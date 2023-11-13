@@ -31,9 +31,9 @@
                         <span class="text-xs font-normal text-center">By proceeding, I agree that Faith Academy can
                             collect, use and
                             disclose the information
-                            provided by me in accordance with the <a href="/privacy-policy"
+                            provided by me in accordance with the <a :href="redirect('/privacy-policy')"
                                 target="_blank" class="underline">Privacy Policy</a> and I fully comply with the
-                            <a class="underline" href="/terms-and-condition" target="_blank">Terms &
+                            <a class="underline" :href="redirect('/terms-and-condition')" target="_blank">Terms &
                                 Conditions</a>
                             which I have read and understand.
                         </span>
@@ -81,7 +81,8 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { redirect } from '~/components/common/utils/object';
 import Header from '../components/common/Header.vue';
 import { localStorageBrowser } from '../components/common/utils/cache';
 import RegistrationForm from '../components/form-dc-no-flow/RegistrationForm.vue';
@@ -108,6 +109,9 @@ export default {
         }
     },
     methods: {
+        redirect(url: string) {
+            return redirect(url)
+        },
         getFormValues() {
             localStorageBrowser.setItem('register-path', this.$router.currentRoute.value.path)
             if (this.process) {

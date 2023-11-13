@@ -34,3 +34,6 @@ export const removeValueExcept = (
 
 export const stringWithoutFirstChar = (originalString: string) =>
   originalString.split("").slice(1).join("");
+
+export const redirect = (url: string) =>
+  `/assets/faith_academy/registration${url}`;

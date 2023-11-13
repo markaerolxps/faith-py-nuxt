@@ -1,3 +1,5 @@
+import type { buildAssetsDir } from "nuxt/dist/core/runtime/nitro/paths";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -20,5 +22,8 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  app: {
+    baseURL: "/assets/faith_academy/registration",
   },
 });

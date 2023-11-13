@@ -106,14 +106,15 @@
     </div>
 </template>
 
-<script lang="ts">
+<script >
+import { redirect } from '~/components/common/utils/object';
 import CommonLayout from '../components/common/CommonLayout.vue';
 import { localStorageBrowser } from '../components/common/utils/cache';
 export default {
     components: { CommonLayout },
     methods: {
         redirectBack() {
-            this.$router.push(localStorageBrowser.getItem('register-path'))
+            this.$router.push(redirect(localStorageBrowser.getItem('register-path')))
         }
     }
 }
