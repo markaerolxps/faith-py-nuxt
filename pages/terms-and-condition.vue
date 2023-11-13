@@ -113,7 +113,7 @@ export default {
     components: { CommonLayout },
     methods: {
         redirectBack() {
-            this.$router.push(redirect(localStorageBrowser.getItem('register-path')))
+            this.$router.back()
         }
     }
 }

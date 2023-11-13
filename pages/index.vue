@@ -31,10 +31,10 @@
                         <span class="text-xs font-normal text-center">By proceeding, I agree that Faith Academy can
                             collect, use and
                             disclose the information
-                            provided by me in accordance with the <a :href="redirect('/privacy-policy')"
-                                target="_blank" class="underline">Privacy Policy</a> and I fully comply with the
-                            <a class="underline" :href="redirect('/terms-and-condition')" target="_blank">Terms &
-                                Conditions</a>
+                            provided by me in accordance with the <nuxt-link :href="redirect('/privacy-policy')"
+                                target="_blank" class="underline">Privacy Policy</nuxt-link> and I fully comply with the
+                            <nuxt-link class="underline" :href="redirect('/terms-and-condition')" target="_blank">Terms &
+                                Conditions</nuxt-link>
                             which I have read and understand.
                         </span>
                     </div>

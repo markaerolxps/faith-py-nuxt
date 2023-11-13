@@ -113,8 +113,9 @@ import { localStorageBrowser } from '../components/common/utils/cache';
 export default {
     components: { CommonLayout },
     methods: {
-        redirectBack() {
-            this.$router.push(redirect(localStorageBrowser.getItem('register-path')))
+        async redirectBack() {
+            alert('bacl')
+            this.$router.back()
         }
     }
 }
