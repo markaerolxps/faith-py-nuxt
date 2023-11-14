@@ -4,10 +4,10 @@
             <label class="text-sm font-normal">{{ title }}</label>
             <span class="text-sm font-normal text-[#FF4D4F]">*</span>
         </div>
-        <div :class="`bg-[#F5F5F5] rounded-lg w-full items-start flex flex-col justify-start relative ${isError && 'border-2 border-red-400'}`" id="fil-action"
-            @click="openMenu">
+        <div :class="`bg-[#F5F5F5] rounded-lg w-full items-start flex flex-col justify-start relative ${isError && 'border-2 border-red-400'}`"
+            id="fil-action" @click="openMenu">
 
-            <div  :class="`flex flex-row justify-between w-full z-20`" style="padding: 8px 12px;" id="fil-field">
+            <div :class="`flex flex-row justify-between w-full z-20`" style="padding: 8px 12px;" id="fil-field">
                 <span v-if="!isObjectArray" class="font-normal text-sm "
                     :class="modelValue !== 'Select' ? 'text-[#252525]' : 'text-[#b8b8b8]'">{{
                         modelValue }}</span>
@@ -21,15 +21,16 @@
                         fill="black" fill-opacity="0.45" />
                 </svg>
             </div>
-            <select class="absolute w-full h-[50%] z-10 pointer-events-none opacity-0" v-bind="$attrs" >
-                <option  v-for="(item, index ) in items" :value="item?.value ? item?.value : item">
+            <select class="absolute w-full h-[50%] z-10 pointer-events-none opacity-0" v-bind="$attrs">
+                <option v-for="(item, index ) in items" :value="item?.value ? item?.value : item">
                     {{ item?.value ? item?.value : item }}
                 </option>
             </select>
         </div>
         <div class="relative flex w-full z-50 " v-if="showMenu">
-            <div class="flex flex-col absolute w-full items-start  gap-1 " v-if="!isObjectArray"
-                style="border-radius: 8px;border: 1px solid var(--neutral-5, #D9D9D9);background: #FFF;box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.10);padding: 8px 0px 8px 1px;">
+            <div class="flex flex-col absolute w-full items-start overflow-x-auto   gap-1 " v-if="!isObjectArray"
+                style="border-radius: 8px;border: 1px solid var(--neutral-5, #D9D9D9);background: #FFF;box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.10);padding: 8px 0px 8px 1px;"
+                :class="items.length > 10 ? 'h-[200px]' : 'h-fit'">
                 <div v-for="(item, index ) in items" :key="index" class="flex flex-col w-full">
                     <span class="text-xs font-normal px-2 w-full hover:bg-[#F5F5F5] cursor-pointer"
                         @click="selectedType(item)">{{ item }}</span>
@@ -82,12 +83,12 @@ export default {
             required: false,
         },
         isError: {
-          type: Boolean,
-          required: false,
-          default: false
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
-    emits: ['selectedType','update:modelValue'],
+    emits: ['selectedType', 'update:modelValue'],
     data() {
         return {
             showMenu: false,

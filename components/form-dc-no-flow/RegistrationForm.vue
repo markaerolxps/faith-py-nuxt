@@ -113,8 +113,8 @@
             </div>
 
             <div class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active">
-                <InputText v-model="passportNumber" :title="'Philippine Passport Number'"
-                    :placeholder="'Philippine Passport Number'" v-on:change="inputChange" :type="'text'"
+                <InputText v-model="passportNumber" :title="'Passport Number'"
+                    :placeholder="'Passport Number'" v-on:change="inputChange" :type="'text'"
                     :name="'passportNumber'" :value="passportNumber" />
 
 
@@ -300,7 +300,7 @@
                         <InputText v-model="acrCardNoReason"
                             :title="'Indicate reason why you don’t have an ACR I-Card or Philippine Retirement Authority (PRA) Card'"
                             :placeholder="'Indicate reason why you don’t have an ACR I-Card or Philippine Retirement Authority (PRA) Card'"
-                            v-on:change="inputChange" :type="'date'" :name="'acrCardNoReason'" :value="acrCardNoReason" />
+                            v-on:change="inputChange" :type="'text'" :name="'acrCardNoReason'" :value="acrCardNoReason" />
 
 
                     </div>
@@ -1085,7 +1085,7 @@ export default {
                     recaptcha: this.recaptchaToken
                 })
             }
-            console.log(formRequest)
+            console.log(formRequest[0])
         }
 
     },
