@@ -312,7 +312,9 @@
 
         </div>
         <div class="flex flex-row items-end justify-end w-full mt-16">
-            
+            <vue-recaptcha ref="recaptcha" sitekey="6LdEI7cmAAAAAAtDpGiownF3Q-nQPUb43zm8vkim" :load-recaptcha-script="true"
+                @verify="onCaptchaVerified" @expired="expiredMethod">
+            </vue-recaptcha>
             <button style="padding: 6.4px 15px;" type="button"
                 class="h-[2.5rem] w-[7.125rem] flex justify-center items-center text-base rounded-md text-[#1890FF] cursor-pointer"
                 @click="getStarted">Back</button>
@@ -330,9 +332,10 @@
 import Dropdown from '../common/Dropdown.vue';
 import UploadFile from '../common/UploadFile.vue';
 import InputText from '../common/InputText.vue';
-import { localStorageBrowser } from '../common/utils/cache';
+import { VueRecaptcha } from 'vue-recaptcha';
+
 export default {
-    components: { Dropdown, UploadFile, InputText },
+    components: { Dropdown, UploadFile, InputText,VueRecaptcha },
     data() {
         return {
             phPassportActionSelected: 'Select',
@@ -434,7 +437,7 @@ export default {
             acrCardFileBack: null,
             recaptchaToken: null,
             flowFormat: null,
-            formData: JSON.parse(localStorageBrowser.getItem('form-data')) || [],
+            formData: JSON.parse(localStorage.getItem('form-data')) || [],
         }
     },
     emits: ['backToOptions'],
@@ -450,7 +453,7 @@ export default {
                 this.formData.map((value) => {
                     value.inDefinite = this.inDefinite;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         }
         else {
@@ -458,13 +461,13 @@ export default {
                 this.formData.map((value) => {
                     delete value.inDefinite;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         }
     },
     methods: {
         getStarted() {
-            localStorageBrowser.removeItem('form-data')
+            localStorage.removeItem('form-data')
             this.$emit('backToOptions');
         },
         getFormValues() {
@@ -549,11 +552,11 @@ export default {
 
                     });
                 }
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             else {
                 this.formData.push({ filipinoAction: this.filipinoActionSelected })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
 
 
@@ -569,7 +572,7 @@ export default {
                 this.formData.map((value) => {
                     value.birthCertAction = this.birthCertActionSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         },
         showCountryMenu() {
@@ -580,7 +583,7 @@ export default {
                 this.formData.map((value) => {
                     value[e.target.name] = e.target.value;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         },
         selectedCountry() {
@@ -588,7 +591,7 @@ export default {
                 this.formData.map((value) => {
                     value.country = this.countrySelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         },
         showPhPassportActionOption() {
@@ -599,7 +602,7 @@ export default {
                 this.formData.map((value) => {
                     value.phPassportAction = this.phPassportActionSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             this.phPassportActionMenu = false
         },
@@ -611,7 +614,7 @@ export default {
                 this.formData.map((value) => {
                     value.nationality = this.nationalitySelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             this.nationalityMenu = false
         },
@@ -626,7 +629,7 @@ export default {
                 this.formData.map((value) => {
                     value.childCurrentlyInPh = this.childCurrentlyInPhSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
         },
         showChildEnterReason() {
@@ -637,7 +640,7 @@ export default {
                 this.formData.map((value) => {
                     value.childEnterReason = this.childEnterReasonSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             this.childEnterReasonMenu = false
         },
@@ -649,7 +652,7 @@ export default {
                 this.formData.map((value) => {
                     value.childVisa = this.childVisaSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             this.childVisaMenu = false
         },
@@ -665,7 +668,7 @@ export default {
                 this.formData.map((value) => {
                     value.acrCard = this.acrCardActionSelected;
                 })
-                localStorageBrowser.setItem('form-data', JSON.stringify(this.formData))
+                localStorage.setItem('form-data', JSON.stringify(this.formData))
             }
             this.acrCardActionMenu = false
         },

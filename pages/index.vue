@@ -48,7 +48,7 @@
                     v-else-if="step === 'dual-citizen-yes'">
                     <RegistrationDCYesForm @back-to-options="getStarted" />
                 </div>
-                
+
             </div>
             <div class="step-2 flex flex-col items-center gap-[3.5rem] w-[40rem]" v-if="step === 'step-2'">
 
@@ -84,21 +84,21 @@
 <script lang="ts">
 import { redirect } from '~/components/common/utils/object';
 import Header from '../components/common/Header.vue';
-import { localStorageBrowser } from '../components/common/utils/cache';
 import RegistrationForm from '../components/form-dc-no-flow/RegistrationForm.vue';
 import RegistrationDCYesForm from '../components/form-dc-yes-flow/RegistrationDCYesForm.vue';
 export default {
-    components: { Header, RegistrationForm, RegistrationDCYesForm},
+    components: { Header, RegistrationForm, RegistrationDCYesForm },
     data() {
         return {
             step: 'step-1',
-            process: localStorageBrowser.getItem('process'),
+            process: process.browser ? localStorage.getItem('process') : '',
             accept: false,
             getStartedState: false,
         }
     },
     mounted() {
         this.getFormValues();
+        console.log(this.process)
     },
     updated() {
         if (this.accept) {
@@ -114,7 +114,9 @@ export default {
             return redirect(url)
         },
         getFormValues() {
-            localStorageBrowser.setItem('register-path', this.$router.currentRoute.value.path)
+            if(process.browser){
+                localStorage.setItem('register-path', this.$router.currentRoute.value.path)
+            }
             if (this.process) {
                 this.step = this.process
             }
@@ -122,16 +124,16 @@ export default {
 
         getStarted() {
             this.step = 'step-2'
-            localStorageBrowser.setItem('process', this.step)
+            localStorage.setItem('process', this.step)
 
         },
         noAction() {
             this.step = 'dual-citizen-no'
-            localStorageBrowser.setItem('process', this.step)
+            localStorage.setItem('process', this.step)
         },
         yesAction() {
             this.step = 'dual-citizen-yes'
-            localStorageBrowser.setItem('process', this.step)
+            localStorage.setItem('process', this.step)
         },
     }
 }

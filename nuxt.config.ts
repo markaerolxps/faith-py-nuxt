@@ -1,21 +1,9 @@
-import type { buildAssetsDir } from "nuxt/dist/core/runtime/nitro/paths";
+import type { buildAssetsDir } from 'nuxt/dist/core/runtime/nitro/paths';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
-  modules: ["vue-recaptcha/nuxt"],
-  runtimeConfig: {
-    public: {
-      recaptcha: {
-        v2SiteKey: "6LdEI7cmAAAAAAtDpGiownF3Q-nQPUb43zm8vkim",
-        v3SiteKey: "6LdEI7cmAAAAAAtDpGiownF3Q-nQPUb43zm8vkim",
-      },
-    },
-  },
-  recaptcha: {
-    enterprise: true,
-  },
+  css: ['~/assets/css/main.css'],
   ssr: true,
   postcss: {
     plugins: {
@@ -24,6 +12,9 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: "/assets/faith_academy/registration",
+    baseURL: '/assets/faith_academy/registration',
+    head: {
+      link: [{ rel: 'icon', type: 'image/x-icon', href: './faith_favicon.svg' }],
+    }
   },
 });

@@ -118,6 +118,7 @@ import { mapObjectValues, removeValueExcept, stringWithoutFirstChar } from '../c
 import { REGISTRATION_DF_YES_INPUTS, defaultItems, type IDualCitizenYesInputs, } from './data';
 import { getCountries } from '../../api';
 import { REGISTRATION_DF_NO_INPUTS } from './data-flow-3'
+import { VueRecaptcha } from 'vue-recaptcha';
 
 export const defaultObjData = {
     dualFilipino: {
@@ -139,7 +140,7 @@ export const defaultObjData = {
     } as IDualCitizenYesInputs,
 };
 export default {
-    components: { Dropdown, InputText, UploadFile },
+    components: { Dropdown, InputText, UploadFile,VueRecaptcha },
     data: () => ({
         inputs: defaultObjData,
         submitState: false,
