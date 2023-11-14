@@ -144,7 +144,7 @@ export default {
     data: () => ({
         inputs: defaultObjData,
         submitState: false,
-        countries: null,
+        countries: [] as string[],
         recaptchaToken: false,
         formData: parsedFormData.getAll(),
         validatedSteps: [
@@ -158,7 +158,7 @@ export default {
         ],
     }),
     async mounted() {
-        this.countries = await getCountries()
+        this.countries = [...(await getCountries()), "Other"]
     },
     emits: ['backToOptions'],
     methods: {
@@ -433,6 +433,9 @@ export default {
         }
         if (this.inputs?.country) {
             this.inputs.country.items = this.countries
+        }
+        if (this.inputs?.country2) {
+            this.inputs.country2.items = this.countries
         }
         this.validateAllSteps();
     },

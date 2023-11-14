@@ -1,3 +1,4 @@
+import { getCountries } from "~/assets/api";
 import { parsedFormData } from "../common/utils/cache";
 
 export interface IDualCitizenYesInputs {
@@ -74,6 +75,17 @@ const isInPHYes = {
     inputType: "select",
     placeholder: "Country",
     items: [],
+    required: true,
+  } as IDualCitizenYesInputs,
+  countryOther: {
+    id: "countryOther",
+    value: parsedFormData.get("countryOther"),
+    title: "Other",
+    dependsOnExpectValue: [
+      ["dualFilipino-Yes", "isUsePhPassport-Any", "country-Other"],
+    ], // Key-Value
+    inputType: "input-text",
+    placeholder: "Other",
     required: true,
   } as IDualCitizenYesInputs,
   surname: {
@@ -269,6 +281,17 @@ const hasPHPassportYES = {
     value: parsedFormData.get("country2"),
     title: "Country",
     dependsOnExpectValue: [["dualFilipino-Yes", "hasPHPassport-Yes"]], // Key-Value
+    items: ["Other"],
+    inputType: "select",
+    required: true,
+  } as IDualCitizenYesInputs,
+  country2Other: {
+    id: "country2Other",
+    value: parsedFormData.get("country2Other"),
+    title: "Other",
+    dependsOnExpectValue: [
+      ["dualFilipino-Yes", "hasPHPassport-Yes", "country2-Other"],
+    ], // Key-Value
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,

@@ -1,5 +1,5 @@
 const isProd = process.env.NODE_ENV === "production";
-const subPath = "";
+const subPath = "/assets/faith_academy/registration";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
