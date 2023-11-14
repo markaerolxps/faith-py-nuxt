@@ -1,9 +1,9 @@
-import type { buildAssetsDir } from 'nuxt/dist/core/runtime/nitro/paths';
-
+const isProd = process.env.NODE_ENV === "production";
+const subPath = "";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
   ssr: true,
   postcss: {
     plugins: {
@@ -12,9 +12,16 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    baseURL: '/assets/faith_academy/registration',
+    baseURL: isProd ? subPath : "",
     head: {
-      link: [{ rel: 'icon', type: 'image/x-icon', href: './faith_favicon.svg' }],
-    }
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "./faith_favicon.svg" },
+      ],
+    },
+  },
+  nitro: {
+    output: {
+      publicDir: "./registration",
+    },
   },
 });

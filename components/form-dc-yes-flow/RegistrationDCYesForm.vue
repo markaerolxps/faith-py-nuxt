@@ -116,7 +116,7 @@ import Dropdown from '../common/Dropdown.vue';
 import { localStorageBrowser, parsedFormData } from '../common/utils/cache'
 import { mapObjectValues, removeValueExcept, stringWithoutFirstChar } from '../common/utils/object'
 import { REGISTRATION_DF_YES_INPUTS, defaultItems, type IDualCitizenYesInputs, } from './data';
-import { getCountries } from '../../api';
+import { getCountries } from '@/assets/api';
 import { REGISTRATION_DF_NO_INPUTS } from './data-flow-3'
 import { VueRecaptcha } from 'vue-recaptcha';
 

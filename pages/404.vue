@@ -28,7 +28,6 @@ import CommonLayout from '../components/common/CommonLayout.vue';
 
 export default {
     components: { CommonLayout },
-
 }
 </script>
 
