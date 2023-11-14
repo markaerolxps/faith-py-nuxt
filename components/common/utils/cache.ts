@@ -45,8 +45,9 @@ export const localStorageBrowser = {
 
   getItem: (key: any) => {
     if (typeof localStorage !== "undefined") {
-      localStorage.getItem(key);
+      return localStorage.getItem(key);
     }
+    return undefined;
   },
   removeItem: (key: any) => {
     if (typeof localStorage !== "undefined") {

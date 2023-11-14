@@ -109,6 +109,7 @@ export default {
         }
     },
     methods: {
+        inputChange() {},
         redirect(url: string) {
             return redirect(url)
         },

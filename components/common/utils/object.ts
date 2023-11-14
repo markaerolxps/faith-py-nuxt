@@ -1,6 +1,7 @@
-import { IDualCitizenYesInputs } from "./../../form-dc-yes-flow/data";
+import type { IDualCitizenYesInputs } from "~/components/form-dc-yes-flow/data";
+
 export const mapObjectValues = (inputObject: any, ignoreFile: boolean) => {
-  const result = {};
+  const result: any = {};
 
   for (const key in inputObject) {
     if (inputObject.hasOwnProperty(key) && !!inputObject[key].value) {
