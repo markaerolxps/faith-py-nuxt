@@ -172,7 +172,7 @@ export default {
             console.log('formData', formData)
         },
         submitValidateForm() {
-
+w
         },
         isNoteVisible(noteDependsOn: string[]) {
             return noteDependsOn.every(keyVal => {
@@ -204,6 +204,10 @@ export default {
                 if (expectValue.length >= 2) {
                     const orStatement = expectValue.some((orValue: string) => orValue === this.inputs[dependsOn]?.value)
                     return keyVal[0] === '!' ? (!orStatement) : orStatement
+                }
+
+                if (expectValue[0] === 'Visible' && this.inputs[dependsOn]) {
+                    return this.isInputVisible(this.inputs[dependsOn])
                 }
 
                 // Any value, but should select first the depend input
@@ -392,7 +396,7 @@ export default {
             this.validateAllSteps()
         },
         validateAllSteps() {
-            const otherInputsVisibleRequired = Object.values(this.inputs).filter(input => this.isInputVisible(input)).map((input: any) => input.id + '-Any')
+            const otherInputsVisibleRequired = Object.values(this.inputs).filter(input => this.isInputVisible(input) && input?.required).map((input: any) => input.id + '-Any')
             const isValid = (this.validatedSteps.length > 0 && this.validatedSteps?.some((and: string[]) => {
                 if (and[0] === 'validateCountryField') {
                     return this.validateCountryField()

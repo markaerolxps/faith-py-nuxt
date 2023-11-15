@@ -2,7 +2,7 @@
     <div class="flex flex-col items-start w-full gap-1">
         <div class="flex-row items-start w-full gap-1">
             <label class="text-sm font-normal">{{ title }}</label>
-            <span class="text-sm font-normal text-[#FF4D4F]" v-if="required">*</span>
+            <span v-if="required" class="text-sm font-normal text-[#FF4D4F]">*</span>
         </div>
 
         <div class="relative rounded-md flex items-center" v-if="!fileData"

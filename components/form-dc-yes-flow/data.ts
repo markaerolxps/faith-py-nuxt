@@ -248,6 +248,14 @@ const hasAnotherPassportYes = {
     items: defaultItems,
     required: true,
   } as IDualCitizenYesInputs,
+  child2ndCountry2: {
+    id: "child2ndCountry2",
+    value: parsedFormData.get("child2ndCountry2"),
+    title: "Other",
+    dependsOnExpectValue: [["child2ndCountry-Other"]], // Key-Value
+    inputType: "input-text",
+    required: true,
+  } as IDualCitizenYesInputs,
   passport2ndNumber: {
     id: "passport2ndNumber",
     value: parsedFormData.get("passport2ndNumber"),
@@ -377,14 +385,14 @@ const hasPHPassportYES = {
     title: "Upload Arrival Stamp (if applicable)",
     dependsOnExpectValue: [["dualFilipino-Yes", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-file",
-    required:false,
+    required: false,
   } as IDualCitizenYesInputs,
   hasBICert2: {
     id: "hasBICert2",
     value: parsedFormData.get("hasBICert2"),
     title: "Does your child have BI Identification Certificate?",
     dependsOnExpectValue: [
-      ["dualFilipino-Yes", "isUsePhPassport-No", "hasPHPassport-Yes"]
+      ["dualFilipino-Yes", "isUsePhPassport-No", "hasPHPassport-Yes"],
     ], // Key-Value
     inputType: "select",
     items: defaultItems,
