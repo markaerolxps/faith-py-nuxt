@@ -377,14 +377,14 @@ const hasPHPassportYES = {
     title: "Upload Arrival Stamp (if applicable)",
     dependsOnExpectValue: [["dualFilipino-Yes", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-file",
-    required: true,
+    required:false,
   } as IDualCitizenYesInputs,
   hasBICert2: {
     id: "hasBICert2",
     value: parsedFormData.get("hasBICert2"),
     title: "Does your child have BI Identification Certificate?",
     dependsOnExpectValue: [
-      ["dualFilipino-Yes", "isUsePhPassport-No", "arrivalStampFile2-Any"],
+      ["dualFilipino-Yes", "isUsePhPassport-No", "hasPHPassport-Yes"]
     ], // Key-Value
     inputType: "select",
     items: defaultItems,

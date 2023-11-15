@@ -442,7 +442,7 @@ export default {
     watch: {
         'inputs.isUsePhPassport.value'(newValue: string) {
             if (this.inputs['arrivalStampFile']) {
-                this.inputs['arrivalStampFile'].title = "Upload Arrival Stamp " + (newValue === "Yes" ? "(if in PH)" : "")
+                this.inputs['arrivalStampFile'].title = "Upload Arrival Stamp " + (newValue === "Yes" || newValue === "No" ? "(if in PH)" : "")
             }
 
             if (this.inputs['passportNumber'] && this.inputs['passportExpirationDate']) {
