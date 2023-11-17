@@ -18,16 +18,21 @@
                 </div>
                 <!-- first Step -->
                 <div class="step-1 w-full flex flex-col items-center gap-[1rem] " v-if="step === 'step-1'">
+                    <div class="flex flex-col w-[33.563rem] items-start">
+                        <InputText v-model="email" :title="'Email Address'" :placeholder="'Email Address'"
+                            @input="inputChange" :type="'text'" :name="'email'" :value="email" />
+                        <span v-if="error" class="font-bold text-sm text-red-400">{{ errorText }}</span>
+                    </div>
                     <div style="padding: 22px "
                         class=" w-[33.563rem] flex flex-col justify-center items-center rounded-2xl gap-[0.625rem] "
-                        :class="getStartedState ? 'bg-[#C2E5FF] text-black  cursor-pointer ' : 'bg-[#D9D9D9] text-[#343541]'"
+                        :class="getStartedState && email.includes('@faith') && !error ? 'bg-[#C2E5FF] text-black  cursor-pointer ' : 'bg-[#D9D9D9] text-[#343541]'"
                         @click="getStarted">
                         <span>Let’s Gets Started →</span>
 
                     </div>
                     <div class="flex flex-row items-start justify-center  gap-1" style="padding: 22px 60px;">
                         <input type="checkbox" name="accept" id="accept" v-model="accept" class="  rounded-lg "
-                            @input="inputChange" style="margin-top:2px" />
+                            style="margin-top:2px" />
                         <span class="text-xs font-normal text-center">By proceeding, I agree that Faith Academy can
                             collect, use and
                             disclose the information
@@ -86,13 +91,17 @@ import { redirect } from '~/components/common/utils/object';
 import Header from '../components/common/Header.vue';
 import RegistrationForm from '../components/form-dc-no-flow/RegistrationForm.vue';
 import RegistrationDCYesForm from '../components/form-dc-yes-flow/RegistrationDCYesForm.vue';
+import InputText from '~/components/common/InputText.vue';
 export default {
-    components: { Header, RegistrationForm, RegistrationDCYesForm },
+    components: { Header, RegistrationForm, RegistrationDCYesForm, InputText },
     data() {
         return {
             step: 'step-1',
             process: process.browser ? localStorage.getItem('process') : '',
             accept: false,
+            email: '',
+            error: false,
+            errorText: '',
             getStartedState: false,
         }
     },
@@ -109,12 +118,23 @@ export default {
         }
     },
     methods: {
-        inputChange() {},
+        inputChange(e) {
+
+            if (!e.target.value.includes('@faith')) {
+                this.error = true;
+                this.errorText = 'Invalid Faith Academy Email!';
+            }
+            else {
+                this.error = false;
+                this.errorText = ""
+            }
+
+        },
         redirect(url: string) {
             return redirect(url)
         },
         getFormValues() {
-            if(process.browser){
+            if (process.browser) {
                 localStorage.setItem('register-path', this.$router.currentRoute.value.path)
             }
             if (this.process) {
@@ -123,8 +143,14 @@ export default {
         },
 
         getStarted() {
-            this.step = 'step-2'
-            localStorage.setItem('process', this.step)
+            if (this.getStartedState && this.email.includes('@faith') && !this.error) {
+                this.step = 'step-2'
+                localStorage.setItem('process', this.step)
+            }
+            else {
+                return;
+            }
+
 
         },
         noAction() {
