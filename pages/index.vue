@@ -123,10 +123,12 @@ export default {
             if (!e.target.value.includes('@faith')) {
                 this.error = true;
                 this.errorText = 'Invalid Faith Academy Email!';
+      
             }
             else {
                 this.error = false;
                 this.errorText = ""
+                localStorage.setItem('form-data', JSON.stringify([{ email: e.target.value }]))
             }
 
         },
