@@ -52,8 +52,7 @@ export default {
         },
         required: {
             type: Boolean,
-            required: true,
-            default: 'Yes',
+            required: false,
         }
     },
     data() {

@@ -19,13 +19,13 @@
                 <!-- first Step -->
                 <div class="step-1 w-full flex flex-col items-center gap-[1rem] " v-if="step === 'step-1'">
                     <div class="flex flex-col w-[33.563rem] items-start">
-                        <InputText v-model="email" :title="'Email Address'" :placeholder="'Email Address'"
-                            @input="inputChange" :type="'text'" :name="'email'" :value="email" />
+                        <InputText v-model="registerKey" :title="'Register Key'" :placeholder="'Register Key'"
+                            @input="inputChange" :type="'text'" :name="'registerKey'" :value="registerKey" />
                         <span v-if="error" class="font-bold text-sm text-red-400">{{ errorText }}</span>
                     </div>
                     <div style="padding: 22px "
                         class=" w-[33.563rem] flex flex-col justify-center items-center rounded-2xl gap-[0.625rem] "
-                        :class="getStartedState && email.includes('@faith') && !error ? 'bg-[#C2E5FF] text-black  cursor-pointer ' : 'bg-[#D9D9D9] text-[#343541]'"
+                        :class="getStartedState  ? 'bg-[#C2E5FF] text-black  cursor-pointer ' : 'bg-[#D9D9D9] text-[#343541]'"
                         @click="getStarted">
                         <span>Let’s Gets Started →</span>
 
@@ -92,6 +92,7 @@ import Header from '../components/common/Header.vue';
 import RegistrationForm from '../components/form-dc-no-flow/RegistrationForm.vue';
 import RegistrationDCYesForm from '../components/form-dc-yes-flow/RegistrationDCYesForm.vue';
 import InputText from '~/components/common/InputText.vue';
+import axios from 'axios'
 export default {
     components: { Header, RegistrationForm, RegistrationDCYesForm, InputText },
     data() {
@@ -99,7 +100,7 @@ export default {
             step: 'step-1',
             process: process.browser ? localStorage.getItem('process') : '',
             accept: false,
-            email: '',
+            registerKey: '',
             error: false,
             errorText: '',
             getStartedState: false,
@@ -123,7 +124,7 @@ export default {
             if (!e.target.value.includes('@faith')) {
                 this.error = true;
                 this.errorText = 'Invalid Faith Academy Email!';
-      
+
             }
             else {
                 this.error = false;
@@ -145,13 +146,10 @@ export default {
         },
 
         getStarted() {
-            if (this.getStartedState && this.email.includes('@faith') && !this.error) {
-                this.step = 'step-2'
-                localStorage.setItem('process', this.step)
-            }
-            else {
-                return;
-            }
+
+            this.step = 'step-2'
+            localStorage.setItem('process', this.step)
+
 
 
         },

@@ -113,9 +113,8 @@
             </div>
 
             <div class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active">
-                <InputText v-model="passportNumber" :title="'Passport Number'"
-                    :placeholder="'Passport Number'" v-on:change="inputChange" :type="'text'"
-                    :name="'passportNumber'" :value="passportNumber" />
+                <InputText v-model="passportNumber" :title="'Passport Number'" :placeholder="'Passport Number'"
+                    v-on:change="inputChange" :type="'text'" :name="'passportNumber'" :value="passportNumber" />
 
 
             </div>
@@ -335,7 +334,7 @@ import InputText from '../common/InputText.vue';
 import { VueRecaptcha } from 'vue-recaptcha';
 
 export default {
-    components: { Dropdown, UploadFile, InputText,VueRecaptcha },
+    components: { Dropdown, UploadFile, InputText, VueRecaptcha },
     data() {
         return {
             phPassportActionSelected: 'Select',
@@ -343,6 +342,7 @@ export default {
             birthCertActionSelected: 'Select',
             passportDate: '',
             jsonRequest: [],
+            fileUpload: [],
             defaultItems: ['Yes', 'No'],
             childEnterReasonItems: [
                 {
@@ -688,24 +688,24 @@ export default {
         },
         submitStateValidate() {
             if (this.phPassportActionSelected === 'No' && this.birthCertActionSelected === 'Yes' && this.filipinoActionSelected === 'Yes' && this.recaptchaToken) {
-                this.flowFormat = 'flow-1'
+                this.flowFormat = 'step-1'
                 this.submitState = true;
 
             }
             else if (this.phPassportActionSelected === 'No' && this.birthCertActionSelected === 'No' && this.birthCertFile != null && this.filipinoActionSelected === 'Yes'
                 && this.recaptchaToken) {
 
-                this.flowFormat = 'flow-2'
+                this.flowFormat = 'step-2'
                 this.submitState = true;
             }
             else if (this.phPassportActionSelected === 'Yes' && this.birthCertActionSelected === 'No' && this.filipinoActionSelected === 'Yes'
                 && this.passportNumber && this.passportDate && this.passportFile != null && this.recaptchaToken) {
-                this.flowFormat = 'flow-3'
+                this.flowFormat = 'step-3'
                 this.submitState = true;
             }
             else if (this.phPassportActionSelected === 'Yes' && this.birthCertActionSelected === 'Yes' && this.filipinoActionSelected === 'Yes'
                 && this.passportNumber && this.passportDate && this.passportFile != null && this.recaptchaToken) {
-                this.flowFormat = 'flow-4'
+                this.flowFormat = 'step-4'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -714,7 +714,7 @@ export default {
                 && this.passportDate && this.issuingAuthority && this.passportBioFile != null && this.childCurrentlyInPhSelected === 'No' && this.anticipatedArrivalDate
                 && this.childEnterReasonSelected === 'visa-holder' && this.recaptchaToken) {
 
-                this.flowFormat = 'flow-5'
+                this.flowFormat = 'step-5'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -723,7 +723,7 @@ export default {
                 && this.passportDate && this.issuingAuthority && this.passportBioFile != null && this.childCurrentlyInPhSelected === 'No' && this.anticipatedArrivalDate
                 && ((this.childEnterReasonSelected === 'visa-granted' || this.childEnterReasonSelected === 'visa-free' || this.childEnterReasonSelected === 'balikbayan-visa'))
                 && this.childVisaSelected != 'Select' && this.recaptchaToken) {
-                this.flowFormat = 'flow-6'
+                this.flowFormat = 'step-6'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -734,7 +734,7 @@ export default {
                 && this.childsVisaPageFile != null && this.acrCardActionSelected === 'No' && this.acrCardNoReason && this.recaptchaToken
             ) {
 
-                this.flowFormat = 'flow-7'
+                this.flowFormat = 'step-7'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -745,7 +745,7 @@ export default {
                 && this.childsVisaPageFile != null && this.acrCardActionSelected === 'Yes' && this.acrCardExpDate && this.acrCardFileFront != null && this.acrCardFileBack != null && this.recaptchaToken
             ) {
 
-                this.flowFormat = 'flow-8'
+                this.flowFormat = 'step-8'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -753,7 +753,7 @@ export default {
                 && this.surName && this.middleName && this.firstName && this.birthPlace && this.dateOfBirth && this.passportNumber
                 && this.passportDate && this.issuingAuthority && this.passportBioFile != null && this.childCurrentlyInPhSelected === 'Yes' && this.dateOfArrival
                 && this.dateOfAuthorizedStay && this.arrivalStampFile != null && this.childEnterReasonSelected === 'visa-holder' && this.recaptchaToken) {
-                this.flowFormat = 'flow-9'
+                this.flowFormat = 'step-9'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -763,7 +763,7 @@ export default {
                 && this.dateOfAuthorizedStay && this.arrivalStampFile != null && ((this.childEnterReasonSelected === 'visa-granted' || this.childEnterReasonSelected === 'visa-free' || this.childEnterReasonSelected === 'balikbayan-visa'))
                 && this.childVisaSelected != 'Select' && this.recaptchaToken) {
 
-                this.flowFormat = 'flow-10'
+                this.flowFormat = 'step-10'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -774,7 +774,7 @@ export default {
                 && this.childsVisaPageFile != null && this.acrCardActionSelected === 'No' && this.acrCardNoReason && this.recaptchaToken
             ) {
 
-                this.flowFormat = 'flow-11'
+                this.flowFormat = 'step-11'
                 this.submitState = true;
             }
             else if (this.filipinoActionSelected === 'No' && ((this.countrySelected != 'Select' && this.countrySelected != 'Other') || (this.countrySelected === 'Other' && this.otherCountry))
@@ -785,7 +785,7 @@ export default {
                 && this.childsVisaPageFile != null && this.acrCardActionSelected === 'Yes' && this.acrCardExpDate && this.acrCardFileFront != null && this.acrCardFileBack != null && this.recaptchaToken
             ) {
 
-                this.flowFormat = 'flow-12'
+                this.flowFormat = 'step-12'
                 this.submitState = true;
             }
 
@@ -796,33 +796,40 @@ export default {
 
         birthCertUploadData(data) {
             this.birthCertFile = data;
+            this.fileUpload.push({ birthCertFile: data })
             this.submitStateValidate()
         },
         uploadPassport(data) {
             this.passportFile = data
+            this.fileUpload.push({ passportFile: data })
             this.submitStateValidate()
         },
         uploadPassportBio(data) {
             this.passportBioFile = data
+            this.fileUpload.push({ passportBioFile: data })
             this.submitStateValidate()
         },
         uploadArrivalStamp(data) {
             this.arrivalStampFile = data
+            this.fileUpload.push({ arrivalStampFile: data })
             this.submitStateValidate()
 
         },
         uploadChildsVisaPage(data) {
             this.childsVisaPageFile = data
+            this.fileUpload.push({ childsVisaPageFile: data })
             this.submitStateValidate()
 
         },
         uploadAcrCardFront(data) {
             this.acrCardFileFront = data
+            this.fileUpload.push({ acrCardFileFront: data })
             this.submitStateValidate()
 
         },
         uploadAcrCardBack(data) {
             this.acrCardFileBack = data
+            this.fileUpload.push({ acrCardFileBack: data })
             this.submitStateValidate()
 
         },
@@ -836,40 +843,43 @@ export default {
         },
         sendForm() {
             const formRequest = [];
-            if (this.flowFormat === 'flow-1') {
+            if (this.flowFormat === 'step-1') {
                 formRequest.push({
                     phPassportAction: this.phPassportActionSelected,
                     birthCertAction: this.birthCertActionSelected,
                     filipinoAction: this.filipinoActionSelected,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-2') {
+            if (this.flowFormat === 'step-2') {
                 formRequest.push({
                     phPassportAction: this.phPassportActionSelected,
                     birthCertAction: this.birthCertActionSelected,
                     filipinoAction: this.filipinoActionSelected,
-                    birthCertFile: this.birthCertFile,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-3' || this.flowFormat === 'flow-4') {
+            if (this.flowFormat === 'step-3' || this.flowFormat === 'step-4') {
                 formRequest.push({
                     phPassportAction: this.phPassportActionSelected,
                     birthCertAction: this.birthCertActionSelected,
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-5') {
+            if (this.flowFormat === 'step-5') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -884,15 +894,16 @@ export default {
                     childInPh: this.childCurrentlyInPhSelected,
                     childEnterReason: this.childEnterReasonSelected,
                     childVisaSelected: this.childVisaSelected,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-6') {
+            if (this.flowFormat === 'step-6') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -907,15 +918,16 @@ export default {
                     childInPh: this.childCurrentlyInPhSelected,
                     childEnterReason: this.childEnterReasonSelected,
                     childVisaSelected: this.childVisaSelected,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-7') {
+            if (this.flowFormat === 'step-7') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -932,18 +944,18 @@ export default {
                     typeOfPhVisa: this.typeOfPhVisa,
                     phVisaExpDate: this.phVisaExpDate,
                     indefinite: this.inDefinite,
-                    childsVisaPageFile: this.childsVisaPageFile,
                     acrCardAction: this.acrCardActionSelected,
                     acrCardNoReason: this.acrCardNoReason,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-8') {
+            if (this.flowFormat === 'step-8') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -960,20 +972,18 @@ export default {
                     typeOfPhVisa: this.typeOfPhVisa,
                     phVisaExpDate: this.phVisaExpDate,
                     indefinite: this.inDefinite,
-                    childsVisaPageFile: this.childsVisaPageFile,
                     acrCardAction: this.acrCardActionSelected,
                     acrCardExpDate: this.acrCardExpDate,
-                    acrCardFileFront: this.acrCardFileFront,
-                    acrCardFileBack: this.acrCardFileBack,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-9') {
+            if (this.flowFormat === 'step-9') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -984,26 +994,19 @@ export default {
                     birthPlace: this.birthPlace,
                     dateOfBirth: this.dateOfBirth,
                     issuingAuthority: this.issuingAuthority,
-                    anticipatedArrivalDate: this.anticipatedArrivalDate,
+                    authori: this.authori,
                     childInPh: this.childCurrentlyInPhSelected,
                     childEnterReason: this.childEnterReasonSelected,
-                    typeOfPhVisa: this.typeOfPhVisa,
-                    phVisaExpDate: this.phVisaExpDate,
-                    indefinite: this.inDefinite,
-                    childsVisaPageFile: childsVisaPageFile,
-                    acrCardAction: this.acrCardActionSelected,
-                    acrCardExpDate: this.acrCardExpDate,
-                    acrCardFileFront: this.acrCardFileFront,
-                    acrCardFileBack: this.acrCardFileBack,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-10') {
+            if (this.flowFormat === 'step-10') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -1019,16 +1022,16 @@ export default {
                     childVisaSelected: this.childVisaSelected,
                     dateOfArrival: this.dateOfArrival,
                     dateOfAuthorizedStay: this.dateOfAuthorizedStay,
-                    arrivalStampFile: this.arrivalStampFile,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-11') {
+            if (this.flowFormat === 'step-11') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -1041,24 +1044,23 @@ export default {
                     issuingAuthority: this.issuingAuthority,
                     dateOfArrival: this.dateOfArrival,
                     dateOfAuthorizedStay: this.dateOfAuthorizedStay,
-                    arrivalStampFile: this.arrivalStampFile,
                     childInPh: this.childCurrentlyInPhSelected,
                     childEnterReason: this.childEnterReasonSelected,
                     typeOfPhVisa: this.typeOfPhVisa,
                     phVisaExpDate: this.phVisaExpDate,
                     indefinite: this.inDefinite,
-                    childsVisaPageFile: this.childsVisaPageFile,
                     acrCardAction: this.acrCardActionSelected,
                     acrCardNoReason: this.acrCardNoReason,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
-            if (this.flowFormat === 'flow-12') {
+            if (this.flowFormat === 'step-12') {
                 formRequest.push({
                     filipinoAction: this.filipinoActionSelected,
                     passportNumber: this.passportNumber,
                     passportDate: this.passportDate,
-                    passportFile: this.passportFile,
                     countrySelected: this.countrySelected,
                     otherCountry: this.countrySelected === 'Other' ? this.otherCountry : null,
                     nationality: this.nationalitySelected,
@@ -1071,7 +1073,6 @@ export default {
                     issuingAuthority: this.issuingAuthority,
                     dateOfArrival: this.dateOfArrival,
                     dateOfAuthorizedStay: this.dateOfAuthorizedStay,
-                    arrivalStampFile: this.arrivalStampFile,
                     childInPh: this.childCurrentlyInPhSelected,
                     childEnterReason: this.childEnterReasonSelected,
                     typeOfPhVisa: this.typeOfPhVisa,
@@ -1080,12 +1081,15 @@ export default {
                     childsVisaPageFile: this.childsVisaPageFile,
                     acrCardAction: this.acrCardActionSelected,
                     acrCardExpDate: this.acrCardExpDate,
-                    acrCardFileFront: this.acrCardFileFront,
-                    acrCardFileBack: this.acrCardFileBack,
+                    flowFormat: 'flow-1',
+                    email: this.formData[0].email,
                     recaptcha: this.recaptchaToken
                 })
             }
             console.log(formRequest[0])
+            if (this.fileUpload.length > 0) {
+                console.log(this.fileUpload)
+            }
         }
 
     },
