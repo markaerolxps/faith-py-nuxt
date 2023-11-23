@@ -1,112 +1,192 @@
 <template>
-    <form ref="formRef" class="flex flex-col items-start justify-center w-full " name="register-form" method="POST"
-        enctype="multipart/form-data" @submit.prevent="sendForm">
-        <div v-for="(inputForm, index) in inputs" :key="index" class="w-full">
-            <!-- NOTE -->
-            <div v-if="inputForm?.note && isNoteVisible(inputForm?.note?.dependsOn)"
-                class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[1rem] mb-[1rem] fade-up-enter-active">
-                <p class="font-bold text-[1rem]">
-                    {{ inputForm.note?.content }}
-                </p>
-            </div>
+  <form
+    ref="formRef"
+    class="flex flex-col items-start justify-center w-full"
+    name="register-form"
+    method="POST"
+    enctype="multipart/form-data"
+    @submit.prevent="sendForm"
+  >
+    <div v-for="(inputForm, index) in inputs" :key="index" class="w-full">
+      <!-- NOTE -->
+      <div
+        v-if="inputForm?.note && isNoteVisible(inputForm?.note?.dependsOn)"
+        class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[1rem] mb-[1rem] fade-up-enter-active"
+      >
+        <p class="font-bold text-[1rem]">
+          {{ inputForm.note?.content }}
+        </p>
+      </div>
 
-            <div v-if="inputForm.id === 'preferredVisa' && isInputVisible(inputForm)"
-                class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[2rem] mb-[1rem] fade-up-enter-active">
-                <p class="font-bold text-[1rem]">
-                    You are not legally a DFC, here are your options to be BI Compliant
-                    Student in the PH.
-                </p>
+      <div
+        v-if="inputForm.id === 'preferredVisa' && isInputVisible(inputForm)"
+        class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[2rem] mb-[1rem] fade-up-enter-active"
+      >
+        <p class="font-bold text-[1rem]">
+          You are not legally a DFC, here are your options to be BI Compliant
+          Student in the PH.
+        </p>
 
-                <ul class="text-gray-800 text-sm list-disc px-[2rem] mt-[1rem]">
-                    <li>
-                        <small>Apply for FA 47(a)(2) Visa</small>
-                    </li>
-                    <li>
-                        <small>Apply for another PH Visa -> Apply for SSP</small>
-                    </li>
-                </ul>
-            </div>
+        <ul class="text-gray-800 text-sm list-disc px-[2rem] mt-[1rem]">
+          <li>
+            <small>Apply for FA 47(a)(2) Visa</small>
+          </li>
+          <li>
+            <small>Apply for another PH Visa -> Apply for SSP</small>
+          </li>
+        </ul>
+      </div>
 
-            <div v-if="isInputVisible(inputForm)" class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active">
+      <div
+        v-if="isInputVisible(inputForm)"
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <div
+          class="flex flex-col w-full gap-4"
+          v-if="inputForm.inputType === 'select'"
+        >
+          <Dropdown
+            :required="inputForm?.required"
+            :title="inputForm.title"
+            :items="inputForm.items"
+            :hasOption="inputForm.hasOption"
+            v-model="inputForm.value"
+            :value="inputForm.value"
+            :isObjectArray="inputForm.itemsObjectArray"
+          />
 
-                <div class="flex flex-col w-full gap-4" v-if="inputForm.inputType === 'select'">
-                    <Dropdown :required="inputForm?.required" :title="inputForm.title" :items="inputForm.items"
-                        :hasOption="inputForm.hasOption" v-model="inputForm.value" :value="inputForm.value"
-                        :isObjectArray="inputForm.itemsObjectArray" />
+          <div
+            v-if="inputForm.id === 'childFaVisa' && inputForm.value === 'Yes'"
+            class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
+            style="padding: 16px 24px"
+          >
+            <span class="font-bold text-base"
+              >Your child need to apply for a 47(a)(2)</span
+            >
+          </div>
+        </div>
 
-                    <div v-if="inputForm.id === 'childFaVisa' && inputForm.value === 'Yes'"
-                        class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
-                        style="padding: 16px 24px;">
-                        <span class="font-bold text-base">Your child need to apply for a 47(a)(2)</span>
-                    </div>
-                </div>
-
-
-                <div class="flex flex-col w-full gap-4" v-else-if="inputForm.inputType.split('-')[1] === 'file'">
-                    <UploadFile :title="inputForm.title" @uploadFile="(file: any) => {
+        <div
+          class="flex flex-col w-full gap-4"
+          v-else-if="inputForm.inputType.split('-')[1] === 'file'"
+        >
+          <UploadFile
+            :title="inputForm.title"
+            @uploadFile="(file: any) => {
                         inputs[inputForm.id].value = file
-                    }" :refName="inputForm.id" :required="inputForm?.required" />
+                    }"
+            :refName="inputForm.id"
+            :required="inputForm?.required"
+          />
 
-                    <div v-if="inputForm.id === 'stampArrivalFile'"
-                        class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
-                        style="padding: 16px 24px;">
-                        <span class="font-bold text-base">Passport used to enter the Philippines</span>
-                    </div>
-                </div>
-                <div class="flex flex-col w-full gap-4" v-else>
-                    <InputText v-model="inputForm.value" :title="inputForm.title" :placeholder="inputForm.placeholder"
-                        :description="inputForm.description" v-on:change="(e) => {
-                            this.updateLocalStorageFormData(inputForm.id, e.target.value)
-                        }" :type="inputForm.inputType.split('-')[1]" :value="inputForm.value"
-                        :required="inputForm?.required"
-                        :disabled="inputForm.id === 'phVisaExpDate' && inputs?.['indefinite']?.value === 'on' ? true : false" />
-                    <div v-if="inputForm.id === 'anticipatedArrivalDate'"
-                        class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
-                        style="padding: 16px 24px;">
-                        <span class="font-bold text-base">Passport used to enter the Philippines</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div v-if="inputForm.value && inputForm.id === 'preferredVisa' && isInputVisible(inputForm)">
-                <div class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[2rem] mb-[1rem] fade-up-enter-active">
-                    <p v-if="inputForm.value === 'Apply for FA 47(a)(2) Visa'" class="font-bold text-[1rem]">
-                        Apply for FA 47(a)(2) Visa
-                    </p>
-
-                    <p v-else class="font-bold text-[1rem]">
-                        Apply for SSP
-                    </p>
-
-                    <p class="text-gray-800 text-sm list-disc px-[1rem] mt-[1rem]">
-                        We will prepare your child's application. Expect instructions to be sent to you via email.Please
-                        turnover your passport immediately to the Visa Office at Faith Academy or as soon as you arrive in
-                        the country.
-                        <br />
-                        <br />
-                        For more information please email g.visaoffice@faith.edu.ph
-                    </p>
-                </div>
-            </div>
-
-
+          <div
+            v-if="inputForm.id === 'stampArrivalFile'"
+            class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
+            style="padding: 16px 24px"
+          >
+            <span class="font-bold text-base"
+              >Passport used to enter the Philippines</span
+            >
+          </div>
         </div>
-
-        <div class="flex flex-row items-end justify-end w-full mt-16">
-            <vue-recaptcha ref="recaptcha" sitekey="6LdEI7cmAAAAAAtDpGiownF3Q-nQPUb43zm8vkim" :load-recaptcha-script="true"
-                @verify="onCaptchaVerified" @expired="expiredMethod">
-            </vue-recaptcha>
-            <button style="padding: 6.4px 15px;" type="button"
-                class="h-[2.5rem] w-[7.125rem] flex justify-center items-center text-base rounded-md text-[#1890FF] cursor-pointer"
-                @click="getStarted">Back</button>
-
-            <button type="submit" style="padding: 6.4px 15px;"
-                class="h-[2.5rem]  g-recaptcha w-[7.125rem] flex justify-center items-center rounded-md  text-base cursor-pointer"
-                :class="submitState ? 'bg-[#1890FF] text-white ' : 'bg-[#F5F5F5] text-[#b8b8b8]'"
-                :disabled="submitState ? false : true">Submit</button>
+        <div class="flex flex-col w-full gap-4" v-else>
+          <InputText
+            v-model="inputForm.value"
+            :title="inputForm.title"
+            :placeholder="inputForm.placeholder"
+            :description="inputForm.description"
+            v-on:change="
+              (e) => {
+                this.updateLocalStorageFormData(inputForm.id, e.target.value);
+              }
+            "
+            :type="inputForm.inputType.split('-')[1]"
+            :value="inputForm.value"
+            :required="inputForm?.required"
+            :disabled="
+              inputForm.id === 'phVisaExpDate' &&
+              inputs?.['indefinite']?.value === 'on'
+                ? true
+                : false
+            "
+          />
+          <div
+            v-if="inputForm.id === 'anticipatedArrivalDate'"
+            class="flex flex-col w-full gap-1 bg-[#F0F7FE] text-black items-start justify-center rounded-2xl"
+            style="padding: 16px 24px"
+          >
+            <span class="font-bold text-base"
+              >Passport used to enter the Philippines</span
+            >
+          </div>
         </div>
-    </form>
+      </div>
+
+      <div
+        v-if="
+          inputForm.value &&
+          inputForm.id === 'preferredVisa' &&
+          isInputVisible(inputForm)
+        "
+      >
+        <div
+          class="bg-[#F0F7FE] text-[#1C355E] rounded-lg p-[2rem] mb-[1rem] fade-up-enter-active"
+        >
+          <p
+            v-if="inputForm.value === 'Apply for FA 47(a)(2) Visa'"
+            class="font-bold text-[1rem]"
+          >
+            Apply for FA 47(a)(2) Visa
+          </p>
+
+          <p v-else class="font-bold text-[1rem]">Apply for SSP</p>
+
+          <p class="text-gray-800 text-sm list-disc px-[1rem] mt-[1rem]">
+            We will prepare your child's application. Expect instructions to be
+            sent to you via email.Please turnover your passport immediately to
+            the Visa Office at Faith Academy or as soon as you arrive in the
+            country.
+            <br />
+            <br />
+            For more information please email g.visaoffice@faith.edu.ph
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-row items-end justify-end w-full mt-16">
+      <vue-recaptcha
+        ref="recaptcha"
+        sitekey="6LdEI7cmAAAAAAtDpGiownF3Q-nQPUb43zm8vkim"
+        :load-recaptcha-script="true"
+        @verify="onCaptchaVerified"
+        @expired="expiredMethod"
+      >
+      </vue-recaptcha>
+      <button
+        style="padding: 6.4px 15px"
+        type="button"
+        class="h-[2.5rem] w-[7.125rem] flex justify-center items-center text-base rounded-md text-[#1890FF] cursor-pointer"
+        @click="getStarted"
+      >
+        Back
+      </button>
+
+      <button
+        type="submit"
+        style="padding: 6.4px 15px"
+        class="h-[2.5rem] g-recaptcha w-[7.125rem] flex justify-center items-center rounded-md text-base cursor-pointer"
+        :class="
+          submitState
+            ? 'bg-[#1890FF] text-white '
+            : 'bg-[#F5F5F5] text-[#b8b8b8]'
+        "
+        :disabled="submitState ? false : true"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
 </template>
 
 <script lang="ts">
@@ -116,10 +196,12 @@ import Dropdown from '../common/Dropdown.vue';
 import { localStorageBrowser, parsedFormData } from '../common/utils/cache'
 import { mapObjectValues, removeValueExcept, stringWithoutFirstChar } from '../common/utils/object'
 import { REGISTRATION_DF_YES_INPUTS, defaultItems, type IDualCitizenYesInputs, } from './data';
-import { getCountries } from '@/assets/api';
+
 import { REGISTRATION_DF_NO_INPUTS } from './data-flow-3'
 import { VueRecaptcha } from 'vue-recaptcha';
-
+import { getCountries } from '~/assets/api';
+import axios from "axios";
+import envConfig from "~/configs/api";
 export const defaultObjData = {
     dualFilipino: {
         id: "dualFilipino",
@@ -158,10 +240,24 @@ export default {
         ],
     }),
     async mounted() {
-        this.countries = [...(await getCountries()), "Other"]
+        this.getCountries();
     },
     emits: ['backToOptions'],
     methods: {
+        getCountries(){
+            axios
+        .get(
+          `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.country_list`
+        )
+        .then((res) => {
+          console.log(res);
+
+          if(res.data){
+            this.countries = res.data.data
+          }
+        })
+        .catch((err) => {});
+        },
         getStarted() {
             localStorageBrowser.removeItem('form-data')
             this.$emit('backToOptions');
@@ -219,7 +315,7 @@ w
             })))
 
             if (!isVisible && this.inputs[inputForm.id]) {
-                // to hide again the other inputs 
+                // to hide again the other inputs
                 this.inputs[inputForm.id].value = ''
             }
 
@@ -466,4 +562,3 @@ w
     }
 }
 </script>
-
