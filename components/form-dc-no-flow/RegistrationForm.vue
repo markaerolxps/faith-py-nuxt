@@ -698,7 +698,7 @@ export default {
       birthCertFile: null,
       passportFile: null,
       countries: [],
-      nationalities: ["nationality1", "nationality2"],
+      nationalities: [],
       nationalityMenu: false,
       passportBioFile: null,
       countryMenu: false,
@@ -719,6 +719,7 @@ export default {
   mounted() {
     this.getFormValues();
     this.getCountryList();
+    this.getNationalityList();
     document.body.addEventListener("click", this.closeDropDown);
   },
   updated() {
@@ -750,6 +751,20 @@ export default {
      
           if(res.data){
             this.countries = res.data.data
+          }
+        })
+        .catch((err) => {});
+    },
+    getNationalityList() {
+      axios
+        .get(
+          `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.nationality_list`
+        )
+        .then((res) => {
+          console.log(res);
+     
+          if(res.data){
+            this.nationalities = res.data.data
           }
         })
         .catch((err) => {});
@@ -1297,7 +1312,7 @@ export default {
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1307,7 +1322,7 @@ export default {
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1319,7 +1334,7 @@ export default {
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1345,7 +1360,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1371,7 +1386,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1401,7 +1416,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1431,7 +1446,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1456,7 +1471,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1483,7 +1498,7 @@ export default {
           dateOfArrival: this.dateOfArrival,
           dateOfAuthorizedStay: this.dateOfAuthorizedStay,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1514,7 +1529,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1546,7 +1561,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
-          email: this.formData[0].email,
+          registerKey: this.formData[0].registerKey,
           recaptcha: this.recaptchaToken,
         });
       }
