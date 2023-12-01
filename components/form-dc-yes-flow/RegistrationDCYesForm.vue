@@ -1,4 +1,15 @@
 <template>
+  <div v-if="isLoading">
+    <loading
+      v-model:active="isLoading"
+      :is-full-page="fullPage"
+      :loader="'spinner'"
+      :color="'#1C355E'"
+      :height="180"
+      :width="180"
+      :transition="'fade'"
+    />
+  </div>
   <form
     ref="formRef"
     class="flex flex-col items-start justify-center w-full"
@@ -190,375 +201,863 @@
 </template>
 
 <script lang="ts">
-import UploadFile from '../common/UploadFile.vue';
-import InputText from '../common/InputText.vue';
-import Dropdown from '../common/Dropdown.vue';
-import { localStorageBrowser, parsedFormData } from '../common/utils/cache'
-import { mapObjectValues, removeValueExcept, stringWithoutFirstChar } from '../common/utils/object'
-import { REGISTRATION_DF_YES_INPUTS, defaultItems, type IDualCitizenYesInputs, } from './data';
+import UploadFile from "../common/UploadFile.vue";
+import InputText from "../common/InputText.vue";
+import Dropdown from "../common/Dropdown.vue";
+import { localStorageBrowser, parsedFormData } from "../common/utils/cache";
+import {
+  mapObjectValues,
+  removeValueExcept,
+  stringWithoutFirstChar,
+} from "../common/utils/object";
+import {
+  REGISTRATION_DF_YES_INPUTS,
+  defaultItems,
+  type IDualCitizenYesInputs,
+} from "./data";
 
-import { REGISTRATION_DF_NO_INPUTS } from './data-flow-3'
-import { VueRecaptcha } from 'vue-recaptcha';
-import { getCountries } from '~/assets/api';
+import { REGISTRATION_DF_NO_INPUTS } from "./data-flow-3";
+import { VueRecaptcha } from "vue-recaptcha";
+import { getCountries } from "~/assets/api";
 import axios from "axios";
 import envConfig from "~/configs/api";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 export const defaultObjData = {
-    dualFilipino: {
-        id: "dualFilipino",
-        value: parsedFormData.get("dualFilipino"),
-        title: "Dual Filipino?",
-        items: defaultItems,
-        inputType: "select",
-        required: true,
-    } as IDualCitizenYesInputs,
-    isInPH: {
-        id: "isInPH",
-        value: parsedFormData.get("isInPH"),
-        title: "Is your child currently in the Philippines?",
-        dependsOnExpectValue: [["dualFilipino-Any"]], // Key-Value
-        items: defaultItems,
-        inputType: "select",
-        required: true,
-    } as IDualCitizenYesInputs,
+  dualFilipino: {
+    id: "dualFilipino",
+    value: parsedFormData.get("dualFilipino"),
+    title: "Dual Filipino?",
+    items: defaultItems,
+    inputType: "select",
+    required: true,
+  } as IDualCitizenYesInputs,
+  isInPH: {
+    id: "isInPH",
+    value: parsedFormData.get("isInPH"),
+    title: "Is your child currently in the Philippines?",
+    dependsOnExpectValue: [["dualFilipino-Any"]], // Key-Value
+    items: defaultItems,
+    inputType: "select",
+    required: true,
+  } as IDualCitizenYesInputs,
 };
 export default {
-    components: { Dropdown, InputText, UploadFile,VueRecaptcha },
-    data: () => ({
-        inputs: defaultObjData,
-        submitState: false,
-        countries: [] as string[],
-        recaptchaToken: false,
-        formData: parsedFormData.getAll(),
-        validatedSteps: [
-            ['dualFilipino-Yes', 'isUsePhPassport-Yes', 'hasBICert-Any', 'hasAnotherPassport-Any'],
-            ['dualFilipino-Yes', 'isUsePhPassport-No', 'hasPHPassport-Yes', 'hasBICert2-Yes'],
-            ['dualFilipino-Yes', 'isUsePhPassport-No', 'hasPHPassport-Yes', 'hasBICert2-No', 'preferredVisa-Any'],
-            ['dualFilipino-Yes', 'isUsePhPassport-No', 'hasPHPassport-No', 'hasBICert-Yes'],
-            ['dualFilipino-Yes', 'isUsePhPassport-No', 'hasPHPassport-No', 'hasBICert-No', 'preferredVisa-Any'],
-            // ['dualFilipino-No', 'isInPH-Yes', 'dateOfArrival-Any', 'stampArrivalFile-Any', 'country-Any',],
-            ['validateCountryField'],
-        ],
-    }),
-    async mounted() {
-        this.getCountries();
-    },
-    emits: ['backToOptions'],
-    methods: {
-        getCountries(){
-            axios
+  components: { Dropdown, InputText, UploadFile, VueRecaptcha, Loading },
+  data: () => ({
+    inputs: defaultObjData,
+    submitState: false,
+    countries: [] as string[],
+    recaptchaToken: false,
+    formData: parsedFormData.getAll(),
+    isLoading: false,
+    fullPage: true,
+    validatedSteps: [
+      [
+        "dualFilipino-Yes",
+        "isUsePhPassport-Yes",
+        "hasBICert-Any",
+        "hasAnotherPassport-Any",
+      ],
+      [
+        "dualFilipino-Yes",
+        "isUsePhPassport-No",
+        "hasPHPassport-Yes",
+        "hasBICert2-Yes",
+      ],
+      [
+        "dualFilipino-Yes",
+        "isUsePhPassport-No",
+        "hasPHPassport-Yes",
+        "hasBICert2-No",
+        "preferredVisa-Any",
+      ],
+      [
+        "dualFilipino-Yes",
+        "isUsePhPassport-No",
+        "hasPHPassport-No",
+        "hasBICert-Yes",
+      ],
+      [
+        "dualFilipino-Yes",
+        "isUsePhPassport-No",
+        "hasPHPassport-No",
+        "hasBICert-No",
+        "preferredVisa-Any",
+      ],
+      // ['dualFilipino-No', 'isInPH-Yes', 'dateOfArrival-Any', 'stampArrivalFile-Any', 'country-Any',],
+      ["validateCountryField"],
+    ],
+  }),
+  async mounted() {
+    this.getCountries();
+  },
+  emits: ["backToOptions"],
+  methods: {
+    getCountries() {
+      axios
         .get(
           `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.country_list`
         )
         .then((res) => {
           console.log(res);
 
-          if(res.data){
-            this.countries = res.data.data
+          if (res.data) {
+            this.countries = res.data.data;
           }
         })
         .catch((err) => {});
-        },
-        getStarted() {
-            localStorageBrowser.removeItem('form-data')
-            this.$emit('backToOptions');
-        },
-        sendForm(e: any) {
-            const formData: any = mapObjectValues(this.inputs, false)
-            formData.recaptcha = this.recaptchaToken;
-            console.log('formData', formData)
-        },
-        submitValidateForm() {
-w
-        },
-        isNoteVisible(noteDependsOn: string[]) {
-            return noteDependsOn.every(keyVal => {
-                if (noteDependsOn.length === 0) return false
+    },
+    getStarted() {
+      localStorageBrowser.removeItem("form-data");
+      this.$emit("backToOptions");
+    },
+    sendForm(e: any) {
+      const formData: any = mapObjectValues(this.inputs, false);
+      formData.recaptcha = this.recaptchaToken;
+      console.log("formData", formData);
+    },
+    submitValidateForm() {
+      w;
+    },
+    isNoteVisible(noteDependsOn: string[]) {
+      return noteDependsOn.every((keyVal) => {
+        if (noteDependsOn.length === 0) return false;
 
-                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
-                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
+        const dependsOn =
+          keyVal[0] === "!"
+            ? stringWithoutFirstChar(keyVal.split("-")[0])
+            : keyVal.split("-")[0];
+        const expectValue: string[] = keyVal.split("-")[1]?.split("||");
 
-                if (expectValue.length >= 2) {
-                    const orStatement = expectValue.some((orValue: string) => orValue === this.inputs[dependsOn]?.value)
-                    return keyVal[0] === '!' ? (!orStatement) : orStatement
-                }
+        if (expectValue.length >= 2) {
+          const orStatement = expectValue.some(
+            (orValue: string) => orValue === this.inputs[dependsOn]?.value
+          );
+          return keyVal[0] === "!" ? !orStatement : orStatement;
+        }
 
-                // Any value, but should select first the depend input
-                if (expectValue[0] === 'Any' && !!this.inputs[dependsOn]?.value) {
-                    return true
-                }
+        // Any value, but should select first the depend input
+        if (expectValue[0] === "Any" && !!this.inputs[dependsOn]?.value) {
+          return true;
+        }
 
-                return keyVal[0] === '!' ? expectValue[0] !== this.inputs[dependsOn]?.value : expectValue[0] === this.inputs[dependsOn]?.value
+        return keyVal[0] === "!"
+          ? expectValue[0] !== this.inputs[dependsOn]?.value
+          : expectValue[0] === this.inputs[dependsOn]?.value;
+      });
+    },
+    isInputVisible(inputForm: IDualCitizenYesInputs) {
+      const isVisible =
+        !inputForm.dependsOnExpectValue?.length ||
+        (inputForm.dependsOnExpectValue.length > 0 &&
+          inputForm.dependsOnExpectValue?.some((and: string[]) =>
+            and.every((keyVal) => {
+              if (and.length === 0) return false;
+
+              const dependsOn =
+                keyVal[0] === "!"
+                  ? stringWithoutFirstChar(keyVal.split("-")[0])
+                  : keyVal.split("-")[0];
+              const expectValue: string[] = keyVal.split("-")[1]?.split("||");
+
+              if (expectValue.length >= 2) {
+                const orStatement = expectValue.some(
+                  (orValue: string) => orValue === this.inputs[dependsOn]?.value
+                );
+                return keyVal[0] === "!" ? !orStatement : orStatement;
+              }
+
+              if (expectValue[0] === "Visible" && this.inputs[dependsOn]) {
+                return this.isInputVisible(this.inputs[dependsOn]);
+              }
+
+              // Any value, but should select first the depend input
+              if (expectValue[0] === "Any" && !!this.inputs[dependsOn]?.value) {
+                return true;
+              }
+
+              return keyVal[0] === "!"
+                ? expectValue[0] !== this.inputs[dependsOn]?.value
+                : expectValue[0] === this.inputs[dependsOn]?.value;
             })
-        },
-        isInputVisible(inputForm: IDualCitizenYesInputs) {
-            const isVisible = !inputForm.dependsOnExpectValue?.length || (inputForm.dependsOnExpectValue.length > 0 && inputForm.dependsOnExpectValue?.some((and: string[]) => and.every(keyVal => {
-                if (and.length === 0) return false
+          ));
 
-                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
-                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
+      if (!isVisible && this.inputs[inputForm.id]) {
+        // to hide again the other inputs
+        this.inputs[inputForm.id].value = "";
+      }
 
-                if (expectValue.length >= 2) {
-                    const orStatement = expectValue.some((orValue: string) => orValue === this.inputs[dependsOn]?.value)
-                    return keyVal[0] === '!' ? (!orStatement) : orStatement
-                }
-
-                if (expectValue[0] === 'Visible' && this.inputs[dependsOn]) {
-                    return this.isInputVisible(this.inputs[dependsOn])
-                }
-
-                // Any value, but should select first the depend input
-                if (expectValue[0] === 'Any' && !!this.inputs[dependsOn]?.value) {
-                    return true
-                }
-
-                return keyVal[0] === '!' ? expectValue[0] !== this.inputs[dependsOn]?.value : expectValue[0] === this.inputs[dependsOn]?.value
-            })))
-
-            if (!isVisible && this.inputs[inputForm.id]) {
-                // to hide again the other inputs
-                this.inputs[inputForm.id].value = ''
-            }
-
-            return isVisible
-        },
-        updateLocalStorageFormData(key: string, value: any) {
-            parsedFormData.set(key, value);
-        },
-        validateCountryField() {
-            if (this.inputs.dualFilipino.value === 'No' && this.inputs.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) && this.inputs?.surName?.value && this.inputs?.firstName?.value && this.inputs?.middleName?.value && this.inputs?.birthPlace?.value && this.inputs?.dateOfBirth?.value && this.inputs?.passportNumber?.value && this.inputs?.passportExpDate?.value && this.inputs?.issuingAuthority?.value && this.inputs?.bioPageFile?.value
-                && this.inputs.childEnterReason.value === 'visaHolder' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs.dualFilipino.value === 'No' && this.inputs.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'Yes' && this.inputs?.childAnotherPassport?.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'Yes' && this.inputs?.childAnotherPassport?.value === 'Yes'
-                && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'No' && this.inputs?.nameOfMission?.value && this.inputs?.contactName?.value && this.inputs?.contactNumber?.value
-                && this.inputs?.contactEmail.value && this.inputs?.childAnotherPassport.value && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'No' && this.inputs?.nameOfMission?.value && this.inputs?.contactName?.value && this.inputs?.contactNumber?.value
-                && this.inputs?.contactEmail.value && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'No' && this.inputs?.reasonDontHaveACRCard.value && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'No' && this.inputs?.reasonDontHaveACRCard.value && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'Yes' && this.inputs?.expirationDateACRCard.value && this.inputs?.childFrontACRCardFile.value && this.inputs?.childBackACRCardFile && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'Yes' &&
-                this.inputs?.dateOfArrival?.value && this.inputs?.dateOfAuthorizedStay?.value &&
-                this.inputs?.stampArrivalFile?.value != null && ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'Yes' && this.inputs?.expirationDateACRCard.value && this.inputs?.childFrontACRCardFile.value && this.inputs?.childBackACRCardFile && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName?.value && this.inputs?.firstName?.value && this.inputs?.middleName?.value && this.inputs?.birthPlace?.value && this.inputs?.dateOfBirth?.value && this.inputs?.passportNumber?.value && this.inputs?.passportExpDate?.value && this.inputs?.issuingAuthority?.value && this.inputs?.bioPageFile?.value
-                && this.inputs?.childEnterReason.value === 'visaHolder' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'Yes' && this.inputs?.childAnotherPassport?.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'Yes' && this.inputs?.childAnotherPassport?.value === 'Yes'
-                && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'No' && this.inputs?.nameOfMission?.value && this.inputs?.contactName?.value && this.inputs?.contactNumber?.value
-                && this.inputs?.contactEmail.value && this.inputs?.childAnotherPassport.value && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'visaFree' || this.inputs?.childEnterReason.value === 'visaGranted')) && this.inputs?.childFaVisa.value === 'No' && this.inputs?.nameOfMission?.value && this.inputs?.contactName?.value && this.inputs?.contactNumber?.value
-                && this.inputs?.contactEmail.value && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'No' && this.inputs?.reasonDontHaveACRCard.value && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'No' && this.inputs?.reasonDontHaveACRCard.value && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'Yes' && this.inputs?.expirationDateACRCard.value && this.inputs?.childFrontACRCardFile.value && this.inputs?.childBackACRCardFile && this.inputs?.childAnotherPassport.value === 'Yes' && ((this.inputs?.child2ndCountry.value && this.inputs?.child2ndCountry.value != 'Other') || (this.inputs?.child2ndCountry.value === 'Other' && this.inputs?.secondOtherCountry.value))
-                && this.inputs?.secondPassportNumber.value && this.inputs?.secondPassportExpDate.value && this.inputs?.secondBioPageFile.value && this.recaptchaToken) {
-                return true;
-            }
-            else if (this.inputs?.dualFilipino.value === 'No' && this.inputs?.isInPH.value === 'No' && this.inputs?.anticipatedArrivalDate.value &&
-                ((this.inputs?.country?.value && this.inputs?.country?.value != 'Other') || (this.inputs?.country?.value === 'Other' && this.inputs?.otherCountry?.value)) &&
-                this.inputs?.surName.value && this.inputs?.firstName.value && this.inputs?.middleName.value && this.inputs?.birthPlace.value
-                && this.inputs?.dateOfBirth.value && this.inputs?.passportNumber.value && this.inputs?.passportExpDate.value && this.inputs?.issuingAuthority.value && this.inputs?.bioPageFile.value
-                && ((this.inputs?.childEnterReason.value === 'phVisa')) && this.inputs?.typeOfPhVisa.value && (this.inputs?.phVisaExpDate.value || this.inputs?.indefinite.value === 'on') &&
-                this.inputs?.visaPageFile.value && this.inputs?.acrCardOption.value === 'Yes' && this.inputs?.expirationDateACRCard.value && this.inputs?.childFrontACRCardFile.value && this.inputs?.childBackACRCardFile && this.inputs?.childAnotherPassport.value === 'No' && this.recaptchaToken) {
-                return true;
-            }
-            else {
-                return false
-            }
-        },
-        expiredMethod() {
-            this.recaptchaToken = null;
-            this.validateAllSteps()
-        },
-        onCaptchaVerified(response) {
-            this.recaptchaToken = response
-            this.validateAllSteps()
-        },
-        validateAllSteps() {
-            const otherInputsVisibleRequired = Object.values(this.inputs).filter(input => this.isInputVisible(input) && input?.required).map((input: any) => input.id + '-Any')
-            const isValid = (this.validatedSteps.length > 0 && this.validatedSteps?.some((and: string[]) => {
-                if (and[0] === 'validateCountryField') {
-                    return this.validateCountryField()
-                }
-
-                const otherInputs = otherInputsVisibleRequired.filter(visibleInput => !and.includes(visibleInput))
-                return [...otherInputs, ...and].every(keyVal => {
-                    if (and.length === 0) return false
-
-                    const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
-                    const expectValue: string[] = keyVal.split('-')[1]?.split('||')
-
-                    if (!expectValue?.[0]) {
-                        return false
-                    }
-
-                    if (expectValue.length >= 2) {
-                        const orStatement = expectValue.some((orValue: string) => orValue === this.inputs[dependsOn]?.value)
-                        return keyVal[0] === '!' ? !orStatement : orStatement
-                    }
-
-                    // Any value, but should select first the depend input
-                    if (expectValue[0] === 'Any' && !!this.inputs[dependsOn]?.value) {
-                        return true
-                    }
-
-                    return keyVal[0] === '!' ? expectValue[0] !== this.inputs[dependsOn]?.value : expectValue[0] === this.inputs[dependsOn]?.value
-                })
-            }))
-            this.submitState = this.recaptchaToken && isValid === true
-            return isValid
-        }
+      return isVisible;
     },
-    updated() {
-        parsedFormData.updateAll(mapObjectValues(this.inputs, true))
-        if (this.inputs?.child2ndCountry) {
-            this.inputs.child2ndCountry.items = this.countries
-        }
-        if (this.inputs?.country) {
-            this.inputs.country.items = this.countries
-        }
-        if (this.inputs?.country2) {
-            this.inputs.country2.items = this.countries
-        }
-        this.validateAllSteps();
+    updateLocalStorageFormData(key: string, value: any) {
+      parsedFormData.set(key, value);
     },
-    watch: {
-        'inputs.isUsePhPassport.value'(newValue: string) {
-            if (this.inputs['arrivalStampFile']) {
-                this.inputs['arrivalStampFile'].title = "Upload Arrival Stamp " + (newValue === "Yes" || newValue === "No" ? "(if in PH)" : "")
+    validateCountryField() {
+      if (
+        this.inputs.dualFilipino.value === "No" &&
+        this.inputs.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName?.value &&
+        this.inputs?.firstName?.value &&
+        this.inputs?.middleName?.value &&
+        this.inputs?.birthPlace?.value &&
+        this.inputs?.dateOfBirth?.value &&
+        this.inputs?.passportNumber?.value &&
+        this.inputs?.passportExpDate?.value &&
+        this.inputs?.issuingAuthority?.value &&
+        this.inputs?.bioPageFile?.value &&
+        this.inputs.childEnterReason.value === "visaHolder" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs.dualFilipino.value === "No" &&
+        this.inputs.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "Yes" &&
+        this.inputs?.childAnotherPassport?.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "Yes" &&
+        this.inputs?.childAnotherPassport?.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "No" &&
+        this.inputs?.nameOfMission?.value &&
+        this.inputs?.contactName?.value &&
+        this.inputs?.contactNumber?.value &&
+        this.inputs?.contactEmail.value &&
+        this.inputs?.childAnotherPassport.value &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "No" &&
+        this.inputs?.nameOfMission?.value &&
+        this.inputs?.contactName?.value &&
+        this.inputs?.contactNumber?.value &&
+        this.inputs?.contactEmail.value &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "No" &&
+        this.inputs?.reasonDontHaveACRCard.value &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "No" &&
+        this.inputs?.reasonDontHaveACRCard.value &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "Yes" &&
+        this.inputs?.expirationDateACRCard.value &&
+        this.inputs?.childFrontACRCardFile.value &&
+        this.inputs?.childBackACRCardFile &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "Yes" &&
+        this.inputs?.dateOfArrival?.value &&
+        this.inputs?.dateOfAuthorizedStay?.value &&
+        this.inputs?.stampArrivalFile?.value != null &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "Yes" &&
+        this.inputs?.expirationDateACRCard.value &&
+        this.inputs?.childFrontACRCardFile.value &&
+        this.inputs?.childBackACRCardFile &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName?.value &&
+        this.inputs?.firstName?.value &&
+        this.inputs?.middleName?.value &&
+        this.inputs?.birthPlace?.value &&
+        this.inputs?.dateOfBirth?.value &&
+        this.inputs?.passportNumber?.value &&
+        this.inputs?.passportExpDate?.value &&
+        this.inputs?.issuingAuthority?.value &&
+        this.inputs?.bioPageFile?.value &&
+        this.inputs?.childEnterReason.value === "visaHolder" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "Yes" &&
+        this.inputs?.childAnotherPassport?.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "Yes" &&
+        this.inputs?.childAnotherPassport?.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "No" &&
+        this.inputs?.nameOfMission?.value &&
+        this.inputs?.contactName?.value &&
+        this.inputs?.contactNumber?.value &&
+        this.inputs?.contactEmail.value &&
+        this.inputs?.childAnotherPassport.value &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        (this.inputs?.childEnterReason.value === "visaFree" ||
+          this.inputs?.childEnterReason.value === "visaGranted") &&
+        this.inputs?.childFaVisa.value === "No" &&
+        this.inputs?.nameOfMission?.value &&
+        this.inputs?.contactName?.value &&
+        this.inputs?.contactNumber?.value &&
+        this.inputs?.contactEmail.value &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "No" &&
+        this.inputs?.reasonDontHaveACRCard.value &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "No" &&
+        this.inputs?.reasonDontHaveACRCard.value &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "Yes" &&
+        this.inputs?.expirationDateACRCard.value &&
+        this.inputs?.childFrontACRCardFile.value &&
+        this.inputs?.childBackACRCardFile &&
+        this.inputs?.childAnotherPassport.value === "Yes" &&
+        ((this.inputs?.child2ndCountry.value &&
+          this.inputs?.child2ndCountry.value != "Other") ||
+          (this.inputs?.child2ndCountry.value === "Other" &&
+            this.inputs?.secondOtherCountry.value)) &&
+        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondBioPageFile.value &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else if (
+        this.inputs?.dualFilipino.value === "No" &&
+        this.inputs?.isInPH.value === "No" &&
+        this.inputs?.anticipatedArrivalDate.value &&
+        ((this.inputs?.country?.value &&
+          this.inputs?.country?.value != "Other") ||
+          (this.inputs?.country?.value === "Other" &&
+            this.inputs?.otherCountry?.value)) &&
+        this.inputs?.surName.value &&
+        this.inputs?.firstName.value &&
+        this.inputs?.middleName.value &&
+        this.inputs?.birthPlace.value &&
+        this.inputs?.dateOfBirth.value &&
+        this.inputs?.passportNumber.value &&
+        this.inputs?.passportExpDate.value &&
+        this.inputs?.issuingAuthority.value &&
+        this.inputs?.bioPageFile.value &&
+        this.inputs?.childEnterReason.value === "phVisa" &&
+        this.inputs?.typeOfPhVisa.value &&
+        (this.inputs?.phVisaExpDate.value ||
+          this.inputs?.indefinite.value === "on") &&
+        this.inputs?.visaPageFile.value &&
+        this.inputs?.acrCardOption.value === "Yes" &&
+        this.inputs?.expirationDateACRCard.value &&
+        this.inputs?.childFrontACRCardFile.value &&
+        this.inputs?.childBackACRCardFile &&
+        this.inputs?.childAnotherPassport.value === "No" &&
+        this.recaptchaToken
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    expiredMethod() {
+      this.recaptchaToken = null;
+      this.validateAllSteps();
+    },
+    onCaptchaVerified(response) {
+      this.recaptchaToken = response;
+      this.validateAllSteps();
+    },
+    validateAllSteps() {
+      const otherInputsVisibleRequired = Object.values(this.inputs)
+        .filter((input) => this.isInputVisible(input) && input?.required)
+        .map((input: any) => input.id + "-Any");
+      const isValid =
+        this.validatedSteps.length > 0 &&
+        this.validatedSteps?.some((and: string[]) => {
+          if (and[0] === "validateCountryField") {
+            return this.validateCountryField();
+          }
+
+          const otherInputs = otherInputsVisibleRequired.filter(
+            (visibleInput) => !and.includes(visibleInput)
+          );
+          return [...otherInputs, ...and].every((keyVal) => {
+            if (and.length === 0) return false;
+
+            const dependsOn =
+              keyVal[0] === "!"
+                ? stringWithoutFirstChar(keyVal.split("-")[0])
+                : keyVal.split("-")[0];
+            const expectValue: string[] = keyVal.split("-")[1]?.split("||");
+
+            if (!expectValue?.[0]) {
+              return false;
             }
 
-            if (this.inputs['passportNumber'] && this.inputs['passportExpirationDate']) {
-                this.inputs['passportNumber'].title = `${newValue === 'No' ? 'Foreign National ' : ''}Passport Number`
-                this.inputs['passportExpirationDate'].title = `${newValue === 'No' ? 'Foreign National ' : ''}Passport Expiration Date`
+            if (expectValue.length >= 2) {
+              const orStatement = expectValue.some(
+                (orValue: string) => orValue === this.inputs[dependsOn]?.value
+              );
+              return keyVal[0] === "!" ? !orStatement : orStatement;
             }
-            this.inputs = removeValueExcept(this.inputs, ['dualFilipino', 'isInPH', 'isUsePhPassport', 'anticipatedDateOfArrival'])
-        },
-        'inputs.dualFilipino.value'(newValue: string) {
-            if (newValue === 'No') {
-                this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS }
+
+            // Any value, but should select first the depend input
+            if (expectValue[0] === "Any" && !!this.inputs[dependsOn]?.value) {
+              return true;
             }
-            else {
-                this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS }
-            }
-        },
+
+            return keyVal[0] === "!"
+              ? expectValue[0] !== this.inputs[dependsOn]?.value
+              : expectValue[0] === this.inputs[dependsOn]?.value;
+          });
+        });
+      this.submitState = this.recaptchaToken && isValid === true;
+      return isValid;
+    },
+  },
+  updated() {
+    parsedFormData.updateAll(mapObjectValues(this.inputs, true));
+    if (this.inputs?.child2ndCountry) {
+      this.inputs.child2ndCountry.items = this.countries;
     }
-}
+    if (this.inputs?.country) {
+      this.inputs.country.items = this.countries;
+    }
+    if (this.inputs?.country2) {
+      this.inputs.country2.items = this.countries;
+    }
+    this.validateAllSteps();
+  },
+  watch: {
+    "inputs.isUsePhPassport.value"(newValue: string) {
+      if (this.inputs["arrivalStampFile"]) {
+        this.inputs["arrivalStampFile"].title =
+          "Upload Arrival Stamp " +
+          (newValue === "Yes" || newValue === "No" ? "(if in PH)" : "");
+      }
+
+      if (
+        this.inputs["passportNumber"] &&
+        this.inputs["passportExpirationDate"]
+      ) {
+        this.inputs["passportNumber"].title = `${
+          newValue === "No" ? "Foreign National " : ""
+        }Passport Number`;
+        this.inputs["passportExpirationDate"].title = `${
+          newValue === "No" ? "Foreign National " : ""
+        }Passport Expiration Date`;
+      }
+      this.inputs = removeValueExcept(this.inputs, [
+        "dualFilipino",
+        "isInPH",
+        "isUsePhPassport",
+        "anticipatedDateOfArrival",
+      ]);
+    },
+    "inputs.dualFilipino.value"(newValue: string) {
+      if (newValue === "No") {
+        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS };
+      } else {
+        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS };
+      }
+    },
+  },
+};
 </script>

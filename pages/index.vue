@@ -29,6 +29,17 @@
           class="step-1 w-full flex flex-col items-center gap-[1rem]"
           v-if="step === 'step-1'"
         >
+          <div v-if="isLoading">
+            <loading
+              v-model:active="isLoading"
+              :is-full-page="fullPage"
+              :loader="'spinner'"
+              :color="'#1C355E'"
+              :height="180"
+              :width="180"
+              :transition="'fade'"
+            />
+          </div>
           <div class="flex flex-col w-[33.563rem] items-start">
             <InputText
               v-model="registerKey"
@@ -143,8 +154,16 @@ import RegistrationDCYesForm from "../components/form-dc-yes-flow/RegistrationDC
 import InputText from "~/components/common/InputText.vue";
 import envConfig from "~/configs/api";
 import axios from "axios";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 export default {
-  components: { Header, RegistrationForm, RegistrationDCYesForm, InputText },
+  components: {
+    Header,
+    RegistrationForm,
+    RegistrationDCYesForm,
+    InputText,
+    Loading,
+  },
   data() {
     return {
       step: "step-1",
@@ -153,6 +172,8 @@ export default {
       registerKey: "",
       error: false,
       errorText: "",
+      isLoading: false,
+      fullPage: true,
       getStartedState: false,
     };
   },
@@ -192,6 +213,8 @@ export default {
     getStarted() {
       if (this.registerKey != "") {
         this.error = false;
+        this.errorText = "";
+        this.isLoading = true;
         axios
           .post(
             `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
@@ -201,6 +224,7 @@ export default {
             console.log(res);
 
             if (res.data) {
+              this.isLoading = false;
               this.step = "step-2";
               localStorage.setItem("process", this.step);
             }
@@ -210,6 +234,7 @@ export default {
             if (err.response.data) {
               this.errorText = err.response.data.message;
             }
+            this.isLoading = false;
             console.log(err);
           });
       }

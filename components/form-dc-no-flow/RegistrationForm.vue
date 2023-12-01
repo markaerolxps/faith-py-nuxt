@@ -1,4 +1,15 @@
 <template>
+  <div v-if="isLoading">
+    <loading
+      v-model:active="isLoading"
+      :is-full-page="fullPage"
+      :loader="'spinner'"
+      :color="'#1C355E'"
+      :height="180"
+      :width="180"
+      :transition="'fade'"
+    />
+  </div>
   <form
     class="flex flex-col items-start justify-center w-full"
     name="register-form"
@@ -608,14 +619,18 @@ import InputText from "../common/InputText.vue";
 import { VueRecaptcha } from "vue-recaptcha";
 import axios from "axios";
 import envConfig from "~/configs/api";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 export default {
-  components: { Dropdown, UploadFile, InputText, VueRecaptcha },
+  components: { Dropdown, UploadFile, InputText, VueRecaptcha, Loading },
   data() {
     return {
       phPassportActionSelected: "Select",
       filipinoActionSelected: "Select",
       birthCertActionSelected: "Select",
       passportDate: "",
+      isLoading: false,
+      fullPage: true,
       jsonRequest: [],
       fileUpload: [],
       defaultItems: ["Yes", "No"],
@@ -748,9 +763,9 @@ export default {
         )
         .then((res) => {
           console.log(res);
-     
-          if(res.data){
-            this.countries = res.data.data
+
+          if (res.data) {
+            this.countries = res.data.data;
           }
         })
         .catch((err) => {});
@@ -762,9 +777,9 @@ export default {
         )
         .then((res) => {
           console.log(res);
-     
-          if(res.data){
-            this.nationalities = res.data.data
+
+          if (res.data) {
+            this.nationalities = res.data.data;
           }
         })
         .catch((err) => {});
@@ -1565,7 +1580,11 @@ export default {
           recaptcha: this.recaptchaToken,
         });
       }
-      console.log(formRequest[0]);
+      this.isLoading = true;
+      setTimeout(() => {
+        console.log(formRequest[0]);
+        this.isLoading = false;
+      }, 2000);
       if (this.fileUpload.length > 0) {
         console.log(this.fileUpload);
       }

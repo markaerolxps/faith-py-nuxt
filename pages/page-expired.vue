@@ -26,7 +26,7 @@
                         <p class="text-sm font-normal text-center "><span class="font-semibold">Mailing Address:</span> MCPO Box 20160706 Makati City
                             Philippines</p>
                         <p class="text-sm font-normal text-center ">
-                            <span class="font-semibold">Physical Address:</span> Penny Lane StreetValley Golf Subd., San JuanCainta, Rizal 1900</p>
+                            <span class="font-semibold">Physical Address:</span> Penny Lane StreetValley Golf Subd., San Juan, Cainta, Rizal 1900</p>
                         <p class="text-sm font-normal text-center ">
                             <span class="font-semibold">Phone & Fax:</span> Trunk/Landline: +63 2-8651-7100, Fax: +63 2-8857-2001
                           </p>
