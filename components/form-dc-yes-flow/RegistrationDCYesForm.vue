@@ -218,7 +218,6 @@ import {
 
 import { REGISTRATION_DF_NO_INPUTS } from "./data-flow-3";
 import { VueRecaptcha } from "vue-recaptcha";
-import { getCountries } from "~/assets/api";
 import axios from "axios";
 import envConfig from "~/configs/api";
 import Loading from "vue-loading-overlay";
@@ -307,28 +306,29 @@ export default {
           }
         })
         .catch((err) => {});
-    },
-    getStarted() {
-      localStorageBrowser.removeItem("form-data");
-      this.$emit("backToOptions");
-    },
-    sendForm(e: any) {
-      const formData: any = mapObjectValues(this.inputs, false);
-      formData.recaptcha = this.recaptchaToken;
-      console.log("formData", formData);
-    },
-    submitValidateForm() {
-      w;
-    },
-    isNoteVisible(noteDependsOn: string[]) {
-      return noteDependsOn.every((keyVal) => {
-        if (noteDependsOn.length === 0) return false;
+        },
+        getStarted() {
+            localStorageBrowser.removeItem('form-data')
+            this.$emit('backToOptions');
+        },
+        sendForm(e: any) {
+            let formData: any = mapObjectValues(this.inputs, false)
+            formData.recaptcha = this.recaptchaToken;
+            
+            const isFlow2 = this.inputs?.dualFilipino?.value === 'Yes' && !!this.inputs?.isInPH?.value 
+            formData.flow = isFlow2 && 'flow-2'
 
-        const dependsOn =
-          keyVal[0] === "!"
-            ? stringWithoutFirstChar(keyVal.split("-")[0])
-            : keyVal.split("-")[0];
-        const expectValue: string[] = keyVal.split("-")[1]?.split("||");
+            console.log('formData', formData)
+        },
+        submitValidateForm() {
+            
+        },
+        isNoteVisible(noteDependsOn: string[]) {
+            return noteDependsOn.every(keyVal => {
+                if (noteDependsOn.length === 0) return false
+
+                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
+                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
 
         if (expectValue.length >= 2) {
           const orStatement = expectValue.some(
@@ -342,24 +342,15 @@ export default {
           return true;
         }
 
-        return keyVal[0] === "!"
-          ? expectValue[0] !== this.inputs[dependsOn]?.value
-          : expectValue[0] === this.inputs[dependsOn]?.value;
-      });
-    },
-    isInputVisible(inputForm: IDualCitizenYesInputs) {
-      const isVisible =
-        !inputForm.dependsOnExpectValue?.length ||
-        (inputForm.dependsOnExpectValue.length > 0 &&
-          inputForm.dependsOnExpectValue?.some((and: string[]) =>
-            and.every((keyVal) => {
-              if (and.length === 0) return false;
+                return keyVal[0] === '!' ? expectValue[0] !== this.inputs[dependsOn]?.value : expectValue[0] === this.inputs[dependsOn]?.value
+            })
+        },
+        isInputVisible(inputForm: IDualCitizenYesInputs) {
+            const isVisible: any = !inputForm.dependsOnExpectValue?.length || (inputForm.dependsOnExpectValue.length > 0 && inputForm.dependsOnExpectValue?.some((and: string[]) => and.every(keyVal => {
+                if (and.length === 0) return false
 
-              const dependsOn =
-                keyVal[0] === "!"
-                  ? stringWithoutFirstChar(keyVal.split("-")[0])
-                  : keyVal.split("-")[0];
-              const expectValue: string[] = keyVal.split("-")[1]?.split("||");
+                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
+                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
 
               if (expectValue.length >= 2) {
                 const orStatement = expectValue.some(

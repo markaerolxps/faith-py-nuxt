@@ -1,4 +1,7 @@
-export const getCountries = async () => {
+import axios from "axios";
+import envConfig from "~/configs/api";
+
+export const getCountriesStatic = async () => {
   // const data =
   //   (await callApi("https://restcountries.com/v3.1/all?fields=name")) || [];
   // return data.map((country: any) => country.name.common);
@@ -246,10 +249,61 @@ export const getCountries = async () => {
   return data;
 };
 
+export const getCountries = async () => {
+  const res = await axios.get(
+    `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.country_list`
+  );
+
+  return res.data;
+};
+
+export const getNationalityList = async () => {
+  const res = await axios.get(
+    `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.nationality_list`
+  );
+
+  return res.data;
+};
+
+export const getStartedApi = async (registerKey: string) => {
+  try {
+    const res = await axios.post(
+      `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
+      { unique_key: registerKey }
+    );
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const uploadFile = (key: string, file: File): Promise<any> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const formData = new FormData();
+      formData.append(key, file);
+
+      const res = await axios.post(
+        `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.upload_file`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      resolve(res.data?.message?.[key]);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      reject(error);
+    }
+  });
+};
+
 const callApi = async (url: string, init?: RequestInit | undefined) => {
   try {
-    const res = await fetch(url, init);
-    return res.json();
   } catch (error) {
     return null;
   }
