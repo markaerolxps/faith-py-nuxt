@@ -1,11 +1,23 @@
 <template>
   <div class="flex flex-col justify-center w-full">
     <Header />
+
     <div class="flex flex-col w-full h-full justify-center items-center py-20">
       <div
         class="main flex flex-col items-center gap-[3.5rem] w-[40rem]"
-        v-if="step !== 'step-2'"
+        v-if="step === 'step-1'"
       >
+        <div v-if="isLoading">
+          <loading
+            v-model:active="isLoading"
+            :is-full-page="fullPage"
+            :loader="'spinner'"
+            :color="'#1C355E'"
+            :height="180"
+            :width="180"
+            :transition="'fade'"
+          />
+        </div>
         <div class="flex flex-col items-center gap-[2rem]">
           <h1
             class="text-[#1C355E] text-center text-[3rem] font-bold leading-[3.5rem]"
@@ -25,26 +37,12 @@
           >
         </div>
         <!-- first Step -->
-        <div
-          class="step-1 w-full flex flex-col items-center gap-[1rem]"
-          v-if="step === 'step-1'"
-        >
-          <div v-if="isLoading">
-            <loading
-              v-model:active="isLoading"
-              :is-full-page="fullPage"
-              :loader="'spinner'"
-              :color="'#1C355E'"
-              :height="180"
-              :width="180"
-              :transition="'fade'"
-            />
-          </div>
+        <div class="step-1 w-full flex flex-col items-center gap-[1rem]">
           <div class="flex flex-col w-[33.563rem] items-start">
             <InputText
               v-model="registerKey"
-              :title="'Register Key'"
-              :placeholder="'Register Key'"
+              :title="'Registration Key'"
+              :placeholder="'Registration Key'"
               @input="inputChange"
               :type="'text'"
               :name="'registerKey'"
@@ -98,22 +96,10 @@
             </span>
           </div>
         </div>
-        <div
-          class="dual-citizen-no w-[33.563rem] flex flex-col items-start gap-[1rem]"
-          v-if="step === 'dual-citizen-no'"
-        >
-          <RegistrationForm @back-to-options="getStarted" />
-        </div>
-        <div
-          class="dual-citizen-yes w-[33.563rem] flex flex-col items-start gap-[1rem]"
-          v-else-if="step === 'dual-citizen-yes'"
-        >
-          <RegistrationDCYesForm @back-to-options="getStarted" />
-        </div>
       </div>
       <div
         class="step-2 flex flex-col items-center gap-[3.5rem] w-[40rem]"
-        v-if="step === 'step-2'"
+        v-if="step === 'step-2' && storedKey != ''"
       >
         <div class="flex flex-col items-center gap-[2rem] w-[33.563rem]">
           <h1
@@ -142,6 +128,54 @@
           </div>
         </div>
       </div>
+      <div
+        class="dual-citizen-no w-[33.563rem] flex flex-col items-start gap-[1rem]"
+        v-if="step === 'dual-citizen-no' && storedKey != ''"
+      >
+        <div class="flex flex-col items-center gap-[2rem]">
+          <h1
+            class="text-[#1C355E] text-center text-[3rem] font-bold leading-[3.5rem]"
+          >
+            Students Bureau of Immigration Compliance
+          </h1>
+
+          <span
+            style="font-family: 'Roboto', sans-serif"
+            class="text-black text-center text-sm font-normal px-16"
+            >Foreign National Students (FNS) including Dual Filipino Citizens
+            (DFC) must comply with the Bureau of Immigration’s requirements to
+            be permitted to attend class at Faith Academy, Inc. Filipino (having
+            only one citizenship) students need only to submit a scanned copy of
+            their Philippine Statistics Authority (PSA) Certificate of Live
+            Birth.</span
+          >
+        </div>
+        <RegistrationForm @back-to-options="backToOptions" />
+      </div>
+      <div
+        class="dual-citizen-yes w-[33.563rem] flex flex-col items-start gap-[1rem]"
+        v-else-if="step === 'dual-citizen-yes' && storedKey != ''"
+      >
+        <div class="flex flex-col items-center gap-[2rem]">
+          <h1
+            class="text-[#1C355E] text-center text-[3rem] font-bold leading-[3.5rem]"
+          >
+            Students Bureau of Immigration Compliance
+          </h1>
+
+          <span
+            style="font-family: 'Roboto', sans-serif"
+            class="text-black text-center text-sm font-normal px-16"
+            >Foreign National Students (FNS) including Dual Filipino Citizens
+            (DFC) must comply with the Bureau of Immigration’s requirements to
+            be permitted to attend class at Faith Academy, Inc. Filipino (having
+            only one citizenship) students need only to submit a scanned copy of
+            their Philippine Statistics Authority (PSA) Certificate of Live
+            Birth.</span
+          >
+        </div>
+        <RegistrationDCYesForm @back-to-options="backToOptions" />
+      </div>
     </div>
   </div>
 </template>
@@ -156,6 +190,7 @@ import envConfig from "~/configs/api";
 import axios from "axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
+import { validateRegisterKey } from "~/components/service/validateRegisterKeyService";
 export default {
   components: {
     Header,
@@ -166,8 +201,9 @@ export default {
   },
   data() {
     return {
-      step: "step-1",
+      step: "",
       process: process.browser ? localStorage.getItem("process") : "",
+      storedKey: process.browser ? localStorage.getItem("registerKey") : "",
       accept: false,
       registerKey: "",
       error: false,
@@ -178,7 +214,12 @@ export default {
     };
   },
   mounted() {
-    this.getFormValues();
+    if (this.process) {
+      this.step = this.process;
+    }
+    if (this.step !== "step-1") {
+      validateRegisterKey(this.storedKey, this.validateKeyCallback);
+    }
     console.log(this.process);
   },
   updated() {
@@ -187,29 +228,30 @@ export default {
     } else {
       this.getStartedState = false;
     }
+    if (localStorage.getItem("registerKey")) {
+      this.storedKey = localStorage.getItem("registerKey");
+    }
   },
   methods: {
-    inputChange(e) {
-      localStorage.setItem(
-        "form-data",
-        JSON.stringify([{ registerKey: e.target.value }])
-      );
+    inputChange(e: any): void {
+      localStorage.setItem("registerKey", e.target.value);
     },
     redirect(url: string) {
       return redirect(url);
     },
-    getFormValues() {
-      if (process.browser) {
-        localStorage.setItem(
-          "register-path",
-          this.$router.currentRoute.value.path
-        );
-      }
-      if (this.process) {
-        this.step = this.process;
+    backToOptions(): void {
+      this.step = "step-2";
+      localStorage.setItem("process", this.step);
+    },
+    validateKeyCallback(result: string): void {
+      if (result === "success") {
+        this.storedKey = localStorage.getItem("registerKey");
+      } else {
+        localStorage.setItem("process", "step-1");
+        localStorage.removeItem("registerKey");
+        this.step = "step-1";
       }
     },
-
     getStarted() {
       if (this.registerKey != "") {
         this.error = false;

@@ -621,6 +621,7 @@ import axios from "axios";
 import envConfig from "~/configs/api";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
+import { uploadFileService } from "../service/uploadService";
 export default {
   components: { Dropdown, UploadFile, InputText, VueRecaptcha, Loading },
   data() {
@@ -897,6 +898,7 @@ export default {
         this.formData.map((value) => {
           value[e.target.name] = e.target.value;
         });
+        console.log(e);
         localStorage.setItem("form-data", JSON.stringify(this.formData));
       }
     },
@@ -1275,40 +1277,68 @@ export default {
         this.submitState = false;
       }
     },
-
+    uploadFileCallback(result, data) {
+      if (result === "success") {
+        if (data.message.birthCertFile) {
+          this.birthCertFile = data.message.birthCertFile;
+        }
+        if (data.message.passportFile) {
+          this.passportFile = data.message.passportFile;
+        }
+        if (data.message.passportBioFile) {
+          this.passportBioFile = data.message.passportBioFile;
+        }
+        if (data.message.arrivalStampFile) {
+          this.arrivalStampFile = data.message.arrivalStampFile;
+        }
+        if (data.message.childVisaPageFile) {
+          this.childVisaPageFile = data.message.childVisaPageFile;
+        }
+        if (data.message.acrCardFileFront) {
+          this.acrCardFileFront = data.message.acrCardFileFront;
+        }
+        if (data.message.acrCardFileBack) {
+          this.acrCardFileBack = data.message.acrCardFileBack;
+        }
+        this.isLoading = false;
+      } else {
+        console.log("upload Failed", data);
+        this.isLoading = false;
+      }
+    },
     birthCertUploadData(data) {
-      this.birthCertFile = data;
-      this.fileUpload.push({ birthCertFile: data });
+      this.isLoading = true;
+      uploadFileService("birthCertFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadPassport(data) {
-      this.passportFile = data;
-      this.fileUpload.push({ passportFile: data });
+      this.isLoading = true;
+      uploadFileService("passportFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadPassportBio(data) {
-      this.passportBioFile = data;
-      this.fileUpload.push({ passportBioFile: data });
+      this.isLoading = true;
+      uploadFileService("passportBioFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadArrivalStamp(data) {
-      this.arrivalStampFile = data;
-      this.fileUpload.push({ arrivalStampFile: data });
+      this.isLoading = true;
+      uploadFileService("arrivalStampFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadChildsVisaPage(data) {
-      this.childsVisaPageFile = data;
-      this.fileUpload.push({ childsVisaPageFile: data });
+      this.isLoading = true;
+      uploadFileService("childsVisaPageFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadAcrCardFront(data) {
-      this.acrCardFileFront = data;
-      this.fileUpload.push({ acrCardFileFront: data });
+      this.isLoading = true;
+      uploadFileService("acrCardFileFront", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadAcrCardBack(data) {
-      this.acrCardFileBack = data;
-      this.fileUpload.push({ acrCardFileBack: data });
+      this.isLoading = true;
+      uploadFileService("acrCardFileBack", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     onCaptchaVerified(response) {
@@ -1327,7 +1357,7 @@ export default {
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1336,8 +1366,9 @@ export default {
           phPassportAction: this.phPassportActionSelected,
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
+          birthCerFile: this.birthCertFile,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1348,8 +1379,9 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1359,6 +1391,8 @@ export default {
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
           countrySelected: this.countrySelected,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1375,7 +1409,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1385,6 +1419,8 @@ export default {
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
           countrySelected: this.countrySelected,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1401,7 +1437,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1410,6 +1446,8 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1430,8 +1468,9 @@ export default {
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
+          childsVisaPageFile: this.childsVisaPageFile,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1440,6 +1479,8 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1461,7 +1502,10 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          childsVisaPageFile: this.childsVisaPageFile,
+          acrCardFileFront: this.acrCardFileFront,
+          acrCardFileBack: this.acrCardFileBack,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1470,6 +1514,8 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1486,7 +1532,10 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          childsVisaPageFile: this.childsVisaPageFile,
+          acrCardFileFront: this.acrCardFileFront,
+          acrCardFileBack: this.acrCardFileBack,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1495,6 +1544,8 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1512,8 +1563,9 @@ export default {
           childVisaSelected: this.childVisaSelected,
           dateOfArrival: this.dateOfArrival,
           dateOfAuthorizedStay: this.dateOfAuthorizedStay,
+          arrivalStampFile: this.arrivalStampFile,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1522,6 +1574,10 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
+          arrivalStampFile: this.arrivalStampFile,
+          childsVisaPageFile: this.childsVisaPageFile,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1544,7 +1600,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("form-data")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1553,6 +1609,12 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
+          passportFile: this.passportFile,
+          passportBioFile: this.passportBioFile,
+          arrivalStampFile: this.arrivalStampFile,
+          childsVisaPageFile: this.childsVisaPageFile,
+          acrCardFileFront: this.acrCardFileFront,
+          acrCardFileBack: this.acrCardFileBack,
           countrySelected: this.countrySelected,
           otherCountry:
             this.countrySelected === "Other" ? this.otherCountry : null,
@@ -1576,7 +1638,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
-          registerKey: this.formData[0].registerKey,
+          registerKey: JSON.parse(localStorage.getItem("registerKey")),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1585,9 +1647,6 @@ export default {
         console.log(formRequest[0]);
         this.isLoading = false;
       }, 2000);
-      if (this.fileUpload.length > 0) {
-        console.log(this.fileUpload);
-      }
     },
   },
   unmounted() {
