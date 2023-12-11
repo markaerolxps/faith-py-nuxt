@@ -50,6 +50,7 @@
         :title="'Upload Birth Certificate'"
         @uploadFile="birthCertUploadData"
         :refName="'uploadBirthCert'"
+        @clear-file="clearFile"
       />
     </div>
     <div
@@ -622,6 +623,7 @@ import envConfig from "~/configs/api";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { uploadFileService } from "../service/uploadService";
+import { validateRegisterKey } from "../service/validateRegisterKeyService";
 export default {
   components: { Dropdown, UploadFile, InputText, VueRecaptcha, Loading },
   data() {
@@ -731,11 +733,15 @@ export default {
       formData: JSON.parse(localStorage.getItem("form-data")) || [],
     };
   },
-  emits: ["backToOptions"],
+  emits: ["backToOptions", "failedKey"],
   mounted() {
     this.getFormValues();
     this.getCountryList();
     this.getNationalityList();
+    validateRegisterKey(
+      localStorage.getItem("registerKey"),
+      this.validateKeyCallback
+    );
     document.body.addEventListener("click", this.closeDropDown);
   },
   updated() {
@@ -757,10 +763,16 @@ export default {
     }
   },
   methods: {
+    clearFile(file) {},
+    validateKeyCallback(result) {
+      if (result === "fail") {
+        this.$emit("failedKey");
+      }
+    },
     getCountryList() {
       axios
         .get(
-          `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.country_list`
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.country_list`
         )
         .then((res) => {
           console.log(res);
@@ -774,7 +786,7 @@ export default {
     getNationalityList() {
       axios
         .get(
-          `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.nationality_list`
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.nationality_list`
         )
         .then((res) => {
           console.log(res);

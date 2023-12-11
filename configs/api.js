@@ -1,5 +1,9 @@
 const config = {
-  dev: "https://faithacademy-xurpas-sandbox.frappe.cloud/api",
+  dev: `${
+    typeof window !== "undefined"
+      ? "https://faithacademy-xurpas-sandbox.frappe.cloud"
+      : "https://faithacademy-xurpas-sandbox.frappe.cloud"
+  }`,
   prod: "",
 };
 

@@ -12,6 +12,7 @@ export const parsedFormData = {
   set: (key: string, value: any) => {
     try {
       const formData = parsedFormData.getAll();
+      console.log("cache", key, value);
       formData[key] = value;
       localStorage.setItem("form-data", JSON.stringify(formData));
     } catch (error) {

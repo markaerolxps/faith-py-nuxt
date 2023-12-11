@@ -59,7 +59,7 @@
           <Dropdown
             :required="inputForm?.required"
             :title="inputForm.title"
-            :items="inputForm.items"
+            :items="inputForm.id === 'country' ? countries : inputForm.items"
             :hasOption="inputForm.hasOption"
             v-model="inputForm.value"
             :value="inputForm.value"
@@ -84,7 +84,7 @@
           <UploadFile
             :title="inputForm.title"
             @uploadFile="(file: any) => {
-                        inputs[inputForm.id].value = file
+                        uploadFnc(inputs[inputForm.id].id,file)
                     }"
             :refName="inputForm.id"
             :required="inputForm?.required"
@@ -214,6 +214,7 @@ import {
   REGISTRATION_DF_YES_INPUTS,
   defaultItems,
   type IDualCitizenYesInputs,
+  countries,
 } from "./data";
 
 import { REGISTRATION_DF_NO_INPUTS } from "./data-flow-3";
@@ -222,6 +223,8 @@ import axios from "axios";
 import envConfig from "~/configs/api";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
+import { validateRegisterKey } from "../service/validateRegisterKeyService";
+import { uploadFileService } from "../service/uploadService";
 export const defaultObjData = {
   dualFilipino: {
     id: "dualFilipino",
@@ -308,13 +311,43 @@ export default {
   }),
   async mounted() {
     this.getCountries();
+    if (parsedFormData.get("dualFilipino") === "No") {
+      this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS };
+    } else {
+      this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS };
+    }
+    validateRegisterKey(
+      localStorage.getItem("registerKey"),
+      this.validateKeyCallback
+    );
   },
-  emits: ["backToOptions"],
+  emits: ["backToOptions", "failedKey"],
   methods: {
+    uploadFileCallback(result: string, data: any) {
+      if (result === "success") {
+        console.log(data.message);
+        const key = Object.keys(data.message)[0];
+        const value = data.message[key];
+        this.inputs[key].value = value;
+        this.isLoading = false;
+      } else {
+        console.log("upload Failed", data);
+        this.isLoading = false;
+      }
+    },
+    uploadFnc(fileName: string, file: any): void {
+      this.isLoading = true;
+      uploadFileService(fileName, file, this.uploadFileCallback);
+    },
+    validateKeyCallback(result: string): void {
+      if (result === "fail") {
+        this.$emit("failedKey");
+      }
+    },
     getCountries() {
       axios
         .get(
-          `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.country_list`
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.country_list`
         )
         .then((res) => {
           console.log(res);
@@ -324,29 +357,32 @@ export default {
           }
         })
         .catch((err) => {});
-        },
-        getStarted() {
-            localStorageBrowser.removeItem('form-data')
-            this.$emit('backToOptions');
-        },
-        sendForm(e: any) {
-            let formData: any = mapObjectValues(this.inputs, false)
-            formData.recaptcha = this.recaptchaToken;
-            
-            const isFlow2 = this.inputs?.dualFilipino?.value === 'Yes' && !!this.inputs?.isInPH?.value 
-            formData.flow = isFlow2 && 'flow-2'
+    },
+    getStarted() {
+      localStorageBrowser.removeItem("form-data");
+      this.$emit("backToOptions");
+    },
+    sendForm(e: any) {
+      let formData: any = mapObjectValues(this.inputs, true);
+      formData.recaptcha = this.recaptchaToken;
 
-            console.log('formData', formData)
-        },
-        submitValidateForm() {
-            
-        },
-        isNoteVisible(noteDependsOn: string[]) {
-            return noteDependsOn.every(keyVal => {
-                if (noteDependsOn.length === 0) return false
+      const isFlow2 =
+        this.inputs?.dualFilipino?.value === "Yes" &&
+        !!this.inputs?.isInPH?.value;
+      formData.flow = isFlow2 && "flow-2";
 
-                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
-                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
+      console.log("formData", formData);
+    },
+    submitValidateForm() {},
+    isNoteVisible(noteDependsOn: string[]) {
+      return noteDependsOn.every((keyVal) => {
+        if (noteDependsOn.length === 0) return false;
+
+        const dependsOn =
+          keyVal[0] === "!"
+            ? stringWithoutFirstChar(keyVal.split("-")[0])
+            : keyVal.split("-")[0];
+        const expectValue: string[] = keyVal.split("-")[1]?.split("||");
 
         if (expectValue.length >= 2) {
           const orStatement = expectValue.some(
@@ -360,15 +396,24 @@ export default {
           return true;
         }
 
-                return keyVal[0] === '!' ? expectValue[0] !== this.inputs[dependsOn]?.value : expectValue[0] === this.inputs[dependsOn]?.value
-            })
-        },
-        isInputVisible(inputForm: IDualCitizenYesInputs) {
-            const isVisible: any = !inputForm.dependsOnExpectValue?.length || (inputForm.dependsOnExpectValue.length > 0 && inputForm.dependsOnExpectValue?.some((and: string[]) => and.every(keyVal => {
-                if (and.length === 0) return false
+        return keyVal[0] === "!"
+          ? expectValue[0] !== this.inputs[dependsOn]?.value
+          : expectValue[0] === this.inputs[dependsOn]?.value;
+      });
+    },
+    isInputVisible(inputForm: IDualCitizenYesInputs) {
+      const isVisible: any =
+        !inputForm.dependsOnExpectValue?.length ||
+        (inputForm.dependsOnExpectValue.length > 0 &&
+          inputForm.dependsOnExpectValue?.some((and: string[]) =>
+            and.every((keyVal) => {
+              if (and.length === 0) return false;
 
-                const dependsOn = keyVal[0] === '!' ? stringWithoutFirstChar(keyVal.split('-')[0]) : keyVal.split('-')[0]
-                const expectValue: string[] = keyVal.split('-')[1]?.split('||')
+              const dependsOn =
+                keyVal[0] === "!"
+                  ? stringWithoutFirstChar(keyVal.split("-")[0])
+                  : keyVal.split("-")[0];
+              const expectValue: string[] = keyVal.split("-")[1]?.split("||");
 
               if (expectValue.length >= 2) {
                 const orStatement = expectValue.some(
@@ -400,6 +445,7 @@ export default {
       return isVisible;
     },
     updateLocalStorageFormData(key: string, value: any) {
+      console.log("key", key, value);
       parsedFormData.set(key, value);
     },
     validateCountryField() {
@@ -1053,12 +1099,6 @@ export default {
           newValue === "No" ? "Foreign National " : ""
         }Passport Expiration Date`;
       }
-      this.inputs = removeValueExcept(this.inputs, [
-        "dualFilipino",
-        "isInPH",
-        "isUsePhPassport",
-        "anticipatedDateOfArrival",
-      ]);
     },
     "inputs.dualFilipino.value"(newValue: string) {
       if (newValue === "No") {

@@ -150,7 +150,10 @@
             Birth.</span
           >
         </div>
-        <RegistrationForm @back-to-options="backToOptions" />
+        <RegistrationForm
+          @back-to-options="backToOptions"
+          @failedKey="failedRegisterKey"
+        />
       </div>
       <div
         class="dual-citizen-yes w-[33.563rem] flex flex-col items-start gap-[1rem]"
@@ -174,7 +177,10 @@
             Birth.</span
           >
         </div>
-        <RegistrationDCYesForm @back-to-options="backToOptions" />
+        <RegistrationDCYesForm
+          @back-to-options="backToOptions"
+          @failedKey="failedRegisterKey"
+        />
       </div>
     </div>
   </div>
@@ -217,6 +223,7 @@ export default {
     if (this.process) {
       this.step = this.process;
     }
+
     if (this.step !== "step-1") {
       validateRegisterKey(this.storedKey, this.validateKeyCallback);
     }
@@ -242,24 +249,29 @@ export default {
     backToOptions(): void {
       this.step = "step-2";
       localStorage.setItem("process", this.step);
+      localStorage.removeItem("form-data");
+      validateRegisterKey(this.storedKey, this.validateKeyCallback);
     },
     validateKeyCallback(result: string): void {
       if (result === "success") {
         this.storedKey = localStorage.getItem("registerKey");
       } else {
-        localStorage.setItem("process", "step-1");
-        localStorage.removeItem("registerKey");
-        this.step = "step-1";
+        this.failedRegisterKey();
       }
     },
+    failedRegisterKey() {
+      localStorage.setItem("process", "step-1");
+      localStorage.removeItem("registerKey");
+      this.step = "step-1";
+    },
     getStarted() {
-      if (this.registerKey != "") {
+      if (this.registerKey != "" && this.getStartedState) {
         this.error = false;
         this.errorText = "";
         this.isLoading = true;
         axios
           .post(
-            `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
+            `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
             { unique_key: this.registerKey }
           )
           .then((res) => {

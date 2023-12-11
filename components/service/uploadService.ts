@@ -9,7 +9,7 @@ export const uploadFileService: any = (
   formData.append(filename, file);
   axios
     .post(
-      `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.upload_file`,
+      `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.upload_file`,
       formData,
       {
         headers: {

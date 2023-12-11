@@ -5,13 +5,7 @@ export const mapObjectValues = (inputObject: any, ignoreFile: boolean) => {
 
   for (const key in inputObject) {
     if (inputObject.hasOwnProperty(key) && !!inputObject[key].value) {
-      if (inputObject[key].inputType === "input-file") {
-        if (!ignoreFile) {
-          result[key] = inputObject[key].value;
-        }
-      } else {
-        result[key] = inputObject[key].value;
-      }
+      result[key] = inputObject[key].value;
     }
   }
 

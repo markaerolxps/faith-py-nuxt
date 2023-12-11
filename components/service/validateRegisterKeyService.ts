@@ -6,7 +6,7 @@ export const validateRegisterKey: any = (
 ) => {
   axios
     .post(
-      `${envConfig.baseUrl}/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
+      `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.validate_unique_key`,
       { unique_key: registerKey }
     )
     .then((res) => {
