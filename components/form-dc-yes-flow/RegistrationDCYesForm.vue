@@ -244,7 +244,25 @@ export const defaultObjData = {
 export default {
   components: { Dropdown, InputText, UploadFile, VueRecaptcha, Loading },
   data: () => ({
-    inputs: defaultObjData,
+    inputs: {
+      dualFilipino: {
+        id: "dualFilipino",
+        value: parsedFormData.get("dualFilipino"),
+        title: "Dual Filipino?",
+        items: defaultItems,
+        inputType: "select",
+        required: true,
+      } as IDualCitizenYesInputs,
+      isInPH: {
+        id: "isInPH",
+        value: parsedFormData.get("isInPH"),
+        title: "Is your child currently in the Philippines?",
+        dependsOnExpectValue: [["dualFilipino-Any"]], // Key-Value
+        items: defaultItems,
+        inputType: "select",
+        required: true,
+      } as IDualCitizenYesInputs,
+    },
     submitState: false,
     countries: [] as string[],
     recaptchaToken: false,
