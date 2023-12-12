@@ -86,6 +86,7 @@
             @uploadFile="(file: any) => {
                         uploadFnc(inputs[inputForm.id].id,file)
                     }"
+            @clear-file="clearFile(inputs[inputForm.id].id)"
             :refName="inputForm.id"
             :required="inputForm?.required"
           />
@@ -325,6 +326,10 @@ export default {
   },
   emits: ["backToOptions", "failedKey"],
   methods: {
+    clearFile(fileName: string) {
+      this.inputs[fileName].value = null;
+      this.validateAllSteps();
+    },
     uploadFileCallback(result: string, data: any) {
       if (result === "success") {
         console.log(data.message);
