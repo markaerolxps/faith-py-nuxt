@@ -1,7 +1,7 @@
 const config = {
   dev: `${
     typeof window !== "undefined"
-      ? "https://faithacademy-xurpas-sandbox.frappe.cloud"
+      ? window.origin
       : "https://faithacademy-xurpas-sandbox.frappe.cloud"
   }`,
   prod: "",

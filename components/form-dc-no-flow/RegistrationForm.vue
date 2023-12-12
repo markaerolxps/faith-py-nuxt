@@ -50,7 +50,7 @@
         :title="'Upload Birth Certificate'"
         @uploadFile="birthCertUploadData"
         :refName="'uploadBirthCert'"
-        @clear-file="clearFile"
+        @clear-file="clearFile('birthCertFile')"
       />
     </div>
     <div
@@ -110,6 +110,7 @@
           :title="'Upload Philippine Passport'"
           @uploadFile="uploadPassport"
           :refName="'uploadPassport'"
+          @clear-file="clearFile('passportFile')"
         />
       </div>
     </div>
@@ -285,6 +286,7 @@
           :title="'Upload Passport Bio Page'"
           @uploadFile="uploadPassportBio"
           :refName="'uploadPassportBio'"
+          @clear-file="clearFile('passportBioFile')"
         />
       </div>
 
@@ -341,6 +343,7 @@
               :title="'Upload Arrival Stamp'"
               @uploadFile="uploadArrivalStamp"
               :refName="'uploadArrivalStamp'"
+              @clear-file="clearFile('arrivalStampFile')"
             />
           </div>
         </div>
@@ -507,6 +510,7 @@
             :title="`Upload your child's visa page`"
             @uploadFile="uploadChildsVisaPage"
             :refName="'uploadChildsVisaPage'"
+            @clear-file="clearFile('childsVisaPageFile')"
           />
         </div>
 
@@ -545,6 +549,7 @@
               :title="`Upload your child's valid card, front ACR I-card or Philippine Retirement Authority (PRA) Card`"
               @uploadFile="uploadAcrCardFront"
               :refName="'uploadAcrCardFront'"
+              @clear-file="clearFile('acrCardFileFront')"
             />
           </div>
 
@@ -555,6 +560,7 @@
               :title="`Upload your child's valid card, back ACR I-card or Philippine Retirement Authority (PRA) Card`"
               @uploadFile="uploadAcrCardBack"
               :refName="'uploadAcrCardBack'"
+              @clear-file="clearFile('acrCardFileBack')"
             />
           </div>
         </div>
@@ -763,7 +769,30 @@ export default {
     }
   },
   methods: {
-    clearFile(file) {},
+    clearFile(fileName) {
+      if (fileName === "birthCertFile") {
+        this.birthCertFile = null;
+      }
+      if (fileName === "passportFile") {
+        this.passportFile = null;
+      }
+      if (fileName === "passportBioFile") {
+        this.passportBioFile = null;
+      }
+      if (fileName === "arrivalStampFile") {
+        this.arrivalStampFile = null;
+      }
+      if (fileName === "childVisaPageFile") {
+        this.childVisaPageFile = null;
+      }
+      if (fileName === "acrCardFileFront") {
+        this.acrCardFileFront = null;
+      }
+      if (fileName === "acrCardFileBack") {
+        this.acrCardFileBack = null;
+      }
+      this.submitStateValidate();
+    },
     validateKeyCallback(result) {
       if (result === "fail") {
         this.$emit("failedKey");

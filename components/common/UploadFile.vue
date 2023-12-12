@@ -115,7 +115,7 @@ export default {
     },
     clearFile() {
       this.fileData = null;
-      this.$emit("clearFile", this.refName);
+      this.$emit("clearFile");
     },
   },
 };

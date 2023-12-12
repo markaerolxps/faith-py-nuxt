@@ -311,10 +311,12 @@ export default {
   }),
   async mounted() {
     this.getCountries();
-    if (parsedFormData.get("dualFilipino") === "No") {
-      this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS };
-    } else {
-      this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS };
+    if (parsedFormData.get("dualFilipino")) {
+      if (parsedFormData.get("dualFilipino") === "No") {
+        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS };
+      } else {
+        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS };
+      }
     }
     validateRegisterKey(
       localStorage.getItem("registerKey"),
