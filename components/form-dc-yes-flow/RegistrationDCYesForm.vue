@@ -251,7 +251,7 @@ export default {
     inputs: {
       dualFilipino: {
         id: "dualFilipino",
-        value: parsedFormData.get("dualFilipino"),
+        value: parsedFormData.get("dualFilipino") || "",
         title: "Dual Filipino?",
         items: defaultItems,
         inputType: "select",
@@ -259,7 +259,7 @@ export default {
       } as IDualCitizenYesInputs,
       isInPH: {
         id: "isInPH",
-        value: parsedFormData.get("isInPH"),
+        value: parsedFormData.get("isInPH") || "",
         title: "Is your child currently in the Philippines?",
         dependsOnExpectValue: [["dualFilipino-Any"]], // Key-Value
         items: defaultItems,
@@ -310,6 +310,7 @@ export default {
       ["validateCountryField"],
     ],
   }),
+  created() {},
   async mounted() {
     this.getCountries();
     if (parsedFormData.get("dualFilipino")) {
