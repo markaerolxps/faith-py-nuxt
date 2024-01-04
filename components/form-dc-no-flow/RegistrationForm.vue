@@ -39,6 +39,86 @@
         @selected-type="selectedBirthCertAction"
         v-model="birthCertActionSelected"
       />
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <InputText
+          v-model="surName"
+          :title="'Surname'"
+          :placeholder="'Surname'"
+          v-on:change="inputChange"
+          :type="'text'"
+          :name="'surName'"
+          :value="surName"
+        />
+      </div>
+
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <InputText
+          v-model="firstName"
+          :title="'First Name'"
+          :placeholder="'First Name'"
+          v-on:change="inputChange"
+          :type="'text'"
+          :name="'firstName'"
+          :value="firstName"
+        />
+      </div>
+
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <InputText
+          v-model="middleName"
+          :title="'Middle Name'"
+          :placeholder="'First Name'"
+          v-on:change="inputChange"
+          :description="'If you don’t have one, just type “none”'"
+          :type="'text'"
+          :name="'middleName'"
+          :value="middleName"
+        />
+      </div>
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <Dropdown
+          :title="'Gender'"
+          :items="genderItems"
+          :hasOption="false"
+          @selected-type="selectedGender"
+          v-model="gender"
+        />
+      </div>
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <InputText
+          v-model="birthPlace"
+          :title="'Birth Place'"
+          :placeholder="'Birth Place'"
+          v-on:change="inputChange"
+          :type="'text'"
+          :name="'birthPlace'"
+          :value="birthPlace"
+        />
+      </div>
+
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <InputText
+          v-model="dateOfBirth"
+          :title="'Date of Birth'"
+          :placeholder="'Date of Birth'"
+          v-on:change="inputChange"
+          :type="'date'"
+          :name="'dateOfBirth'"
+          :value="dateOfBirth"
+        />
+      </div>
     </div>
     <div
       class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
@@ -208,7 +288,17 @@
           :value="middleName"
         />
       </div>
-
+      <div
+        class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
+      >
+        <Dropdown
+          :title="'Gender'"
+          :items="genderItems"
+          :hasOption="false"
+          @selected-type="selectedGender"
+          v-model="gender"
+        />
+      </div>
       <div
         class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
       >
@@ -643,6 +733,7 @@ export default {
       jsonRequest: [],
       fileUpload: [],
       defaultItems: ["Yes", "No"],
+      genderItems: ["Male", "Female"],
       childEnterReasonItems: [
         {
           name: "My child is a Faith Academy visa holder",
@@ -702,6 +793,7 @@ export default {
       dateOfBirth: "",
       issuingAuthority: "",
       countrySelected: "Select",
+      gender: "Select",
       dateOfArrival: "",
       dateOfAuthorizedStay: "",
       nationalitySelected: "Select",
@@ -716,6 +808,7 @@ export default {
       acrCardNoReason: "",
       anticipatedArrivalDate: "",
       filipinoActionMenu: false,
+      genderMenu: false,
       birthCertActionMenu: false,
       phPassportActionMenu: false,
       submitState: false,
@@ -842,6 +935,7 @@ export default {
           this.nationalitySelected = element.nationality || "Select";
           this.surName = element.surName || "";
           this.firstName = element.firstName || "";
+          this.gender = element.gender || "Select";
           this.birthPlace = element.birthPlace || "";
           this.middleName = element.middleName || "";
           this.childCurrentlyInPhSelected =
@@ -1016,6 +1110,15 @@ export default {
     showAcrCardOption() {
       this.acrCardActionMenu = !this.acrCardActionMenu;
     },
+    selectedGender() {
+      if (this.formData.length > 0) {
+        this.formData.map((value) => {
+          value.gender = this.gender;
+        });
+        localStorage.setItem("form-data", JSON.stringify(this.formData));
+      }
+      this.genderMenu = false;
+    },
     selectedAcrCardAction() {
       if (this.acrCardActionSelected === "No") {
         this.acrCardFileBack = null;
@@ -1040,6 +1143,7 @@ export default {
         this.childVisaMenu = false;
         this.acrCardActionMenu = false;
         this.childEnterReasonMenu = false;
+        this.genderMenu = false;
       }
     },
     submitStateValidate() {
@@ -1047,6 +1151,12 @@ export default {
         this.phPassportActionSelected === "No" &&
         this.birthCertActionSelected === "Yes" &&
         this.filipinoActionSelected === "Yes" &&
+        this.surName &&
+        this.middleName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
         this.recaptchaToken
       ) {
         this.flowFormat = "step-1";
@@ -1056,6 +1166,12 @@ export default {
         this.birthCertActionSelected === "No" &&
         this.birthCertFile != null &&
         this.filipinoActionSelected === "Yes" &&
+        this.surName &&
+        this.middleName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
         this.recaptchaToken
       ) {
         this.flowFormat = "step-2";
@@ -1064,6 +1180,12 @@ export default {
         this.phPassportActionSelected === "Yes" &&
         this.birthCertActionSelected === "No" &&
         this.filipinoActionSelected === "Yes" &&
+        this.surName &&
+        this.middleName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
         this.passportNumber &&
         this.passportDate &&
         this.passportFile != null &&
@@ -1075,6 +1197,12 @@ export default {
         this.phPassportActionSelected === "Yes" &&
         this.birthCertActionSelected === "Yes" &&
         this.filipinoActionSelected === "Yes" &&
+        this.surName &&
+        this.middleName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
         this.passportNumber &&
         this.passportDate &&
         this.passportFile != null &&
@@ -1093,6 +1221,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1117,6 +1246,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1144,6 +1274,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1173,6 +1304,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1206,6 +1338,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1232,6 +1365,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1261,6 +1395,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1292,6 +1427,7 @@ export default {
         this.surName &&
         this.middleName &&
         this.firstName &&
+        this.gender &&
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
@@ -1397,8 +1533,14 @@ export default {
           phPassportAction: this.phPassportActionSelected,
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
+          surName: this.surName,
+          middleName: this.middleName,
+          firstName: this.firstName,
+          gender: this.gender,
+          birthPlace: this.birthPlace,
+          dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1408,8 +1550,14 @@ export default {
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
           birthCerFile: this.birthCertFile,
+          surName: this.surName,
+          middleName: this.middleName,
+          firstName: this.firstName,
+          gender: this.gender,
+          birthPlace: this.birthPlace,
+          dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1421,8 +1569,14 @@ export default {
           passportNumber: this.passportNumber,
           passportDate: this.passportDate,
           passportFile: this.passportFile,
+          surName: this.surName,
+          middleName: this.middleName,
+          firstName: this.firstName,
+          gender: this.gender,
+          birthPlace: this.birthPlace,
+          dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1442,6 +1596,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1450,7 +1605,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1470,6 +1625,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1478,7 +1634,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1498,6 +1654,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1511,7 +1668,7 @@ export default {
           acrCardNoReason: this.acrCardNoReason,
           childsVisaPageFile: this.childsVisaPageFile,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1531,6 +1688,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1546,7 +1704,7 @@ export default {
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1566,6 +1724,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1576,7 +1735,7 @@ export default {
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1596,6 +1755,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1606,7 +1766,7 @@ export default {
           dateOfAuthorizedStay: this.dateOfAuthorizedStay,
           arrivalStampFile: this.arrivalStampFile,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1628,6 +1788,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
@@ -1641,7 +1802,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("form-data")),
+          registerKey: localStorage.getItem("registerKey"),
           recaptcha: this.recaptchaToken,
         });
       }
@@ -1665,6 +1826,7 @@ export default {
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
+          gender: this.gender,
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,

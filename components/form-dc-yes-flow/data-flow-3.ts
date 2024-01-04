@@ -1,5 +1,5 @@
 import { parsedFormData } from "../common/utils/cache";
-import { IDualCitizenYesInputs, countries } from "./data";
+import { IDualCitizenYesInputs, countries, genderItems } from "./data";
 
 export const defaultItems = ["Yes", "No"];
 export const visaFreeOptions = [
@@ -126,7 +126,15 @@ const flow3Fields = {
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-
+  gender: {
+    id: "gender",
+    value: parsedFormData.get("gender"),
+    title: "Gender",
+    dependsOnExpectValue: [["dualFilipino-No", "isInPH-Any"]],
+    items: genderItems,
+    inputType: "select",
+    required: true,
+  } as IDualCitizenYesInputs,
   birthPlace: {
     id: "birthPlace",
     value: parsedFormData.get("birthPlace"),

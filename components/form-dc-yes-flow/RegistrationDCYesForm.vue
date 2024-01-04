@@ -251,7 +251,7 @@ export default {
     inputs: {
       dualFilipino: {
         id: "dualFilipino",
-        value: parsedFormData.get("dualFilipino") || "",
+        value: parsedFormData.get("dualFilipino"),
         title: "Dual Filipino?",
         items: defaultItems,
         inputType: "select",
@@ -259,7 +259,7 @@ export default {
       } as IDualCitizenYesInputs,
       isInPH: {
         id: "isInPH",
-        value: parsedFormData.get("isInPH") || "",
+        value: parsedFormData.get("isInPH"),
         title: "Is your child currently in the Philippines?",
         dependsOnExpectValue: [["dualFilipino-Any"]], // Key-Value
         items: defaultItems,
@@ -315,9 +315,9 @@ export default {
     this.getCountries();
     if (parsedFormData.get("dualFilipino")) {
       if (parsedFormData.get("dualFilipino") === "No") {
-        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_NO_INPUTS };
+        this.inputs = { ...REGISTRATION_DF_NO_INPUTS };
       } else {
-        this.inputs = { ...defaultObjData, ...REGISTRATION_DF_YES_INPUTS };
+        this.inputs = { ...REGISTRATION_DF_YES_INPUTS };
       }
     }
     validateRegisterKey(
@@ -470,6 +470,7 @@ export default {
         this.inputs?.surName?.value &&
         this.inputs?.firstName?.value &&
         this.inputs?.middleName?.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
         this.inputs?.passportNumber?.value &&
@@ -493,6 +494,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -519,6 +521,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -552,6 +555,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -583,6 +587,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -620,6 +625,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -657,6 +663,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -687,6 +694,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -726,6 +734,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -756,6 +765,7 @@ export default {
         this.inputs?.surName?.value &&
         this.inputs?.firstName?.value &&
         this.inputs?.middleName?.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
         this.inputs?.passportNumber?.value &&
@@ -777,6 +787,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -801,6 +812,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -832,6 +844,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -861,6 +874,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -896,6 +910,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -931,6 +946,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -959,6 +975,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
@@ -996,6 +1013,7 @@ export default {
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
         this.inputs?.middleName.value &&
+        this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&

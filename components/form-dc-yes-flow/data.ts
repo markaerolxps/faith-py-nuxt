@@ -31,6 +31,7 @@ export interface IDualCitizenYesInputs {
 }
 
 export const defaultItems = ["Yes", "No"];
+export const genderItems = ["Male", "Female"];
 export const visaOptions = [
   "Apply for FA 47(a)(2) Visa",
   "Apply for another PH Visa",
@@ -111,6 +112,15 @@ const isInPHYes = {
     description: "If you don’t have one, just type “none”",
     dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-text",
+    required: true,
+  } as IDualCitizenYesInputs,
+  gender: {
+    id: "gender",
+    value: parsedFormData.get("gender"),
+    title: "Gender",
+    dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]],
+    items: genderItems,
+    inputType: "select",
     required: true,
   } as IDualCitizenYesInputs,
   birthPlace: {
