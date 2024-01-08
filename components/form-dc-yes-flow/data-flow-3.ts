@@ -162,9 +162,9 @@ const flow3Fields = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  passportExpDate: {
-    id: "passportExpDate",
-    value: parsedFormData.get("passportExpDate"),
+  passportExpirationDate: {
+    id: "passportExpirationDate",
+    value: parsedFormData.get("passportExpirationDate"),
     title: "Passport Expiration Date",
     dependsOnExpectValue: [["dualFilipino-No", "isInPH-Any"]],
     inputType: "input-date",
@@ -312,9 +312,9 @@ const anotherPassportOptionYes = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  secondPassportExpDate: {
-    id: "secondPassportExpDate",
-    value: parsedFormData.get("secondPassportExpDate"),
+  secondPassportExpirationDate: {
+    id: "secondPassportExpirationDate",
+    value: parsedFormData.get("secondPassportExpirationDate"),
     title: "FN 2nd Passport Expiration Date",
     dependsOnExpectValue: [
       [

@@ -78,9 +78,9 @@ const isInPHYes = {
     items: [],
     required: true,
   } as IDualCitizenYesInputs,
-  countryOther: {
-    id: "countryOther",
-    value: parsedFormData.get("countryOther"),
+  otherCountry: {
+    id: "otherCountry",
+    value: parsedFormData.get("otherCountry"),
     title: "Other",
     dependsOnExpectValue: [
       ["dualFilipino-Yes", "isUsePhPassport-Any", "country-Other"],
@@ -303,9 +303,9 @@ const hasPHPassportYES = {
     inputType: "select",
     required: true,
   } as IDualCitizenYesInputs,
-  country2Other: {
-    id: "country2Other",
-    value: parsedFormData.get("country2Other"),
+  otherCountry2: {
+    id: "otherCountry2",
+    value: parsedFormData.get("otherCountry2"),
     title: "Other",
     dependsOnExpectValue: [
       ["dualFilipino-Yes", "hasPHPassport-Yes", "country2-Other"],
@@ -336,6 +336,15 @@ const hasPHPassportYES = {
     description: "If you don’t have one, just type “none”",
     dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-text",
+    required: true,
+  } as IDualCitizenYesInputs,
+  gender2: {
+    id: "gender2",
+    value: parsedFormData.get("gender2"),
+    title: "Gender",
+    dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]],
+    items: genderItems,
+    inputType: "select",
     required: true,
   } as IDualCitizenYesInputs,
   birthPlace2: {

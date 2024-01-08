@@ -629,7 +629,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -645,7 +645,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -667,7 +667,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -698,7 +698,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -716,7 +716,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -738,7 +738,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -769,7 +769,7 @@ export default {
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
         this.inputs?.passportNumber?.value &&
-        this.inputs?.passportExpDate?.value &&
+        this.inputs?.passportExpirationDate?.value &&
         this.inputs?.issuingAuthority?.value &&
         this.inputs?.bioPageFile?.value &&
         this.inputs?.childEnterReason.value === "visaHolder" &&
@@ -791,7 +791,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -816,7 +816,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -828,7 +828,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -848,7 +848,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -878,7 +878,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -894,7 +894,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -914,7 +914,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -930,7 +930,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -950,7 +950,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -979,7 +979,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&
@@ -997,7 +997,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {

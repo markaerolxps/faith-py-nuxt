@@ -727,7 +727,7 @@ export default {
       phPassportActionSelected: "Select",
       filipinoActionSelected: "Select",
       birthCertActionSelected: "Select",
-      passportDate: "",
+      passportExpirationDate: "",
       isLoading: false,
       fullPage: true,
       jsonRequest: [],
@@ -929,7 +929,7 @@ export default {
           this.filipinoActionSelected = element.filipinoAction || "Select";
           this.birthCertActionSelected = element.birthCertAction || "Select";
           this.phPassportActionSelected = element.phPassportAction || "Select";
-          this.passportDate = element.passportDate || "";
+          this.passportExpirationDate = element.passportExpirationDate || "";
           this.passportNumber = element.passportNumber || "";
           this.countrySelected = element.country || "Select";
           this.nationalitySelected = element.nationality || "Select";
@@ -969,7 +969,7 @@ export default {
           this.formData.forEach((element) => {
             delete element.birthCertAction;
             delete element.phPassportAction;
-            delete element.passportDate;
+            delete element.passportExpirationDate;
             delete element.passportNumber;
             this.birthCertActionSelected = "Select";
             this.phPassportActionSelected = "Select";
@@ -978,7 +978,7 @@ export default {
         if (this.filipinoActionSelected === "Yes") {
           this.formData.forEach((element) => {
             delete element.country;
-            delete element.passportDate;
+            delete element.passportExpirationDate;
             delete element.passportNumber;
             delete element.country;
             delete element.nationality;
@@ -1187,7 +1187,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.passportFile != null &&
         this.recaptchaToken
       ) {
@@ -1204,7 +1204,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.passportFile != null &&
         this.recaptchaToken
       ) {
@@ -1225,7 +1225,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
@@ -1250,7 +1250,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
@@ -1278,7 +1278,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
@@ -1308,7 +1308,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
@@ -1342,7 +1342,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
@@ -1369,7 +1369,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
@@ -1399,7 +1399,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
@@ -1431,7 +1431,7 @@ export default {
         this.birthPlace &&
         this.dateOfBirth &&
         this.passportNumber &&
-        this.passportDate &&
+        this.passportExpirationDate &&
         this.issuingAuthority &&
         this.passportBioFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
@@ -1567,7 +1567,7 @@ export default {
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
           surName: this.surName,
           middleName: this.middleName,
@@ -1584,7 +1584,7 @@ export default {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           countrySelected: this.countrySelected,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
@@ -1613,7 +1613,7 @@ export default {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           countrySelected: this.countrySelected,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
@@ -1642,7 +1642,7 @@ export default {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
@@ -1676,7 +1676,7 @@ export default {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
           countrySelected: this.countrySelected,
