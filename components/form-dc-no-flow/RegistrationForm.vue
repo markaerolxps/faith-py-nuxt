@@ -205,13 +205,13 @@
           :items="countries"
           :hasOption="true"
           @selected-type="selectedCountry"
-          v-model="countrySelected"
+          v-model="country"
         />
       </div>
 
       <div
         class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
-        v-if="countrySelected === 'Other'"
+        v-if="country === 'Other'"
       >
         <InputText
           v-model="otherCountry"
@@ -792,7 +792,7 @@ export default {
       birthPlace: "",
       dateOfBirth: "",
       issuingAuthority: "",
-      countrySelected: "Select",
+      country: "Select",
       gender: "Select",
       dateOfArrival: "",
       dateOfAuthorizedStay: "",
@@ -931,7 +931,7 @@ export default {
           this.phPassportActionSelected = element.phPassportAction || "Select";
           this.passportExpirationDate = element.passportExpirationDate || "";
           this.passportNumber = element.passportNumber || "";
-          this.countrySelected = element.country || "Select";
+          this.country = element.country || "Select";
           this.nationalitySelected = element.nationality || "Select";
           this.surName = element.surName || "";
           this.firstName = element.firstName || "";
@@ -1040,7 +1040,7 @@ export default {
     selectedCountry() {
       if (this.formData.length > 0) {
         this.formData.map((value) => {
-          value.country = this.countrySelected;
+          value.country = this.country;
         });
         localStorage.setItem("form-data", JSON.stringify(this.formData));
       }
@@ -1212,9 +1212,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1237,9 +1236,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1265,9 +1263,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1295,9 +1292,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1329,9 +1325,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1356,9 +1351,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1386,9 +1380,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1418,9 +1411,8 @@ export default {
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
-        ((this.countrySelected != "Select" &&
-          this.countrySelected != "Other") ||
-          (this.countrySelected === "Other" && this.otherCountry)) &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
         ((this.nationalitySelected != "Select" &&
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
@@ -1585,14 +1577,13 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportExpirationDate: this.passportExpirationDate,
-          countrySelected: this.countrySelected,
+          country: this.country,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1614,14 +1605,13 @@ export default {
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
           passportExpirationDate: this.passportExpirationDate,
-          countrySelected: this.countrySelected,
+          country: this.country,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1645,12 +1635,11 @@ export default {
           passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1679,12 +1668,11 @@ export default {
           passportExpirationDate: this.passportDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1715,12 +1703,11 @@ export default {
           passportDate: this.passportDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1746,12 +1733,11 @@ export default {
           passportDate: this.passportDate,
           passportFile: this.passportFile,
           passportBioFile: this.passportBioFile,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1779,12 +1765,11 @@ export default {
           passportBioFile: this.passportBioFile,
           arrivalStampFile: this.arrivalStampFile,
           childsVisaPageFile: this.childsVisaPageFile,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1817,12 +1802,11 @@ export default {
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
-          countrySelected: this.countrySelected,
-          otherCountry:
-            this.countrySelected === "Other" ? this.otherCountry : null,
+          country: this.country,
+          otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
-            this.countrySelected === "Other" ? this.otherNationality : null,
+            this.country === "Other" ? this.otherNationality : null,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
