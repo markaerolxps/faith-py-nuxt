@@ -1,7 +1,7 @@
 const config = {
   dev: `${
     typeof window !== "undefined"
-      ? window.origin
+      ? "https://faithacademy-xurpas-sandbox.frappe.cloud"
       : "https://faithacademy-xurpas-sandbox.frappe.cloud"
   }`,
   prod: "",
@@ -18,6 +18,7 @@ let _baseUrl = () => {
 
 const envConfig = {
   baseUrl: _baseUrl(),
+  basePath: "/assets/faith_academy/registration",
 };
 
 export default envConfig;

@@ -378,8 +378,22 @@ export default {
         this.inputs?.dualFilipino?.value === "Yes" &&
         !!this.inputs?.isInPH?.value;
       formData.flow = isFlow2 && "flow-2";
+      axios
+        .post(
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.student_registration`,
+          formData
+        )
+        .then((res) => {
+          console.log(res);
 
-      console.log("formData", formData);
+          if (res.data) {
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
     },
     submitValidateForm() {},
     isNoteVisible(noteDependsOn: string[]) {
@@ -474,7 +488,7 @@ export default {
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
         this.inputs?.passportNumber?.value &&
-        this.inputs?.passportExpDate?.value &&
+        this.inputs?.passportExpirationDate?.value &&
         this.inputs?.issuingAuthority?.value &&
         this.inputs?.bioPageFile?.value &&
         this.inputs.childEnterReason.value === "visaHolder" &&
@@ -498,7 +512,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -525,7 +539,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -537,7 +551,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondpassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -559,7 +573,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -591,7 +605,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         (this.inputs?.childEnterReason.value === "visaFree" ||
@@ -607,7 +621,7 @@ export default {
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
         this.inputs?.secondPassportNumber.value &&
-        this.inputs?.secondPassportExpDate.value &&
+        this.inputs?.secondpassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
       ) {
@@ -1017,7 +1031,7 @@ export default {
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
         this.inputs?.passportNumber.value &&
-        this.inputs?.passportExpDate.value &&
+        this.inputs?.passportExpirationDate.value &&
         this.inputs?.issuingAuthority.value &&
         this.inputs?.bioPageFile.value &&
         this.inputs?.childEnterReason.value === "phVisa" &&

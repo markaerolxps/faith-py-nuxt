@@ -131,9 +131,9 @@ const isInPHYes = {
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  birthday: {
-    id: "birthday",
-    value: parsedFormData.get("birthday"),
+  dateOfBirth: {
+    id: "dateOfBirth",
+    value: parsedFormData.get("dateOfBirth"),
     title: "Date of Birth",
     dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-date",
@@ -355,9 +355,9 @@ const hasPHPassportYES = {
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  birthday2: {
-    id: "birthday2",
-    value: parsedFormData.get("birthday2"),
+  dateOfBirth2: {
+    id: "dateOfBirth2",
+    value: parsedFormData.get("dateOfBirth2"),
     title: "Date of Birth",
     dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-date",

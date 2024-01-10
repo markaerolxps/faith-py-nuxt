@@ -174,13 +174,13 @@
         class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
       >
         <InputText
-          v-model="passportDate"
+          v-model="passportExpirationDate"
           :title="'Passport Expiration Date'"
           :placeholder="'Passport Expiration Date'"
           v-on:change="inputChange"
           :type="'date'"
-          :name="'passportDate'"
-          :value="passportDate"
+          :name="'passportExpirationDate'"
+          :value="passportExpirationDate"
         />
       </div>
       <div
@@ -345,13 +345,13 @@
         class="flex flex-col items-start w-full gap-1 mb-4 fade-up-enter-active"
       >
         <InputText
-          v-model="passportDate"
+          v-model="passportExpirationDate"
           :title="'Passport Expiration Date'"
           :placeholder="'Passport Expiration Date'"
           v-on:change="inputChange"
           :type="'date'"
-          :name="'passportDate'"
-          :value="passportDate"
+          :name="'passportExpirationDate'"
+          :value="passportExpirationDate"
         />
       </div>
 
@@ -376,7 +376,7 @@
           :title="'Upload Passport Bio Page'"
           @uploadFile="uploadPassportBio"
           :refName="'uploadPassportBio'"
-          @clear-file="clearFile('passportBioFile')"
+          @clear-file="clearFile('bioPageFile')"
         />
       </div>
 
@@ -817,7 +817,7 @@ export default {
       countries: [],
       nationalities: [],
       nationalityMenu: false,
-      passportBioFile: null,
+      bioPageFile: null,
       countryMenu: false,
       childCurrentlyInPhMenu: false,
       childVisaMenu: false,
@@ -869,8 +869,8 @@ export default {
       if (fileName === "passportFile") {
         this.passportFile = null;
       }
-      if (fileName === "passportBioFile") {
-        this.passportBioFile = null;
+      if (fileName === "bioPageFile") {
+        this.bioPageFile = null;
       }
       if (fileName === "arrivalStampFile") {
         this.arrivalStampFile = null;
@@ -1226,7 +1226,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
         this.anticipatedArrivalDate &&
         this.childEnterReasonSelected === "visa-holder" &&
@@ -1250,7 +1250,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
         this.anticipatedArrivalDate &&
         (this.childEnterReasonSelected === "visa-granted" ||
@@ -1277,7 +1277,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
         this.anticipatedArrivalDate &&
         this.childEnterReasonSelected === "ph-visa" &&
@@ -1306,7 +1306,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "No" &&
         this.dateOfArrival &&
         this.dateOfAuthorizedStay &&
@@ -1339,7 +1339,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
         this.dateOfArrival &&
         this.dateOfAuthorizedStay &&
@@ -1365,7 +1365,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
         this.dateOfArrival &&
         this.dateOfAuthorizedStay &&
@@ -1394,7 +1394,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
         this.dateOfArrival &&
         this.dateOfAuthorizedStay &&
@@ -1425,7 +1425,7 @@ export default {
         this.passportNumber &&
         this.passportExpirationDate &&
         this.issuingAuthority &&
-        this.passportBioFile != null &&
+        this.bioPageFile != null &&
         this.childCurrentlyInPhSelected === "Yes" &&
         this.dateOfArrival &&
         this.dateOfAuthorizedStay &&
@@ -1454,8 +1454,8 @@ export default {
         if (data.message.passportFile) {
           this.passportFile = data.message.passportFile;
         }
-        if (data.message.passportBioFile) {
-          this.passportBioFile = data.message.passportBioFile;
+        if (data.message.bioPageFile) {
+          this.bioPageFile = data.message.bioPageFile;
         }
         if (data.message.arrivalStampFile) {
           this.arrivalStampFile = data.message.arrivalStampFile;
@@ -1487,7 +1487,7 @@ export default {
     },
     uploadPassportBio(data) {
       this.isLoading = true;
-      uploadFileService("passportBioFile", data, this.uploadFileCallback);
+      uploadFileService("bioPageFile", data, this.uploadFileCallback);
       this.submitStateValidate();
     },
     uploadArrivalStamp(data) {
@@ -1532,8 +1532,6 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-2") {
@@ -1549,8 +1547,6 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-3" || this.flowFormat === "step-4") {
@@ -1568,8 +1564,6 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-5") {
@@ -1579,7 +1573,7 @@ export default {
           passportExpirationDate: this.passportExpirationDate,
           country: this.country,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
@@ -1596,8 +1590,6 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-6") {
@@ -1607,7 +1599,7 @@ export default {
           passportExpirationDate: this.passportExpirationDate,
           country: this.country,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
           otherNationality:
@@ -1624,8 +1616,6 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-7") {
@@ -1634,7 +1624,7 @@ export default {
           passportNumber: this.passportNumber,
           passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           country: this.country,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1657,17 +1647,15 @@ export default {
           acrCardNoReason: this.acrCardNoReason,
           childsVisaPageFile: this.childsVisaPageFile,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-8") {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportExpirationDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           country: this.country,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1692,17 +1680,15 @@ export default {
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-9") {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           country: this.country,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1715,24 +1701,21 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           issuingAuthority: this.issuingAuthority,
-          authori: this.authori,
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           flowFormat: "flow-1",
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-10") {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           country: this.country,
           otherCountry: this.country === "Other" ? this.otherCountry : null,
           nationality: this.nationalitySelected,
@@ -1752,17 +1735,15 @@ export default {
           dateOfAuthorizedStay: this.dateOfAuthorizedStay,
           arrivalStampFile: this.arrivalStampFile,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-11") {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           arrivalStampFile: this.arrivalStampFile,
           childsVisaPageFile: this.childsVisaPageFile,
           country: this.country,
@@ -1787,17 +1768,15 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
-          registerKey: localStorage.getItem("registerKey"),
-          recaptcha: this.recaptchaToken,
         });
       }
       if (this.flowFormat === "step-12") {
         formRequest.push({
           filipinoAction: this.filipinoActionSelected,
           passportNumber: this.passportNumber,
-          passportDate: this.passportDate,
+          passportExpirationDate: this.passportExpirationDate,
           passportFile: this.passportFile,
-          passportBioFile: this.passportBioFile,
+          bioPageFile: this.bioPageFile,
           arrivalStampFile: this.arrivalStampFile,
           childsVisaPageFile: this.childsVisaPageFile,
           acrCardFileFront: this.acrCardFileFront,
@@ -1825,15 +1804,52 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
-          registerKey: JSON.parse(localStorage.getItem("registerKey")),
-          recaptcha: this.recaptchaToken,
         });
       }
       this.isLoading = true;
-      setTimeout(() => {
-        console.log(formRequest[0]);
-        this.isLoading = false;
-      }, 2000);
+      const removeNullProperties = (obj) => {
+        for (const [key, value] of Object.entries(obj)) {
+          if (value === null) {
+            delete obj[key];
+          }
+        }
+      };
+
+      formRequest.forEach(removeNullProperties);
+
+      axios
+        .post(
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.student_registration`,
+          formRequest[0]
+        )
+        .then((res) => {
+          console.log(res);
+
+          if (res.data) {
+            this.redirectToSuccess();
+            this.isLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
+    },
+    redirectToSuccess() {
+      axios
+        .post(
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.unique_key_change_status`,
+          { unique_key: localStorage.getItem("registerKey") }
+        )
+        .then((res) => {
+          if (res) {
+            window.location.href = `${envConfig.basePath}/success`;
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
     },
   },
   unmounted() {
