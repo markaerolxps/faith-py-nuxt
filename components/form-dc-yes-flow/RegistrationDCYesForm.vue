@@ -370,6 +370,25 @@ export default {
       localStorageBrowser.removeItem("form-data");
       this.$emit("backToOptions");
     },
+    redirectToSuccess() {
+      axios
+        .post(
+          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.unique_key_change_status`,
+          { unique_key: localStorage.getItem("registerKey") }
+        )
+        .then((res) => {
+          if (res) {
+            localStorage.removeItem("form-data");
+            localStorage.removeItem("registerKey");
+            localStorage.removeItem("process");
+            window.location.href = `${envConfig.basePath}/success`;
+          }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err);
+        });
+    },
     sendForm(e: any) {
       let formData: any = mapObjectValues(this.inputs, true);
       formData.recaptcha = this.recaptchaToken;
@@ -388,6 +407,7 @@ export default {
 
           if (res.data) {
             this.isLoading = false;
+            this.redirectToSuccess();
           }
         })
         .catch((err) => {

@@ -1843,6 +1843,9 @@ export default {
         )
         .then((res) => {
           if (res) {
+            localStorage.removeItem("form-data");
+            localStorage.removeItem("registerKey");
+            localStorage.removeItem("process");
             window.location.href = `${envConfig.basePath}/success`;
           }
         })
