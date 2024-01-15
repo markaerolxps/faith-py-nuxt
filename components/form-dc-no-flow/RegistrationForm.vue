@@ -875,8 +875,8 @@ export default {
       if (fileName === "arrivalStampFile") {
         this.arrivalStampFile = null;
       }
-      if (fileName === "childVisaPageFile") {
-        this.childVisaPageFile = null;
+      if (fileName === "childsVisaPageFile") {
+        this.childsVisaPageFile = null;
       }
       if (fileName === "acrCardFileFront") {
         this.acrCardFileFront = null;
@@ -1460,8 +1460,8 @@ export default {
         if (data.message.arrivalStampFile) {
           this.arrivalStampFile = data.message.arrivalStampFile;
         }
-        if (data.message.childVisaPageFile) {
-          this.childVisaPageFile = data.message.childVisaPageFile;
+        if (data.message.childsVisaPageFile) {
+          this.childsVisaPageFile = data.message.childsVisaPageFile;
         }
         if (data.message.acrCardFileFront) {
           this.acrCardFileFront = data.message.acrCardFileFront;
