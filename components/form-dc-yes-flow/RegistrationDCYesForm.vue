@@ -503,7 +503,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName?.value &&
         this.inputs?.firstName?.value &&
-        this.inputs?.middleName?.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
@@ -527,7 +526,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -554,7 +552,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -588,7 +585,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -620,7 +616,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -658,7 +653,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -696,7 +690,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -727,7 +720,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -767,7 +759,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -798,7 +789,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName?.value &&
         this.inputs?.firstName?.value &&
-        this.inputs?.middleName?.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace?.value &&
         this.inputs?.dateOfBirth?.value &&
@@ -820,7 +810,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -845,7 +834,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -877,7 +865,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -907,7 +894,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -943,7 +929,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -979,7 +964,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -1008,7 +992,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&
@@ -1046,7 +1029,6 @@ export default {
             this.inputs?.otherCountry?.value)) &&
         this.inputs?.surName.value &&
         this.inputs?.firstName.value &&
-        this.inputs?.middleName.value &&
         this.inputs?.gender.value &&
         this.inputs?.birthPlace.value &&
         this.inputs?.dateOfBirth.value &&

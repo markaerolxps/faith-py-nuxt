@@ -50,6 +50,7 @@
           :type="'text'"
           :name="'surName'"
           :value="surName"
+          :required="true"
         />
       </div>
 
@@ -64,6 +65,7 @@
           :type="'text'"
           :name="'firstName'"
           :value="firstName"
+          :required="true"
         />
       </div>
 
@@ -73,12 +75,12 @@
         <InputText
           v-model="middleName"
           :title="'Middle Name'"
-          :placeholder="'First Name'"
+          :placeholder="'Middle Name'"
           v-on:change="inputChange"
-          :description="'If you don’t have one, just type “none”'"
           :type="'text'"
           :name="'middleName'"
           :value="middleName"
+          :required="false"
         />
       </div>
       <div
@@ -103,6 +105,7 @@
           :type="'text'"
           :name="'birthPlace'"
           :value="birthPlace"
+          :required="true"
         />
       </div>
 
@@ -117,6 +120,7 @@
           :type="'date'"
           :name="'dateOfBirth'"
           :value="dateOfBirth"
+          :required="true"
         />
       </div>
     </div>
@@ -167,6 +171,7 @@
           :type="'text'"
           :name="'passportNumber'"
           :value="passportNumber"
+          :required="true"
         />
       </div>
 
@@ -181,6 +186,7 @@
           :type="'date'"
           :name="'passportExpirationDate'"
           :value="passportExpirationDate"
+          :required="true"
         />
       </div>
       <div
@@ -221,6 +227,7 @@
           :type="'text'"
           :name="'otherCountry'"
           :value="otherCountry"
+          :required="true"
         />
       </div>
       <div class="w-full flex flex-col mb-4 items-start">
@@ -244,6 +251,7 @@
           :type="'text'"
           :name="'otherNationality'"
           :value="otherNationality"
+          :required="true"
         />
       </div>
       <div
@@ -257,6 +265,7 @@
           :type="'text'"
           :name="'surName'"
           :value="surName"
+          :required="true"
         />
       </div>
 
@@ -271,6 +280,7 @@
           :type="'text'"
           :name="'firstName'"
           :value="firstName"
+          :required="true"
         />
       </div>
 
@@ -280,12 +290,12 @@
         <InputText
           v-model="middleName"
           :title="'Middle Name'"
-          :placeholder="'First Name'"
+          :placeholder="'Middle Name'"
           v-on:change="inputChange"
-          :description="'If you don’t have one, just type “none”'"
           :type="'text'"
           :name="'middleName'"
           :value="middleName"
+          :required="false"
         />
       </div>
       <div
@@ -310,6 +320,7 @@
           :type="'text'"
           :name="'birthPlace'"
           :value="birthPlace"
+          :required="true"
         />
       </div>
 
@@ -324,6 +335,7 @@
           :type="'date'"
           :name="'dateOfBirth'"
           :value="dateOfBirth"
+          :required="true"
         />
       </div>
 
@@ -338,6 +350,7 @@
           :type="'text'"
           :name="'passportNumber'"
           :value="passportNumber"
+          :required="true"
         />
       </div>
 
@@ -352,6 +365,7 @@
           :type="'date'"
           :name="'passportExpirationDate'"
           :value="passportExpirationDate"
+          :required="true"
         />
       </div>
 
@@ -366,6 +380,7 @@
           :type="'text'"
           :name="'issuingAuthority'"
           :value="issuingAuthority"
+          :required="true"
         />
       </div>
 
@@ -409,6 +424,7 @@
               :type="'date'"
               :name="'dateOfArrival'"
               :value="dateOfArrival"
+              :required="true"
             />
           </div>
 
@@ -423,6 +439,7 @@
               :type="'date'"
               :name="'dateOfAuthorizedStay'"
               :value="dateOfAuthorizedStay"
+              :required="true"
             />
           </div>
 
@@ -453,6 +470,7 @@
               :type="'date'"
               :name="'anticipatedArrivalDate'"
               :value="anticipatedArrivalDate"
+              :required="true"
             />
           </div>
         </div>
@@ -563,6 +581,7 @@
             :type="'text'"
             :name="'typeOfPhVisa'"
             :value="typeOfPhVisa"
+            :required="true"
           />
         </div>
 
@@ -578,6 +597,7 @@
             :name="'phVisaExpDate'"
             :disabled="inDefinite ? true : false"
             :value="phVisaExpDate"
+            :required="false"
           />
 
           <div class="flex flex-row items-center justify-start mt-2 gap-1">
@@ -630,6 +650,7 @@
               :type="'date'"
               :name="'acrCardExpDate'"
               :value="acrCardExpDate"
+              :required="true"
             />
           </div>
           <div
@@ -669,6 +690,7 @@
               :type="'text'"
               :name="'acrCardNoReason'"
               :value="acrCardNoReason"
+              :required="true"
             />
           </div>
         </div>
@@ -1152,7 +1174,6 @@ export default {
         this.birthCertActionSelected === "Yes" &&
         this.filipinoActionSelected === "Yes" &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1167,7 +1188,6 @@ export default {
         this.birthCertFile != null &&
         this.filipinoActionSelected === "Yes" &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1181,7 +1201,6 @@ export default {
         this.birthCertActionSelected === "No" &&
         this.filipinoActionSelected === "Yes" &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1198,7 +1217,6 @@ export default {
         this.birthCertActionSelected === "Yes" &&
         this.filipinoActionSelected === "Yes" &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1218,7 +1236,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1242,7 +1259,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1269,7 +1285,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1298,7 +1313,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1331,7 +1345,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1357,7 +1370,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1386,7 +1398,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&
@@ -1417,7 +1428,6 @@ export default {
           this.nationalitySelected != "Other") ||
           (this.nationalitySelected === "Other" && this.otherNationality)) &&
         this.surName &&
-        this.middleName &&
         this.firstName &&
         this.gender &&
         this.birthPlace &&

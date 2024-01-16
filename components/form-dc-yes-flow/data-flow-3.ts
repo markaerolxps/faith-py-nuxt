@@ -119,12 +119,11 @@ const flow3Fields = {
   } as IDualCitizenYesInputs,
   middleName: {
     id: "middleName",
-    value: parsedFormData.get("middleName") || "none",
+    value: parsedFormData.get("middleName"),
     title: "Middle Name",
-    description: "If you don’t have one, just type “none”",
     dependsOnExpectValue: [["dualFilipino-No", "isInPH-Any"]],
     inputType: "input-text",
-    required: true,
+    required: false,
   } as IDualCitizenYesInputs,
   gender: {
     id: "gender",

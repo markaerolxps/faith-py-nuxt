@@ -107,12 +107,11 @@ const isInPHYes = {
   } as IDualCitizenYesInputs,
   middleName: {
     id: "middleName",
-    value: parsedFormData.get("middleName") || "none",
+    value: parsedFormData.get("middleName"),
     title: "Middle Name",
-    description: "If you don’t have one, just type “none”",
     dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-text",
-    required: true,
+    required: false,
   } as IDualCitizenYesInputs,
   gender: {
     id: "gender",
@@ -331,12 +330,11 @@ const hasPHPassportYES = {
   } as IDualCitizenYesInputs,
   middleName2: {
     id: "middleName2",
-    value: parsedFormData.get("middleName2") || "none",
+    value: parsedFormData.get("middleName2"),
     title: "Middle Name",
-    description: "If you don’t have one, just type “none”",
     dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-text",
-    required: true,
+    required: false,
   } as IDualCitizenYesInputs,
   gender2: {
     id: "gender2",
