@@ -381,7 +381,7 @@ export default {
             localStorage.removeItem("form-data");
             localStorage.removeItem("registerKey");
             localStorage.removeItem("process");
-            window.location.href = `${envConfig.basePath}/success`;
+            // window.location.href = `${envConfig.basePath}/success`;
           }
         })
         .catch((err) => {
@@ -567,7 +567,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -635,7 +635,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -672,7 +672,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -734,14 +734,14 @@ export default {
         this.inputs?.visaPageFile.value &&
         this.inputs?.acrCardOption.value === "Yes" &&
         this.inputs?.expirationDateACRCard.value &&
-        this.inputs?.childFrontACRCardFile.value &&
-        this.inputs?.childBackACRCardFile &&
+        this.inputs?.acrCardFileFront.value &&
+        this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
         ((this.inputs?.child2ndCountry.value &&
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -773,8 +773,8 @@ export default {
         this.inputs?.visaPageFile.value &&
         this.inputs?.acrCardOption.value === "Yes" &&
         this.inputs?.expirationDateACRCard.value &&
-        this.inputs?.childFrontACRCardFile.value &&
-        this.inputs?.childBackACRCardFile &&
+        this.inputs?.acrCardFileFront.value &&
+        this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "No" &&
         this.recaptchaToken
       ) {
@@ -849,7 +849,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -913,7 +913,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -948,7 +948,7 @@ export default {
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -1006,14 +1006,14 @@ export default {
         this.inputs?.visaPageFile.value &&
         this.inputs?.acrCardOption.value === "Yes" &&
         this.inputs?.expirationDateACRCard.value &&
-        this.inputs?.childFrontACRCardFile.value &&
-        this.inputs?.childBackACRCardFile &&
+        this.inputs?.acrCardFileFront.value &&
+        this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
         ((this.inputs?.child2ndCountry.value &&
           this.inputs?.child2ndCountry.value != "Other") ||
           (this.inputs?.child2ndCountry.value === "Other" &&
             this.inputs?.secondOtherCountry.value)) &&
-        this.inputs?.secondPassportNumber.value &&
+        this.inputs?.passportnumber2.value &&
         this.inputs?.secondPassportExpirationDate.value &&
         this.inputs?.secondBioPageFile.value &&
         this.recaptchaToken
@@ -1043,8 +1043,8 @@ export default {
         this.inputs?.visaPageFile.value &&
         this.inputs?.acrCardOption.value === "Yes" &&
         this.inputs?.expirationDateACRCard.value &&
-        this.inputs?.childFrontACRCardFile.value &&
-        this.inputs?.childBackACRCardFile &&
+        this.inputs?.acrCardFileFront.value &&
+        this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "No" &&
         this.recaptchaToken
       ) {

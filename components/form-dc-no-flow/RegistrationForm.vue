@@ -494,14 +494,75 @@
             childEnterReasonSelected === 'visa-free'
           "
         >
-          <Dropdown
-            :title="'Does your child need a visa to study in the Philippines?'"
-            :items="childVisaItems"
-            :hasOption="false"
-            @selected-type="selectedChildVisa"
-            v-model="childVisaSelected"
-            :isObjectArray="true"
-          />
+          <div class="w-full flex flex-col mb-4 items-start">
+            <Dropdown
+              :title="'Does your child need a visa to study in the Philippines?'"
+              :items="childVisaItems"
+              :hasOption="false"
+              @selected-type="selectedChildVisa"
+              v-model="childVisaSelected"
+              :isObjectArray="true"
+            />
+          </div>
+
+          <div
+            class="w-full flex flex-col mb-4 items-start"
+            v-if="
+              childVisaSelected === 'fix-balikbayan-visa' ||
+              childVisaSelected === 'fix-ph-visa'
+            "
+          >
+            <div class="w-full flex flex-col mb-4 items-start">
+              <InputText
+                v-model="nameOfMission"
+                :title="'Name of Mission Org/Company'"
+                :placeholder="'Name of Mission Org/Company'"
+                v-on:change="inputChange"
+                :type="'text'"
+                :name="'nameOfMission'"
+                :value="nameOfMission"
+                :required="true"
+              />
+            </div>
+            <div class="w-full flex flex-col mb-4 items-start">
+              <InputText
+                v-model="nameOfAccreditedOfficer"
+                :title="'Name of Accredited Liaison Officer'"
+                :placeholder="'Name of Accredited Liaison Officer'"
+                v-on:change="inputChange"
+                :type="'text'"
+                :name="'nameOfAccreditedOfficer'"
+                :value="nameOfAccreditedOfficer"
+                :required="true"
+              />
+            </div>
+
+            <div class="w-full flex flex-col mb-4 items-start">
+              <InputText
+                v-model="celNo"
+                :title="'Cel No.'"
+                :placeholder="'Cel No.'"
+                v-on:change="inputChange"
+                :type="'text'"
+                :name="'celNo'"
+                :value="celNo"
+                :required="true"
+              />
+            </div>
+
+            <div class="w-full flex flex-col mb-4 items-start">
+              <InputText
+                v-model="email"
+                :title="'Email'"
+                :placeholder="'Email'"
+                v-on:change="inputChange"
+                :type="'text'"
+                :name="'email'"
+                :value="email"
+                :required="true"
+              />
+            </div>
+          </div>
         </div>
 
         <div
@@ -823,6 +884,10 @@ export default {
       childEnterReasonSelected: "Select",
       childVisaSelected: "Select",
       inDefinite: false,
+      nameOfMission: "",
+      nameOfAccreditedOffice: "",
+      celNo: "",
+      email: "",
       typeOfPhVisa: "",
       phVisaExpDate: "",
       acrCardActionSelected: "Select",
@@ -1272,10 +1337,42 @@ export default {
         (this.childEnterReasonSelected === "visa-granted" ||
           this.childEnterReasonSelected === "visa-free" ||
           this.childEnterReasonSelected === "balikbayan-visa") &&
-        this.childVisaSelected != "Select" &&
+        (this.childVisaSelected != "fix-balikbayan-visa" ||
+          this.childVisaSelected != "fix-ph-visa") &&
         this.recaptchaToken
       ) {
         this.flowFormat = "step-6";
+        this.submitState = true;
+      } else if (
+        this.filipinoActionSelected === "No" &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
+        ((this.nationalitySelected != "Select" &&
+          this.nationalitySelected != "Other") ||
+          (this.nationalitySelected === "Other" && this.otherNationality)) &&
+        this.surName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
+        this.passportNumber &&
+        this.passportExpirationDate &&
+        this.issuingAuthority &&
+        this.bioPageFile != null &&
+        this.childCurrentlyInPhSelected === "No" &&
+        this.anticipatedArrivalDate &&
+        (this.childEnterReasonSelected === "visa-granted" ||
+          this.childEnterReasonSelected === "visa-free" ||
+          this.childEnterReasonSelected === "balikbayan-visa") &&
+        (this.childVisaSelected === "fix-balikbayan-visa" ||
+          this.childVisaSelected === "fix-ph-visa") &&
+        this.nameOfMission &&
+        this.nameOfAccreditedOffice &&
+        this.celNo &&
+        this.email &&
+        this.recaptchaToken
+      ) {
+        this.flowFormat = "step-13";
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
@@ -1385,10 +1482,43 @@ export default {
         (this.childEnterReasonSelected === "visa-granted" ||
           this.childEnterReasonSelected === "visa-free" ||
           this.childEnterReasonSelected === "balikbayan-visa") &&
-        this.childVisaSelected != "Select" &&
+        (this.childVisaSelected !== "fix-balikbayan-visa" ||
+          this.childVisaSelected !== "fix-ph-visa") &&
         this.recaptchaToken
       ) {
         this.flowFormat = "step-10";
+        this.submitState = true;
+      } else if (
+        this.filipinoActionSelected === "No" &&
+        ((this.country != "Select" && this.country != "Other") ||
+          (this.country === "Other" && this.otherCountry)) &&
+        ((this.nationalitySelected != "Select" &&
+          this.nationalitySelected != "Other") ||
+          (this.nationalitySelected === "Other" && this.otherNationality)) &&
+        this.surName &&
+        this.firstName &&
+        this.gender &&
+        this.birthPlace &&
+        this.dateOfBirth &&
+        this.passportNumber &&
+        this.passportExpirationDate &&
+        this.issuingAuthority &&
+        this.bioPageFile != null &&
+        this.childCurrentlyInPhSelected === "Yes" &&
+        this.dateOfArrival &&
+        this.dateOfAuthorizedStay &&
+        (this.childEnterReasonSelected === "visa-granted" ||
+          this.childEnterReasonSelected === "visa-free" ||
+          this.childEnterReasonSelected === "balikbayan-visa") &&
+        (this.childVisaSelected === "fix-balikbayan-visa" ||
+          this.childVisaSelected === "fix-ph-visa") &&
+        this.nameOfMission &&
+        this.nameOfAccreditedOffice &&
+        this.celNo &&
+        this.email &&
+        this.recaptchaToken
+      ) {
+        this.flowFormat = "step-14";
         this.submitState = true;
       } else if (
         this.filipinoActionSelected === "No" &&
@@ -1810,7 +1940,6 @@ export default {
           typeOfPhVisa: this.typeOfPhVisa,
           phVisaExpDate: this.phVisaExpDate,
           indefinite: this.inDefinite,
-          childsVisaPageFile: this.childsVisaPageFile,
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
@@ -1856,7 +1985,7 @@ export default {
             localStorage.removeItem("form-data");
             localStorage.removeItem("registerKey");
             localStorage.removeItem("process");
-            window.location.href = `${envConfig.basePath}/success`;
+            // window.location.href = `${envConfig.basePath}/success`;
           }
         })
         .catch((err) => {

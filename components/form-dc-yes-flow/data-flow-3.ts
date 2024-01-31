@@ -503,8 +503,8 @@ const acrOptionYes = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  childFrontACRCardFile: {
-    id: "childFrontACRCardFile",
+  acrCardFileFront: {
+    id: "acrCardFileFront",
     value: null,
     title:
       "Upload your child's valid card, front ACR I-card or Philippine Retirement Authority (PRA) Card",
@@ -521,8 +521,8 @@ const acrOptionYes = {
     isNotPersist: true,
   } as IDualCitizenYesInputs,
 
-  childBackACRCardFile: {
-    id: "childBackACRCardFile",
+  acrCardFileBack: {
+    id: "acrCardFileBack",
     value: null,
     title:
       "Upload your child's valid card, back ACR I-card or Philippine Retirement Authority (PRA) Card",
