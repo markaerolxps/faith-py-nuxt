@@ -80,7 +80,7 @@
               >By proceeding, I agree that Faith Academy can collect, use and
               disclose the information provided by me in accordance with the
               <nuxt-link
-                :href="redirect('/privacy-policy')"
+                :href="redirect('/#')"
                 target="_blank"
                 class="underline"
                 >Privacy Policy</nuxt-link
@@ -88,7 +88,7 @@
               and I fully comply with the
               <nuxt-link
                 class="underline"
-                :href="redirect('/terms-and-condition')"
+                :href="redirect('/#')"
                 target="_blank"
                 >Terms & Conditions</nuxt-link
               >
@@ -197,6 +197,7 @@ import axios from "axios";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 import { validateRegisterKey } from "~/components/service/validateRegisterKeyService";
+
 export default {
   components: {
     Header,
@@ -223,7 +224,14 @@ export default {
     if (this.process) {
       this.step = this.process;
     }
-
+    if (
+      window.location.pathname.startsWith("/") &&
+      !window.location.pathname.startsWith("/index.html")
+    ) {
+      // Update the URL path to remove "/assets/"
+      const newPath = window.location.pathname.replace("/assets/", "/");
+      window.history.replaceState({}, "", newPath);
+    }
     if (this.step !== "step-1") {
       validateRegisterKey(this.storedKey, this.validateKeyCallback);
     }

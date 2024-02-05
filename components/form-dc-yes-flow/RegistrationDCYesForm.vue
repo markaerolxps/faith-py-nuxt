@@ -381,7 +381,7 @@ export default {
             localStorage.removeItem("form-data");
             localStorage.removeItem("registerKey");
             localStorage.removeItem("process");
-            // window.location.href = `${envConfig.basePath}/success`;
+            window.location.href = `${envConfig.basePath}/success/index.html`;
           }
         })
         .catch((err) => {
@@ -563,13 +563,13 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "Yes" &&
         this.inputs?.childAnotherPassport?.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -631,13 +631,13 @@ export default {
         this.inputs?.contactNumber?.value &&
         this.inputs?.contactEmail.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -668,13 +668,13 @@ export default {
         this.inputs?.acrCardOption.value === "No" &&
         this.inputs?.reasonDontHaveACRCard.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -737,13 +737,13 @@ export default {
         this.inputs?.acrCardFileFront.value &&
         this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -845,13 +845,13 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "Yes" &&
         this.inputs?.childAnotherPassport?.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -909,13 +909,13 @@ export default {
         this.inputs?.contactNumber?.value &&
         this.inputs?.contactEmail.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -944,13 +944,13 @@ export default {
         this.inputs?.acrCardOption.value === "No" &&
         this.inputs?.reasonDontHaveACRCard.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -1009,13 +1009,13 @@ export default {
         this.inputs?.acrCardFileFront.value &&
         this.inputs?.acrCardFileBack &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
-        ((this.inputs?.child2ndCountry.value &&
-          this.inputs?.child2ndCountry.value != "Other") ||
-          (this.inputs?.child2ndCountry.value === "Other" &&
-            this.inputs?.secondOtherCountry.value)) &&
+        ((this.inputs?.country2.value &&
+          this.inputs?.country2.value != "Other") ||
+          (this.inputs?.country2.value === "Other" &&
+            this.inputs?.otherCountry.value)) &&
         this.inputs?.passportnumber2.value &&
-        this.inputs?.secondPassportExpirationDate.value &&
-        this.inputs?.secondBioPageFile.value &&
+        this.inputs?.passportExpirationDate2.value &&
+        this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
       ) {
         return true;
@@ -1111,8 +1111,8 @@ export default {
   },
   updated() {
     parsedFormData.updateAll(mapObjectValues(this.inputs, true));
-    if (this.inputs?.child2ndCountry) {
-      this.inputs.child2ndCountry.items = this.countries;
+    if (this.inputs?.country2) {
+      this.inputs.country2.items = this.countries;
     }
     if (this.inputs?.country) {
       this.inputs.country.items = this.countries;

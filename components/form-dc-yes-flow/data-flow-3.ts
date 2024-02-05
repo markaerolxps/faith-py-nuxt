@@ -254,9 +254,9 @@ const otherPassportOption = {
 };
 
 const anotherPassportOptionYes = {
-  child2ndCountry: {
-    id: "child2ndCountry",
-    value: parsedFormData.get("child2ndCountry"),
+  country2: {
+    id: "country2",
+    value: parsedFormData.get("country2"),
     title: "Indicate your child’s 2nd Country",
     dependsOnExpectValue: [
       [
@@ -279,18 +279,18 @@ const anotherPassportOptionYes = {
     hasOption: true,
   } as IDualCitizenYesInputs,
 
-  secondOtherCountry: {
-    id: "secondOtherCountry2",
-    value: parsedFormData.get("secondOtherCountry"),
+  otherCountry: {
+    id: "otherCountry2",
+    value: parsedFormData.get("otherCountry"),
     title: "Other",
-    dependsOnExpectValue: [["dualFilipino-No", "child2ndCountry-Other"]],
+    dependsOnExpectValue: [["dualFilipino-No", "country2-Other"]],
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
 
-  secondPassportNumber: {
-    id: "secondPassportNumber",
-    value: parsedFormData.get("secondPassportNumber"),
+  passportNumber2: {
+    id: "passportNumber2",
+    value: parsedFormData.get("passportNumber2"),
     title: "FN 2nd Passport Number",
     dependsOnExpectValue: [
       [
@@ -311,9 +311,9 @@ const anotherPassportOptionYes = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  secondPassportExpirationDate: {
-    id: "secondPassportExpirationDate",
-    value: parsedFormData.get("secondPassportExpirationDate"),
+  passportExpirationDate2: {
+    id: "passportExpirationDate2",
+    value: parsedFormData.get("passportExpirationDate2"),
     title: "FN 2nd Passport Expiration Date",
     dependsOnExpectValue: [
       [
@@ -334,8 +334,8 @@ const anotherPassportOptionYes = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  secondBioPageFile: {
-    id: "secondBioPageFile",
+  bioPageFile2: {
+    id: "bioPageFile2",
     value: null,
     title: "Upload 2nd FN Passport Bio Page",
     dependsOnExpectValue: [

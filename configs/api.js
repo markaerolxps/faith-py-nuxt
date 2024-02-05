@@ -1,10 +1,14 @@
 const config = {
   dev: `${
     typeof window !== "undefined"
-      ? "https://faithacademy-xurpas-sandbox.frappe.cloud"
+      ? window.origin
+      : "https://faithacademy-xurpas-deveop.frappe.cloud"
+  }`,
+  prod: `${
+    typeof window !== "undefined"
+      ? window.origin
       : "https://faithacademy-xurpas-sandbox.frappe.cloud"
   }`,
-  prod: "",
 };
 
 let _baseUrl = () => {

@@ -55,5 +55,15 @@ import CommonLayoutVue from "@/components/common/CommonLayout.vue";
 
 export default {
   components: { CommonLayoutVue },
+  mounted() {
+    if (
+      window.location.pathname.startsWith("/") &&
+      !window.location.pathname.startsWith("/index.html")
+    ) {
+      // Update the URL path to remove "/assets/"
+      const newPath = window.location.pathname.replace("/assets/", "/");
+      window.history.replaceState({}, "", newPath);
+    }
+  },
 };
 </script>

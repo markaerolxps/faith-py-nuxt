@@ -1679,7 +1679,7 @@ export default {
           phPassportAction: this.phPassportActionSelected,
           birthCertAction: this.birthCertActionSelected,
           filipinoAction: this.filipinoActionSelected,
-          birthCerFile: this.birthCertFile,
+          birthCertFile: this.birthCertFile,
           surName: this.surName,
           middleName: this.middleName,
           firstName: this.firstName,
@@ -1985,7 +1985,7 @@ export default {
             localStorage.removeItem("form-data");
             localStorage.removeItem("registerKey");
             localStorage.removeItem("process");
-            // window.location.href = `${envConfig.basePath}/success`;
+            window.location.href = `${envConfig.basePath}/success/index.html`;
           }
         })
         .catch((err) => {
