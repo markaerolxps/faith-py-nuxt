@@ -19,6 +19,27 @@ export const visaOptions = [
   "Apply for another PH Visa",
 ];
 
+export const typeOfVisaItems = [
+  "47(a)(2)",
+  "9(A)",
+  "9(B)",
+  "9(C)",
+  "9(D)",
+  "9(E)",
+  "9(F)",
+  "9(G)",
+  "13 Quota Immigrants",
+  "13(A)",
+  "13(B)",
+  "13(C)",
+  "13(D)",
+  "13(E)",
+  "13(F)",
+  "13(G)",
+  "PEZZA",
+  "SRRV",
+];
+
 export const childEnterReasonItems = [
   {
     name: "My child is a Faith Academy visa holder",
@@ -279,7 +300,7 @@ const anotherPassportOptionYes = {
     hasOption: true,
   } as IDualCitizenYesInputs,
 
-  otherCountry: {
+  otherCountry2: {
     id: "otherCountry2",
     value: parsedFormData.get("otherCountry"),
     title: "Other",
@@ -376,9 +397,9 @@ const visaFreeHolderNo = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  contactName: {
-    id: "contactName",
-    value: parsedFormData.get("contactName"),
+  nameOfAccreditedOffice: {
+    id: "nameOfAccreditedOffice",
+    value: parsedFormData.get("nameOfAccreditedOffice"),
     title: "Contact Name ",
     dependsOnExpectValue: [
       [
@@ -392,9 +413,9 @@ const visaFreeHolderNo = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  contactNumber: {
-    id: "contactNumber",
-    value: parsedFormData.get("contactNumber"),
+  missionCellNo: {
+    id: "missionCellNo",
+    value: parsedFormData.get("missionCellNo"),
     title: "Contact Cel. No ",
     dependsOnExpectValue: [
       [
@@ -408,9 +429,9 @@ const visaFreeHolderNo = {
     required: true,
   } as IDualCitizenYesInputs,
 
-  contactEmail: {
-    id: "contactEmail",
-    value: parsedFormData.get("contactEmail"),
+  missionEmail: {
+    id: "missionEmail",
+    value: parsedFormData.get("missionEmail"),
     title: "Contact Email",
     dependsOnExpectValue: [
       [
@@ -429,11 +450,12 @@ const childPhVisa = {
   typeOfPhVisa: {
     id: "typeOfPhVisa",
     value: parsedFormData.get("typeOfPhVisa"),
-    title: "Type of Philippine Visa  ",
+    title: "Type of Philippine Visa",
     dependsOnExpectValue: [
       ["dualFilipino-No", "isInPH-Any", "childEnterReason-phVisa"],
     ],
-    inputType: "input-text",
+    items: typeOfVisaItems,
+    inputType: "select",
     required: true,
   } as IDualCitizenYesInputs,
 

@@ -75,7 +75,8 @@ const isInPHYes = {
     dependsOnExpectValue: [["dualFilipino-Yes", "isUsePhPassport-Any"]], // Key-Value
     inputType: "select",
     placeholder: "Country",
-    items: [],
+    items: countries,
+    hasOption: true,
     required: true,
   } as IDualCitizenYesInputs,
   otherCountry: {
@@ -142,7 +143,7 @@ const isInPHYes = {
     id: "passportNumber",
     value: parsedFormData.get("passportNumber"),
     title: "Passport Number",
-    placeholder: "Philippine Passport Number",
+    placeholder: "Passport Number",
     dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-text",
     required: true,
@@ -151,7 +152,7 @@ const isInPHYes = {
     id: "passportExpirationDate",
     value: parsedFormData.get("passportExpirationDate"),
     title: "Passport Expiration Date",
-    placeholder: "Philippine Passport Number",
+    placeholder: "Passport Number",
     dependsOnExpectValue: [["dualFilipino-Any", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-date",
     required: true,
@@ -248,20 +249,21 @@ const hasBICertYes = {
 };
 
 const hasAnotherPassportYes = {
-  child2ndCountry: {
-    id: "child2ndCountry",
-    value: parsedFormData.get("child2ndCountry"),
+  country2: {
+    id: "country2",
+    value: parsedFormData.get("country2"),
     title: "Indicate your child’s 2nd Country",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "select",
-    items: defaultItems,
-    required: true,
+    items: countries,
+    hasOption: true,
   } as IDualCitizenYesInputs,
-  child2ndCountry2: {
-    id: "child2ndCountry2",
-    value: parsedFormData.get("child2ndCountry2"),
+
+  otherCountry2: {
+    id: "otherCountry2",
+    value: parsedFormData.get("otherCountry2"),
     title: "Other",
-    dependsOnExpectValue: [["child2ndCountry-Other"]], // Key-Value
+    dependsOnExpectValue: [["country2-Other"]], // Key-Value
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
@@ -365,7 +367,7 @@ const hasPHPassportYES = {
     id: "passportNumber2",
     value: parsedFormData.get("passportNumber2"),
     title: "Passport Number",
-    placeholder: "Philippine Passport Number",
+    placeholder: "Passport Number",
     dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-text",
     required: true,
@@ -374,7 +376,7 @@ const hasPHPassportYES = {
     id: "passportExpirationDate2",
     value: parsedFormData.get("passportExpirationDate2"),
     title: "Passport Expiration Date",
-    placeholder: "Philippine Passport Number",
+    placeholder: "Passport Number",
     dependsOnExpectValue: [["dualFilipino-Any", "hasPHPassport-Yes"]], // Key-Value
     inputType: "input-date",
     required: true,

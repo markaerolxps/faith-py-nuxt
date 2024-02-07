@@ -271,6 +271,7 @@ export default {
       localStorage.setItem("process", "step-1");
       localStorage.removeItem("registerKey");
       this.step = "step-1";
+      window.location.href = `${envConfig.basePath}/page-expired/index.html`;
     },
     getStarted() {
       if (this.registerKey != "" && this.getStartedState) {

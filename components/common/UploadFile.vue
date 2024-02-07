@@ -95,11 +95,13 @@ export default {
       if (file) {
         if (file.type.startsWith("image")) {
           file.fileType = "image";
+        } else if (file.type.startsWith("application/pdf")) {
+          file.fileType = "application/pdf";
         } else {
           return;
         }
 
-        if (file.fileType === "image") {
+        if (file.fileType === "image" || file.fileType === "application/pdf") {
           let fr = new FileReader();
           fr.onload = () => {
             file.data = fr.result;

@@ -371,23 +371,12 @@ export default {
       this.$emit("backToOptions");
     },
     redirectToSuccess() {
-      axios
-        .post(
-          `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.unique_key_change_status`,
-          { unique_key: localStorage.getItem("registerKey") }
-        )
-        .then((res) => {
-          if (res) {
-            localStorage.removeItem("form-data");
-            localStorage.removeItem("registerKey");
-            localStorage.removeItem("process");
-            window.location.href = `${envConfig.basePath}/success/index.html`;
-          }
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          console.log(err);
-        });
+      setTimeout(async () => {
+        localStorage.removeItem("form-data");
+        localStorage.removeItem("registerKey");
+        localStorage.removeItem("process");
+        window.location.href = `${envConfig.basePath}/success/index.html`;
+      }, 100);
     },
     sendForm(e: any) {
       let formData: any = mapObjectValues(this.inputs, true);
@@ -567,7 +556,7 @@ export default {
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
             this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
