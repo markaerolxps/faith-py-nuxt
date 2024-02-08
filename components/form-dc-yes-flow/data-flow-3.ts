@@ -109,7 +109,7 @@ const flow3Fields = {
     dependsOnExpectValue: [["dualFilipino-No", "isInPH-Any"]],
     inputType: "select",
     required: true,
-    items: countries,
+    items: defaultItems,
     hasOption: true,
   } as IDualCitizenYesInputs,
 
@@ -294,7 +294,7 @@ const anotherPassportOptionYes = {
         "childAnotherPassport-Yes",
       ],
     ],
-    items: countries,
+    items: defaultItems,
     inputType: "select",
     required: true,
     hasOption: true,

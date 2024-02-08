@@ -59,7 +59,11 @@
           <Dropdown
             :required="inputForm?.required"
             :title="inputForm.title"
-            :items="inputForm.id === 'country' ? countries : inputForm.items"
+            :items="
+              inputForm.id === 'country' || inputForm.id === 'country2'
+                ? countries
+                : inputForm.items
+            "
             :hasOption="inputForm.hasOption"
             v-model="inputForm.value"
             :value="inputForm.value"
@@ -113,7 +117,12 @@
               }
             "
             :type="inputForm.inputType.split('-')[1]"
-            :value="inputForm.value"
+            :value="
+              inputForm.id === 'phVisaExpDate' &&
+              inputs?.['indefinite']?.value === 'on'
+                ? null
+                : inputForm.value
+            "
             :required="inputForm?.required"
             :disabled="
               inputForm.id === 'phVisaExpDate' &&
@@ -362,6 +371,7 @@ export default {
 
           if (res.data) {
             this.countries = res.data.data;
+            this.countries.push("Other");
           }
         })
         .catch((err) => {});
@@ -385,7 +395,8 @@ export default {
       const isFlow2 =
         this.inputs?.dualFilipino?.value === "Yes" &&
         !!this.inputs?.isInPH?.value;
-      formData.flow = isFlow2 && "flow-2";
+      formData.flowFormat = isFlow2 ? "flow-2" : "flow-3";
+
       axios
         .post(
           `${envConfig.baseUrl}/api/method/faith_academy.endpoint.registration.registration.student_registration`,
@@ -555,7 +566,7 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
+            this.inputs?.otherCountry2.value)) &&
         this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
@@ -585,9 +596,9 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "No" &&
         this.inputs?.nameOfMission?.value &&
-        this.inputs?.contactName?.value &&
-        this.inputs?.contactNumber?.value &&
-        this.inputs?.contactEmail.value &&
+        this.inputs?.nameOfAccreditedOffice?.value &&
+        this.inputs?.missionCellNo?.value &&
+        this.inputs?.missionEmail.value &&
         this.inputs?.childAnotherPassport.value &&
         this.inputs?.childAnotherPassport.value === "No" &&
         this.recaptchaToken
@@ -616,15 +627,15 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "No" &&
         this.inputs?.nameOfMission?.value &&
-        this.inputs?.contactName?.value &&
-        this.inputs?.contactNumber?.value &&
-        this.inputs?.contactEmail.value &&
+        this.inputs?.nameOfAccreditedOffice?.value &&
+        this.inputs?.missionCellNo?.value &&
+        this.inputs?.missionEmail.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -660,8 +671,8 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -729,8 +740,8 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -837,8 +848,8 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -865,10 +876,9 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "No" &&
         this.inputs?.nameOfMission?.value &&
-        this.inputs?.contactName?.value &&
-        this.inputs?.contactNumber?.value &&
-        this.inputs?.contactEmail.value &&
-        this.inputs?.childAnotherPassport.value &&
+        this.inputs?.nameOfAccreditedOffice?.value &&
+        this.inputs?.missionCellNo?.value &&
+        this.inputs?.missionEmail.value &&
         this.inputs?.childAnotherPassport.value === "No" &&
         this.recaptchaToken
       ) {
@@ -894,15 +904,15 @@ export default {
           this.inputs?.childEnterReason.value === "visaGranted") &&
         this.inputs?.childFaVisa.value === "No" &&
         this.inputs?.nameOfMission?.value &&
-        this.inputs?.contactName?.value &&
-        this.inputs?.contactNumber?.value &&
-        this.inputs?.contactEmail.value &&
+        this.inputs?.nameOfAccreditedOffice?.value &&
+        this.inputs?.missionCellNo?.value &&
+        this.inputs?.missionEmail.value &&
         this.inputs?.childAnotherPassport.value === "Yes" &&
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -936,8 +946,8 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -1001,8 +1011,8 @@ export default {
         ((this.inputs?.country2.value &&
           this.inputs?.country2.value != "Other") ||
           (this.inputs?.country2.value === "Other" &&
-            this.inputs?.otherCountry.value)) &&
-        this.inputs?.passportnumber2.value &&
+            this.inputs?.otherCountry2.value)) &&
+        this.inputs?.passportNumber2.value &&
         this.inputs?.passportExpirationDate2.value &&
         this.inputs?.bioPageFile2.value &&
         this.recaptchaToken
@@ -1106,9 +1116,7 @@ export default {
     if (this.inputs?.country) {
       this.inputs.country.items = this.countries;
     }
-    if (this.inputs?.country2) {
-      this.inputs.country2.items = this.countries;
-    }
+
     this.validateAllSteps();
   },
   watch: {

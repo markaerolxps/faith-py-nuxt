@@ -130,7 +130,7 @@
       </div>
       <div
         class="dual-citizen-no w-[33.563rem] flex flex-col items-start gap-[1rem]"
-        v-if="step === 'dual-citizen-no' && storedKey != ''"
+        v-if="step === 'dual-citizen-no' && storedKey"
       >
         <div class="flex flex-col items-center gap-[2rem]">
           <h1
@@ -157,7 +157,7 @@
       </div>
       <div
         class="dual-citizen-yes w-[33.563rem] flex flex-col items-start gap-[1rem]"
-        v-else-if="step === 'dual-citizen-yes' && storedKey != ''"
+        v-else-if="step === 'dual-citizen-yes' && storedKey"
       >
         <div class="flex flex-col items-center gap-[2rem]">
           <h1
@@ -208,9 +208,9 @@ export default {
   },
   data() {
     return {
-      step: "",
+      step: "step-1",
       process: process.browser ? localStorage.getItem("process") : "",
-      storedKey: process.browser ? localStorage.getItem("registerKey") : "",
+      storedKey: process.browser ? localStorage.getItem("registerKey") : null,
       accept: false,
       registerKey: "",
       error: false,

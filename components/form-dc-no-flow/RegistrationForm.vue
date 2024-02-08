@@ -654,7 +654,7 @@
             :type="'date'"
             :name="'phVisaExpDate'"
             :disabled="inDefinite ? true : false"
-            :value="phVisaExpDate"
+            :value="inDefinite ? null : phVisaExpDate"
             :required="false"
           />
 
@@ -951,7 +951,7 @@ export default {
     if (this.inDefinite) {
       if (this.formData.length > 0) {
         this.formData.map((value) => {
-          value.inDefinite = this.inDefinite;
+          value.inDefinite = this.inDefinite ? "on" : false;
         });
         localStorage.setItem("form-data", JSON.stringify(this.formData));
       }
@@ -1001,6 +1001,7 @@ export default {
 
           if (res.data) {
             this.countries = res.data.data;
+            this.countries.push("Other");
           }
         })
         .catch((err) => {});
@@ -1015,6 +1016,7 @@ export default {
 
           if (res.data) {
             this.nationalities = res.data.data;
+            this.nationalities.push("Other");
           }
         })
         .catch((err) => {});
@@ -1049,7 +1051,7 @@ export default {
           this.childCurrentlyInPhSelected = element.childCurrentlyInPh;
           this.childEnterReasonSelected = element.childEnterReason;
           this.childVisaSelected = element.childVisa || "Select";
-          this.inDefinite = element.inDefinite === "on" ? "on" : true;
+          this.inDefinite = element.inDefinite;
           this.typeOfPhVisa = element.typeOfPhVisa;
           this.phVisaExpDate = element.phVisaExpDate;
           this.acrCardActionSelected = element.acrCard;
@@ -1133,7 +1135,7 @@ export default {
         this.formData.map((value) => {
           value[e.target.name] = e.target.value;
         });
-        console.log(e);
+        console.log(e.target.value);
         localStorage.setItem("form-data", JSON.stringify(this.formData));
       }
     },
@@ -1816,7 +1818,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           typeOfPhVisa: this.typeOfPhVisa,
-          phVisaExpDate: this.phVisaExpDate,
+          phVisaExpDate: this.inDefinite === "on" ? null : this.phVisaExpDate,
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
@@ -1846,7 +1848,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           typeOfPhVisa: this.typeOfPhVisa,
-          phVisaExpDate: this.phVisaExpDate,
+          phVisaExpDate: this.inDefinite === "on" ? null : this.phVisaExpDate,
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardFileFront: this.acrCardFileFront,
@@ -1877,7 +1879,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           typeOfPhVisa: this.typeOfPhVisa,
-          phVisaExpDate: this.phVisaExpDate,
+          phVisaExpDate: this.inDefinite === "on" ? null : this.phVisaExpDate,
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
@@ -1994,7 +1996,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           typeOfPhVisa: this.typeOfPhVisa,
-          phVisaExpDate: this.phVisaExpDate,
+          phVisaExpDate: this.inDefinite === "on" ? null : this.phVisaExpDate,
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
@@ -2028,7 +2030,7 @@ export default {
           childInPh: this.childCurrentlyInPhSelected,
           childEnterReason: this.childEnterReasonSelected,
           typeOfPhVisa: this.typeOfPhVisa,
-          phVisaExpDate: this.phVisaExpDate,
+          phVisaExpDate: this.inDefinite === "on" ? null : this.phVisaExpDate,
           indefinite: this.inDefinite,
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,

@@ -43,6 +43,7 @@ export const countries = [
   "Andorra",
   "Angola",
   "Antigua and Barbuda",
+  "Other",
   // Add more countries here
 ];
 
@@ -255,7 +256,7 @@ const hasAnotherPassportYes = {
     title: "Indicate your child’s 2nd Country",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "select",
-    items: countries,
+    items: defaultItems,
     hasOption: true,
   } as IDualCitizenYesInputs,
 
@@ -267,25 +268,25 @@ const hasAnotherPassportYes = {
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  passport2ndNumber: {
-    id: "passport2ndNumber",
-    value: parsedFormData.get("passport2ndNumber"),
+  passportNumber2: {
+    id: "passportNumber2",
+    value: parsedFormData.get("passportNumber2"),
     title: "FN 2nd Passport Number",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  passport2ndExpirationDate: {
-    id: "passport2ndExpirationDate",
-    value: parsedFormData.get("passport2ndExpirationDate"),
+  passportExpirationDate2: {
+    id: "passportExpirationDate2",
+    value: parsedFormData.get("passportExpirationDate2"),
     title: "FN 2nd Passport Expiration Date",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "input-date",
     required: true,
   } as IDualCitizenYesInputs,
-  passport2ndBioFile: {
-    id: "passport2ndBioFile",
-    value: parsedFormData.get("passport2ndBioFile"),
+  bioPageFile2: {
+    id: "bioPageFile2",
+    value: parsedFormData.get("bioPageFile2"),
     title: "Upload 2nd FN Passport Bio Page",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value // Key-Value
     inputType: "input-file",
@@ -300,7 +301,7 @@ const hasPHPassportYES = {
     value: parsedFormData.get("country2"),
     title: "Country",
     dependsOnExpectValue: [["dualFilipino-Yes", "hasPHPassport-Yes"]], // Key-Value
-    items: ["Other"],
+    items: countries,
     inputType: "select",
     required: true,
   } as IDualCitizenYesInputs,
