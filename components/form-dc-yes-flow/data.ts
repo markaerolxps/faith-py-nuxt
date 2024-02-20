@@ -181,15 +181,13 @@ const isInPHYes = {
     title: "Upload Arrival Stamp (if in PH)",
     dependsOnExpectValue: [["dualFilipino-Yes", "isUsePhPassport-Any"]], // Key-Value
     inputType: "input-file",
-    required: true,
+    required: false,
   } as IDualCitizenYesInputs,
   hasPHPassport: {
     id: "hasPHPassport",
     value: parsedFormData.get("hasPHPassport"),
     title: "Does your child have a Philippine passport?",
-    dependsOnExpectValue: [
-      ["dualFilipino-Yes", "isUsePhPassport-No", "arrivalStampFile-Any"],
-    ], // Key-Value
+    dependsOnExpectValue: [["dualFilipino-Yes", "isUsePhPassport-No"]], // Key-Value
     inputType: "select",
     items: defaultItems,
     required: true,
@@ -199,8 +197,8 @@ const isInPHYes = {
     value: parsedFormData.get("hasBICert"),
     title: "Does your child have BI Identification Certificate?",
     dependsOnExpectValue: [
-      ["dualFilipino-Yes", "arrivalStampFile-Any", "hasPHPassport-No"],
-      ["dualFilipino-Yes", "isUsePhPassport-Yes", "arrivalStampFile-Any"],
+      ["dualFilipino-Yes", "hasPHPassport-No"],
+      ["dualFilipino-Yes", "isUsePhPassport-Yes"],
     ], // Key-Value
     inputType: "select",
     items: defaultItems,
@@ -250,9 +248,9 @@ const hasBICertYes = {
 };
 
 const hasAnotherPassportYes = {
-  country2: {
-    id: "country2",
-    value: parsedFormData.get("country2"),
+  child2ndCountry: {
+    id: "child2ndCountry",
+    value: parsedFormData.get("child2ndCountry"),
     title: "Indicate your child’s 2nd Country",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "select",
@@ -260,34 +258,34 @@ const hasAnotherPassportYes = {
     hasOption: true,
   } as IDualCitizenYesInputs,
 
-  otherCountry2: {
-    id: "otherCountry2",
-    value: parsedFormData.get("otherCountry2"),
+  childOther2ndCountry: {
+    id: "childOther2ndCountry",
+    value: parsedFormData.get("childOther2ndCountry"),
     title: "Other",
-    dependsOnExpectValue: [["country2-Other"]], // Key-Value
+    dependsOnExpectValue: [["child2ndCountry-Other"]], // Key-Value
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  passportNumber2: {
-    id: "passportNumber2",
-    value: parsedFormData.get("passportNumber2"),
-    title: "FN 2nd Passport Number",
+  foreignNationalPassportNumber: {
+    id: "foreignNationalPassportNumber",
+    value: parsedFormData.get("foreignNationalPassportNumber"),
+    title: " 2nd Passport Number",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "input-text",
     required: true,
   } as IDualCitizenYesInputs,
-  passportExpirationDate2: {
-    id: "passportExpirationDate2",
-    value: parsedFormData.get("passportExpirationDate2"),
-    title: "FN 2nd Passport Expiration Date",
+  foreignPassportExpirationDate: {
+    id: "foreignPassportExpirationDate",
+    value: parsedFormData.get("foreignPassportExpirationDate"),
+    title: " 2nd Passport Expiration Date",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value
     inputType: "input-date",
     required: true,
   } as IDualCitizenYesInputs,
-  bioPageFile2: {
-    id: "bioPageFile2",
-    value: parsedFormData.get("bioPageFile2"),
-    title: "Upload 2nd FN Passport Bio Page",
+  foreignNationalBioPageFile: {
+    id: "foreignNationalBioPageFile",
+    value: parsedFormData.get("foreignNationalBioPageFile"),
+    title: "Upload 2nd  Passport Bio Page",
     dependsOnExpectValue: [["hasAnotherPassport-Yes"]], // Key-Value // Key-Value
     inputType: "input-file",
     required: true,

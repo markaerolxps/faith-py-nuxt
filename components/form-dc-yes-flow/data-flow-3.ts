@@ -312,7 +312,7 @@ const anotherPassportOptionYes = {
   passportNumber2: {
     id: "passportNumber2",
     value: parsedFormData.get("passportNumber2"),
-    title: "FN 2nd Passport Number",
+    title: "2nd Passport Number",
     dependsOnExpectValue: [
       [
         "dualFilipino-No",
@@ -335,7 +335,7 @@ const anotherPassportOptionYes = {
   passportExpirationDate2: {
     id: "passportExpirationDate2",
     value: parsedFormData.get("passportExpirationDate2"),
-    title: "FN 2nd Passport Expiration Date",
+    title: "2nd Passport Expiration Date",
     dependsOnExpectValue: [
       [
         "dualFilipino-No",
@@ -358,7 +358,7 @@ const anotherPassportOptionYes = {
   bioPageFile2: {
     id: "bioPageFile2",
     value: null,
-    title: "Upload 2nd FN Passport Bio Page",
+    title: "Upload 2nd Passport Bio Page",
     dependsOnExpectValue: [
       [
         "dualFilipino-No",

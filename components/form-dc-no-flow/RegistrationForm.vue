@@ -1718,6 +1718,7 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-2") {
@@ -1733,6 +1734,7 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-3") {
@@ -1751,6 +1753,7 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-4") {
@@ -1768,6 +1771,7 @@ export default {
           birthPlace: this.birthPlace,
           dateOfBirth: this.dateOfBirth,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-5") {
@@ -1793,6 +1797,7 @@ export default {
           childEnterReason: this.childEnterReasonSelected,
           childVisaSelected: this.childVisaSelected,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
 
@@ -1824,6 +1829,7 @@ export default {
           acrCardNoReason: this.acrCardNoReason,
           visaPageFile: this.visaPageFile,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-15") {
@@ -1855,6 +1861,7 @@ export default {
           acrCardFileBack: this.acrCardFileBack,
           visaPageFile: this.visaPageFile,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-8") {
@@ -1884,6 +1891,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
           visaPageFile: this.visaPageFile,
           acrCardFileFront: this.acrCardFileFront,
           acrCardFileBack: this.acrCardFileBack,
@@ -1913,6 +1921,7 @@ export default {
           arrivalStampFile: this.arrivalStampFile,
           childEnterReason: this.childEnterReasonSelected,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-10") {
@@ -1944,6 +1953,7 @@ export default {
           missionCellNo: this.missionCellNo,
           missionEmail: this.missionEmail,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-16") {
@@ -1969,6 +1979,7 @@ export default {
           childVisaSelected: this.childVisaSelected,
           anticipatedArrivalDate: this.anticipatedArrivalDate,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-11") {
@@ -2001,6 +2012,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardNoReason: this.acrCardNoReason,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-12") {
@@ -2035,6 +2047,7 @@ export default {
           acrCardAction: this.acrCardActionSelected,
           acrCardExpDate: this.acrCardExpDate,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-13") {
@@ -2064,6 +2077,7 @@ export default {
           missionCellNo: this.missionCellNo,
           missionEmail: this.missionEmail,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
       if (this.flowFormat === "step-14") {
@@ -2095,6 +2109,7 @@ export default {
           missionCellNo: this.missionCellNo,
           missionEmail: this.missionEmail,
           flowFormat: "flow-1",
+          unique_key: localStorage.getItem("registerKey"),
         });
       }
 

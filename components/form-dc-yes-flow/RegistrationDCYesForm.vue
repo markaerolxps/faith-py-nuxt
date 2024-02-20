@@ -60,7 +60,9 @@
             :required="inputForm?.required"
             :title="inputForm.title"
             :items="
-              inputForm.id === 'country' || inputForm.id === 'country2'
+              inputForm.id === 'country' ||
+              inputForm.id === 'country2' ||
+              inputForm.id === 'child2ndCountry'
                 ? countries
                 : inputForm.items
             "
@@ -396,6 +398,8 @@ export default {
         this.inputs?.dualFilipino?.value === "Yes" &&
         !!this.inputs?.isInPH?.value;
       formData.flowFormat = isFlow2 ? "flow-2" : "flow-3";
+
+      formData.unique_key = localStorage.getItem("registerKey");
 
       axios
         .post(
