@@ -66,6 +66,13 @@
                 ? countries
                 : inputForm.items
             "
+            :disabled="
+              inputs?.['dualFilipino']?.value === 'Yes' &&
+              inputs?.['isUsePhPassport']?.value === 'Yes' &&
+              inputForm.id === 'country'
+                ? true
+                : false
+            "
             :hasOption="inputForm.hasOption"
             v-model="inputForm.value"
             :value="inputForm.value"
@@ -103,7 +110,7 @@
             style="padding: 16px 24px"
           >
             <span class="font-bold text-base"
-              >Passport used to enter the Philippines</span
+              >Passport used/will be used to enter the Philippines</span
             >
           </div>
         </div>
@@ -1119,6 +1126,23 @@ export default {
     }
     if (this.inputs?.country) {
       this.inputs.country.items = this.countries;
+    }
+
+    if (
+      this.inputs?.dualFilipino.value === "Yes" &&
+      this.inputs?.country &&
+      this.inputs?.isUsePhPassport.value === "Yes"
+    ) {
+      this.inputs.country.value = "Philippines";
+    }
+
+    if (
+      parsedFormData.get("dualFilipino") === "Yes" &&
+      parsedFormData.get("isUsePhPassport") === "No"
+    ) {
+      if (parsedFormData.get("country") === "Philippines") {
+        this.inputs.country.value = null;
+      }
     }
 
     this.validateAllSteps();

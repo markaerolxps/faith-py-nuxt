@@ -161,6 +161,11 @@ export default {
       required: false,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   emits: ["selectedType", "update:modelValue"],
   data() {
@@ -181,7 +186,9 @@ export default {
   },
   methods: {
     openMenu() {
-      this.showMenu = !this.showMenu;
+      if (!this.disabled) {
+        this.showMenu = !this.showMenu;
+      }
     },
     closeMenu($event) {
       if (!$event || !this.$el.contains($event.target)) {

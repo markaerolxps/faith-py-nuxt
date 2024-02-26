@@ -231,7 +231,7 @@ const hasBICertYes = {
   hasAnotherPassport: {
     id: "hasAnotherPassport",
     value: parsedFormData.get("hasAnotherPassport"),
-    title: "Does your child holds another passport?",
+    title: "Does your child hold another passport?",
     dependsOnExpectValue: [
       [
         "dualFilipino-Yes",

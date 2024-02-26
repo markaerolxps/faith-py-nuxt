@@ -244,7 +244,7 @@ const otherPassportOption = {
   childAnotherPassport: {
     id: "childAnotherPassport",
     value: parsedFormData.get("childAnotherPassport"),
-    title: "Does your child holds another passport?",
+    title: "Does your child hold another passport?",
     dependsOnExpectValue: [
       [
         "dualFilipino-No",

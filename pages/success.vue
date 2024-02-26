@@ -40,8 +40,8 @@
               +63 2-8651-7100, Fax: +63 2-8857-2001
             </p>
             <p class="text-sm font-normal text-center">
-              <span class="font-semibold">Email: </span> vanguard@faith.edu.ph,
-              registrar@faith.edu.ph
+              <span class="font-semibold">Email: </span>
+              g.visaoffice@faith.edu.ph, registrar@faith.edu.ph
             </p>
           </div>
         </div>
