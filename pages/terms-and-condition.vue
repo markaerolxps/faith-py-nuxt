@@ -13,89 +13,222 @@
                         <a @click="redirectBack" class="text-center underline text-[#343541] text-sm">Back to Home</a>
 
                     </div>
-                    <span class="font-bold text-[#1C355E] text-2xl"> Terms & Conditions</span>
-
-                    <span class="font-semibold text-[#1C355E] text-sm">Last Modified: 01 Oct 2023</span>
+                    <span class="font-bold text-2xl sa-header">SERVICE AGREEMENT</span>
 
                     <div class="flex flex-col w-full items-start justify-center gap-6">
-                        <p class="text-sm font-normal ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
-                        <p class="text-sm font-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
-                        <p class="text-sm font-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
-
-                        <div class="flex flex-col items-start w-full gap-2">
-                            <span class="text-base font-semibold">I. COLLECTION OF PERSONAL DATA</span>
-                            <span class="text-sm font-normal">Praesent hendrerit lobortis arcu, a varius ex rhoncus
-                                eu:</span>
-                        </div>
-                        <ul class="flex flex-col items-start w-full gap-2 px-6">
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                        </ul>
-
-                        <div class="flex flex-col items-start w-full gap-2">
-                            <span class="text-base font-semibold">II. USE OF PERSONAL DATA</span>
-                            <span class="text-sm font-normal">Praesent hendrerit lobortis arcu, a varius ex rhoncus
-                                eu:</span>
-                        </div>
-                        <ul class="flex flex-col items-start w-full gap-2 px-6">
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
+                        <p class="text-sm font-normal ">By availing of FA-sponsored special non-immigrant 47(a)(2) visa, I agree to the following terms & conditions:</p>
+                        <ul class="terms-list flex flex-col items-start w-full gap-5 px-6 list-decimal" style="margin-left: 1rem;">
+                            <li class="text-sm font-bold">
+                                <span>Visa Eligibility</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>I undertake to not in any way be a burden to the Republic of the Philippines, nor  shall I engage in employment for financial gain while in the country. I understand that doing so disqualifies me, my dependent/s or my child from holding a 47(a)(2) visa and will initiate the cancellation of the said visa.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Payment</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>In order for the visa office to facilitate my transactions, I  shall put sufficient funds in my account in a timely manner.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Through the FA Portal (FSP) I  shall promptly upload my proof of payment (Official Receipt/Cyber Receipt).</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Complications and/or incurred penalties brought about by delayed payment shall be charged and settled  against my account.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>For personnel and family: Prior to leaving FA, I shall settle fees pertaining to my visa’s cancellation which includes surrendering my I-card for cancellation.  I understand that the fees may vary depending on the nature of the transaction that will be done.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Visa Clearance: I understand that my child’s academic records  shall only be released after I am cleared by the Visa Office.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that the fees are mere estimates and subject to change depending on processes involved.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="text-sm font-bold">
+                                <span>Requirements</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>Applications: The Visa Office’s scope of responsibility starts when I turn over my or my child’s passport used to enter the Philippines which shall be:</p>
+                                        <ul class="inner-list">
+                                            <li class="text-sm font-normal">
+                                                <p>At least six (6) months valid</p>
+                                            </li>
+                                            <li class="text-sm font-normal">
+                                                <p>At least a twenty (20)-day Temporary Visitor’s Visa (TVV) validity.</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall provide truthful, accurate, and complete information to the Visa Office.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall provide all the documents/photos required of me in a timely manner.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>It is my responsibility to cancel previously held ACR I-cards.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Overseas Travels</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>I shall give ample time to the Visa Office to prepare everything I need for my trip. Due to varying situations, circumstances and government requirements needing to be considered, I will make sure to consult the Visa Office about my travel plans, to avoid any unnecessary complications.  I understand that my readiness to fly out also depends on my timely coordination and cooperation with the Visa Office especially when my passport & visa is near expiry.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Unless I am returning to my passport issuing country, I will make sure that my passport is at least six (6) months valid upon departure & arrival from and in the Philippines.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Through the Foreign Services Portal I shall promptly inform the Visa Office of my/our trips as soon as I have decided and provide the plane ticket as soon as I’ve booked it or I must send it at least ten (10) days prior to departure.</p>
+                                        <ul class="inner-list">
+                                            <li class="text-sm font-normal">
+                                                <p>If I have an unforeseen trip I shall immediately <u>call or talk</u> to Visa Office staff to request the expedition of my Travel Pass.  I shall communicate my tentative itinerary and the purpose of my urgent travel.</p>
+                                            </li>
+                                            <li class="text-sm font-normal">
+                                                <p>I accept the consequences of my late travel notification with no valid reason.</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Through the Foreign Services Portal I shall immediately (within 2 days) report my arrival in the Philippines.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Passport, ACR I-card, & other original documents</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>Together with the Visa Office, I shall make sure to keep a record of the release & retrieval of respective items. </p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that I need to keep my ACR I-Card safe, and once it is lost, I shall promptly go to the police station and file a police report. </p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall immediately notify the Visa Office if I lose my passport and promptly go to the police station and file a police report.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that scanned copies of my documents are available to me on the Visa Google Drive. </p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>For FA Visa Holders: Once my visa expires or is pre-terminated, whether in person or by courier, I will promptly surrender my ACR I-Card to the Visa Office.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Once my passport only has a year validity, I shall start working on its renewal and will promptly turn over both old & new passports to the Visa Office for processing.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Clearing and monitoring: I shall submit updated passports and visa information immediately within 5 working days after the completion of renewal/extension/conversion.  I understand that failure to do so may prevent my child from attending classes until we have complied with this requirement.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Guardian</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>I shall provide pertinent information regarding my child’s guardian along with the photocopy of the guardian’s passport biopage.</p>
+                                    </li>
+                                   <li class="text-sm font-normal">
+                                        <p>I shall promptly inform the Visa Office of plans to change the guardian of my child and provide the aforementioned information pertaining to the new guardian.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Communication</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>I shall keep myself informed and act promptly with the instructions from the Visa Office.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>When called upon, I shall promptly appear at the Visa Office.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall regularly check the communication channels set up by the Visa Office, namely: FA Email, Google Space, SMS, and Messenger group chat.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>When applicable, I shall use the foreign services portal to update and retrieve my information. I understand that if I send information/data or notification outside the portal, there is a possibility of it being overlooked. (e.g. plane tickets sent through email)</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Bureau of Immigration (BI) Personal Appearance</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>A child below fourteen (14) years old must be accompanied by the affiant guardian or parent.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>As a parent or guardian, I shall notify the division’s secretary of my students’ absence. </p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>As a staff member, I shall notify my supervisor of my absence and make sure that a substitute teacher will take over my responsibilities.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Within fifteen (15) days after the child turns fourteen (14) years old, he/she must undergo re-registration.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I undertake to do my Annual Report (AR) between January 2 to March 1.  In the event that I am overseas during those dates, I will do my AR within 30 days of my return to the Philippines. I understand that I may incur penalties if I fail to report annually.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that as a guest in the Philippines and as a representative of Faith Academy, I need to conduct myself in a respectable manner, sometimes, needing to exercise tolerance when unexpected situations happen.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>In order to beat traffic, I understand that we need to leave the campus by 5:30am with the hopes of returning to FA before rush hour. I will be prepared to exercise a lot of patience if delays occur.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall wear appropriate attire in accordance with government guidelines.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Trips are normally scheduled every Wednesday & Friday, but if this schedule is not suitable, I will communicate with the Visa Office.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Termination/Cancellation</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>Personnel:  I understand that the effectivity of my visa will terminate once the validity period of my Memorandum of Understanding (MoU) expires.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Students:  I understand that the effectivity of my child’s visa will terminate upon completion of his/her studies or withdrawal from enrollment. However, if my child is a dependent visa holder, upon turning eighteen (18) years old, it will automatically terminate.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that it is not my right but a privilege to be granted the special non-immigrant 47(a)(2) visa. If the FA Admin deems that I am disqualified to continue availing of the said visa, I will acquiesce in their decision.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>Visa downgrading</p>
+                                        <ul class="inner-list">
+                                            <li class="text-sm font-normal">
+                                                <p>Implemented: I understand that I must coordinate with the Visa Office until the visa downgrading has been implemented/stamped on my passport and my I-card canceled.  Afterwards, within 30 days of my departure from the Philippines the VO will help me secure an exit clearance.  In the event that I will remain in the country longer than 30 more days, I will secure it by myself.</p>
+                                            </li>
+                                            <li class="text-sm font-normal">
+                                                <p>Unimplemented: I understand that in the event that my visa is pre-terminated and my visa downgrading was not implemented (by reason of being overseas) on my passport, I am responsible to remove my name on the Bureau of Immigration’s Alert List Order.  Furthermore, I undertake not to enter the Philippines until the date indicated (“stay up to”) on my visa stamp.</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="text-sm font-bold">
+                                <span>Demerits/Penalties</span>
+                                <ul class="inner-list">
+                                    <li class="text-sm font-normal">
+                                        <p>I understand that upon the discretion of the Visa Office, highschool students who failed to follow instructions in the prescribed period of time will be issued a demerit.</p>
+                                    </li>
+                                    <li class="text-sm font-normal">
+                                        <p>I shall shoulder any additional expenses or fees incurred by the Visa Office due to my negligence, delay, and inattention, as well as, my valid emergency transactions.</p>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
 
@@ -104,7 +237,25 @@
         </CommonLayout>
     </div>
 </template>
-
+<style>
+  .sa-header {
+    color: red; 
+    background-color: yellow;
+  }
+  .terms-list span {
+      margin-left: 0.5rem;
+  }
+  .inner-list {
+    list-style-type: '- ';
+    margin-left: 2.5rem;
+  }
+  .inner-list p {
+    margin-left: 1rem;
+    text-align: justify;
+  }
+  .terms-list > li {
+  }
+</style>
 <script>
 import { redirect } from '~/components/common/utils/object';
 import CommonLayout from '../components/common/CommonLayout.vue';

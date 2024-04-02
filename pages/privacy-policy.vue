@@ -3,7 +3,7 @@
         <CommonLayout>
             <div class="flex w-full items-center justify-center">
 
-                <div class="flex flex-col w-[59rem] h-full justify-center items-start py-12  gap-[52px]">
+                <div class="flex flex-col w-[59rem] h-full justify-center items-start py-12  gap-[52px]" style="text-align: justify; font-family: Garamond;">
                     <div class="flex flex-row items-center justify-start gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path
@@ -14,92 +14,96 @@
                         <a @click="redirectBack" class="text-center underline text-[#343541] text-sm">Back to Home</a>
 
                     </div>
-                    <span class="font-bold text-[#1C355E] text-2xl"> Privacy Policy</span>
-
-                    <span class="font-semibold text-[#1C355E] text-sm">Last Modified: 01 Oct 2023</span>
+                    <span class="font-bold text-2xl"> Privacy Policy</span>
 
                     <div class="flex flex-col w-full items-start justify-center gap-6">
-                        <p class="text-sm font-normal ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
-                        <p class="text-sm font-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
-                        <p class="text-sm font-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta
-                            sit
-                            amet turpis ac viverra. Suspendisse vel diam eros. Etiam a erat ante. Donec elementum posuere
-                            felis,
-                            porta porttitor erat ultrices sit amet. Vestibulum risus orci, dictum ac efficitur a, laoreet
-                            eget
-                            nibh. Sed non pulvinar sapien, quis rhoncus nibh. Sed facilisis condimentum augue. Proin tempus
-                            arcu
-                            dapibus, faucibus elit sit amet, faucibus orci. Sed a eleifend neque. Aliquam erat volutpat.
-                            Etiam
-                            vel nibh non lacus convallis aliquet quis a erat.</p>
+                        <p class="font-normal "><b>Faith Academy, Inc.</b> (<b>“FAI”</b>) respects your privacy and recognizes the need for appropriate measures to protect and manage your personal data. This Privacy Policy aims to assure you (the “End User”) and other individuals that we are observing the appropriate level of personal data protection in compliance with the standards prescribed by Republic Act No. 10173, otherwise known as the “Data Privacy Act of 2012”.</p>
+                        
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Service Description</span>
+                        </div>
+                        <p class="font-normal">FAI is an educational institution of international character for primary and secondary education (referred to as "FAI Services").  We are required by law to ensure that all our personnel and students are compliant with the Bureau of Immigration’s orders.</p>
+                        <p class="font-normal">FAI Services may contain hyperlinks to services owned and operated by third parties. These third party services may have their own privacy policies and we recommend that you review them. They will govern the use of personal information that you submit or which is collected by cookies and other tracking technologies whilst using the FAI Services. We do not accept any responsibility or liability for the privacy practices of such third party services and your use of these is at your own risk.</p>
 
                         <div class="flex flex-col items-start w-full gap-2">
-                            <span class="text-base font-semibold">I. COLLECTION OF PERSONAL DATA</span>
-                            <span class="text-sm font-normal">Praesent hendrerit lobortis arcu, a varius ex rhoncus
-                                eu:</span>
+                            <span class="text-base font-bold" style="font-style: italic">Personal Information to be Collected</span>
                         </div>
-                        <ul class="flex flex-col items-start w-full gap-2 px-6">
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                        </ul>
+                        <p class="font-normal">FAI collects the following information: Full Name, Country, Nationality, Place of Birth, Date of Birth, Issuing Authority, Passport Number, Visa Type, Date of Expiry (for Passport and Visa), personal profile (blood type, height, weight, etc.), overseas and Philippine addresses, contact information, educational background, professional experiences, countries of residence, guardian and other pertinent information as needed.</p>
 
                         <div class="flex flex-col items-start w-full gap-2">
-                            <span class="text-base font-semibold">II. USE OF PERSONAL DATA</span>
-                            <span class="text-sm font-normal">Praesent hendrerit lobortis arcu, a varius ex rhoncus
-                                eu:</span>
+                            <span class="text-base font-bold" style="font-style: italic">Collection Method</span>
                         </div>
-                        <ul class="flex flex-col items-start w-full gap-2 px-6">
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
-                            <li class="text-sm font-normal list-disc">Lorem ipsum dolor sit amet consectetur adipisicing
-                                elit.
-                                Eos, similique.</li>
+                        <p class="font-normal">Your personal information may be collected, directly or indirectly, through any of the following means:</p>
+
+                        <ul class="flex flex-col items-start w-full gap-2 px-6 list-decimal">
+                            <li class="font-normal">Upon registration for and log-in to an account on the FAI Services;</li>
+                            <li class="font-normal">Use and log-in to FAI Services website when you choose to fill out the  form;</li>
+                            <li class="font-normal">Communications and correspondences with our customer service representatives, whether in writing, verbally, or thru electronic means</li>
+                            <li class="font-normal">Footages from our CCTV cameras; and</li>
+                            <li class="font-normal">Personal Information may also be obtained from third parties and other sources which have obtained your prior consent for disclosure or when FAI is legally allowed to acquire such information.</li>
                         </ul>
+                        
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Purpose and Use of Collected Personal Information</span>
+                        </div>
+                        <p class="font-normal">Your personal information is collected by FAI for the following purposes:</p>
+                        
+                        <ul class="flex flex-col items-start w-full gap-2 px-6 list-decimal">
+                            <li class="font-normal">To provide the FAI Services to you and to perform our obligations under the EULA;</li>
+                            <li class="font-normal">To record your progress and current status within the website, application, or program, and to ensure the FAI Services deliver the features promised and function properly, so that you have the best experience when using any one of the FAI Services;</li>
+                            <li class="font-normal">To respond to your enquiries and requests for support;</li>
+                            <li class="font-normal">To inform you about the activities, projects, programs of FAI Services;</li>
+                            <li class="font-normal">To verify the identity of the end user when they access the web dashboard; and</li>
+                            <li class="font-normal">To comply with legal and regulatory requirements and perform such other processing that may be required under any applicable law or regulation.</li>
+                        </ul>
+
+                        <p class="font-normal">In the course of performing its services and responsibilities, FAI may engage the services of third-party service providers. In doing so, certain personal information is required to be disclosed for legitimate business concerns and as may be necessary to provide you with the FAI Services. We will never share, sell or otherwise disclose your personal information to third-parties, except as otherwise stated above or unless otherwise permitted under the Data Privacy Law.</p>
+
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Storage and Transmission of Personal Information</span>
+                        </div>
+                        <p class="font-normal">Organizational, physical and technical security measures are maintained, enforced and implemented at all times to ensure the integrity, confidentiality and security of your personal information.</p>
+                        <p class="font-normal">The security measures of FAI include, but are not limited to the following:</p>
+                                               
+                        <ul class="flex flex-col items-start w-full gap-2 px-6 list-decimal">
+                            <li class="font-normal">The processing of personal information is limited to the extent necessary to deliver the FAI Services;</li>
+                            <li class="font-normal">Our server is equipped with firewall, data encryption, anti-virus, and other appropriate security controls;</li>
+                            <li class="font-normal">Access to personal information is restricted to authorized personnel on a need-to-know basis;</li>
+                            <li class="font-normal">Regular audits are conducted to ensure that personal information is secured and security controls are effective;</li>
+                            <li class="font-normal">The security systems are kept up to date; and</li>
+                            <li class="font-normal">The personnel are regularly oriented regarding the appropriate level of data privacy protection.</li>
+                        </ul>
+                        
+                        <p class="font-normal">Your personal information is kept in a secure facility within our office.</p>
+                   
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Method of Use</span>
+                        </div>
+                        <p class="font-normal">Your personal information may be used as is or further processed solely for the purpose of performing our obligations and responsibilities to the end users</p>
+
+                       
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Retention Period</span>
+                        </div>
+                        <p class="font-normal">Your personal information will be retained by FAI until it is no longer necessary for the fulfillment of the purpose/s for which it was obtained and for an additional period of ninety (90) days thereafter. After which, the data will be deleted from our servers.</p>
+
+                        <div class="flex flex-col items-start w-full gap-2">
+                            <span class="text-base font-bold" style="font-style: italic">Rights of Data Subject</span>
+                        </div>
+                        <p class="font-normal">In accordance with the Data Privacy Law, we shall respect and uphold your rights as data subjects. For more information about your rights, kindly refer to National Privacy Commission’s webpage <u><a href="https://privacy.gov.ph/know-your-rights/" target="_blank" rel="noopener noreferrer" style="color: yellow;">https://privacy.gov.ph/know-your-rights/</a></u>.</p>
+
+                        <p class="font-normal">Should you have questions or concerns about Data Privacy, you may contact our Visa Coordinator thru: <u><a href="mailto:visa.coordinator@faith.edu.ph" style="color: blue;">visa.coordinator@faith.edu.ph</a></u> or </p>
+
+                        <div class="flex flex-col items-start w-full">
+                            <span class="font-normal">Visa Coordinator</span>
+                            <span class="font-normal">Faith Academy, Inc.</span>
+                            <span class="font-normal">Penny Lane, Valley Golf Subd.,</span>
+                            <span class="font-normal">Brgy. San Juan, Cainta, Rizal</span>
+                        </div>
+                        
+                        <p class="font-normal">FAI hereby reserves the right to amend this Privacy Statement to comply with government and regulatory requirements, to adapt to new technologies, to align with industry practices, or for other legitimate purposes. Rest assured that you will be notified if the amendments are significant.</p>
+
                     </div>
-
                 </div>
             </div>
         </CommonLayout>
@@ -114,7 +118,6 @@ export default {
     components: { CommonLayout },
     methods: {
         async redirectBack() {
-            alert('bacl')
             this.$router.back()
         }
     }
