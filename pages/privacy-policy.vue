@@ -90,7 +90,7 @@
                         <div class="flex flex-col items-start w-full gap-2">
                             <span class="text-base font-bold" style="font-style: italic">Rights of Data Subject</span>
                         </div>
-                        <p class="font-normal">In accordance with the Data Privacy Law, we shall respect and uphold your rights as data subjects. For more information about your rights, kindly refer to National Privacy Commission’s webpage <u><a href="https://privacy.gov.ph/know-your-rights/" target="_blank" rel="noopener noreferrer" style="color: yellow;">https://privacy.gov.ph/know-your-rights/</a></u>.</p>
+                        <p class="font-normal">In accordance with the Data Privacy Law, we shall respect and uphold your rights as data subjects. For more information about your rights, kindly refer to National Privacy Commission’s webpage <u><a href="https://privacy.gov.ph/know-your-rights/" target="_blank" rel="noopener noreferrer" style="color: blue;">https://privacy.gov.ph/know-your-rights/</a></u>.</p>
 
                         <p class="font-normal">Should you have questions or concerns about Data Privacy, you may contact our Visa Coordinator thru: <u><a href="mailto:visa.coordinator@faith.edu.ph" style="color: blue;">visa.coordinator@faith.edu.ph</a></u> or </p>
 
