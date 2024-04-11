@@ -37,7 +37,7 @@
           >
         </div>
         <!-- first Step -->
-        <div class="step-1 w-full flex flex-col items-center gap-[1rem]">
+        <div class="step-1 w-full flex flex-col items-center gap-[0.5rem]">
           <div class="flex flex-col w-[33.563rem] items-start">
             <InputText
               v-model="registerKey"
@@ -66,21 +66,13 @@
           </div>
           <div
             class="flex flex-row items-start justify-center gap-1"
-            style="padding: 22px 60px"
+            style="padding: 10px 60px"
           >
-            <input
-              type="checkbox"
-              name="accept"
-              id="accept"
-              v-model="accept"
-              class="rounded-lg"
-              style="margin-top: 2px"
-            />
             <span class="text-xs font-normal text-center"
               >By proceeding, I agree that Faith Academy can collect, use and
               disclose the information provided by me in accordance with the
               <nuxt-link
-                :href="redirect('/#')"
+                :href="redirect('/privacy-policy')"
                 target="_blank"
                 class="underline"
                 >Privacy Policy</nuxt-link
@@ -88,12 +80,52 @@
               and I fully comply with the
               <nuxt-link
                 class="underline"
-                :href="redirect('/#')"
+                :href="redirect('/terms-and-condition')"
                 target="_blank"
                 >Terms & Conditions</nuxt-link
               >
               which I have read and understand.
             </span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="flex flex-row gap-2">
+              <input
+                type="checkbox"
+                name="accept"
+                id="accept"
+                v-model="acceptPrivacy"
+                class="rounded-lg"
+                style="margin-top: 2px"
+              />
+              <span class="text-xs font-normal text-center"
+                >I agree to accept the
+                <nuxt-link
+                  :href="redirect('/privacy-policy')"
+                  target="_blank"
+                  class="underline"
+                  >Privacy Policy</nuxt-link
+                ></span
+              >
+            </div>
+            <div class="flex flex-row gap-2">
+              <input
+                type="checkbox"
+                name="accept"
+                id="accept"
+                v-model="acceptTerms"
+                class="rounded-lg"
+                style="margin-top: 2px"
+              />
+              <span class="text-xs font-normal text-center"
+                >I agree to fully comply with the
+                <nuxt-link
+                  class="underline"
+                  :href="redirect('/terms-and-condition')"
+                  target="_blank"
+                  >Terms & Conditions</nuxt-link
+                ></span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -211,7 +243,8 @@ export default {
       step: "step-1",
       process: process.browser ? localStorage.getItem("process") : "",
       storedKey: process.browser ? localStorage.getItem("registerKey") : null,
-      accept: false,
+      acceptPrivacy: false,
+      acceptTerms: false,
       registerKey: "",
       error: false,
       errorText: "",
@@ -238,7 +271,7 @@ export default {
     console.log(this.process);
   },
   updated() {
-    if (this.accept) {
+    if (this.acceptTerms && this.acceptPrivacy) {
       this.getStartedState = true;
     } else {
       this.getStartedState = false;
@@ -252,7 +285,9 @@ export default {
       localStorage.setItem("registerKey", e.target.value);
     },
     redirect(url: string) {
-      return redirect(url);
+      console.log("url", url);
+      const newPath = url.replace("/assets/", "/");
+      return redirect(newPath);
     },
     backToOptions(): void {
       this.step = "step-2";
