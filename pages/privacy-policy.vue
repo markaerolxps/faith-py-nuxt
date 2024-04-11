@@ -251,7 +251,7 @@
                   href="https://privacy.gov.ph/know-your-rights/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style="color: yellow"
+                  style="color: blue"
                   >https://privacy.gov.ph/know-your-rights/</a
                 ></u
               >.
