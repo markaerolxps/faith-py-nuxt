@@ -13,7 +13,7 @@
                         <a @click="redirectBack" class="text-center underline text-[#343541] text-sm">Back to Home</a>
 
                     </div>
-                    <span class="font-bold text-2xl sa-header">SERVICE AGREEMENT</span>
+                    <span class="font-bold text-2xl">SERVICE AGREEMENT</span>
 
                     <div class="flex flex-col w-full items-start justify-center gap-6">
                         <p class="text-sm font-normal ">By availing of FA-sponsored special non-immigrant 47(a)(2) visa, I agree to the following terms & conditions:</p>
@@ -238,10 +238,6 @@
     </div>
 </template>
 <style>
-  .sa-header {
-    color: red; 
-    background-color: yellow;
-  }
   .terms-list span {
       margin-left: 0.5rem;
   }
